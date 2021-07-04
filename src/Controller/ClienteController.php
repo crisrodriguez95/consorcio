@@ -48,6 +48,7 @@ class ClienteController extends AbstractController
         $cliente->nombre($request->query->get('nombre'));
         $cliente->apellido($request->query->get('apellido'));
         $cliente->direccion($request->query->get('direccion'));
+        $cliente->estadocivil($request->query->get('estcivil'));
         $cliente->telefono($request->query->get('telefono'));
         $cliente->movil($request->query->get('celular'));
         $cliente->email($request->query->get('correo'));      

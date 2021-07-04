@@ -3,19 +3,28 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
+
+use App\Entity\Rol;
 
 /** 
  * @ORM\Entity
  * @ORM\Table(name="cliente")
  * @ORM\HasLifecycleCallbacks
  */
-class Cliente {
+class Usuario implements UserInterface
+{
     /**
      * @ORM\Id   
      * @ORM\GeneratedValue(strategy="AUTO")    
      * @ORM\Column(name="ID_CLIENTE", type="integer")
      */
     private $id;
+    /**
+     * @ORM\OneToOne(targetEntity="Rol", mappedBy="rol")
+     * @ORM\JoinColumn(name="rol", referencedColumnName="id")
+     */
+    private $rol;
 
     /**       
      * @ORM\Column(name="CEDULA", type="integer",nullable=false)
@@ -31,32 +40,19 @@ class Cliente {
      * @ORM\Column(name="APELLIDO", type="string",nullable=false)
      */
     private $apellido;
-    /**       
-     * @ORM\Column(name="ESTADO_CIVIL", type="string",nullable=false)
-     */
-    private $estadocivil;
 
     /**       
-     * @ORM\Column(name="DIRECCION", type="string",nullable=false)
-     */
-    private $direccion;
-
-     /**       
-     * @ORM\Column(name="TELEFONO", type="integer",nullable=false)
-     */
-    private $telefono;
-
-     /**       
-     * @ORM\Column(name="MOVIL", type="integer",nullable=false)
-     */
-    private $movil;
-
-     /**       
      * @ORM\Column(name="EMAIL", type="string",nullable=false)
      */
     private $email;
 
-    public function id($value = null) {
+    /**
+     * @ORM\Column(name="salt",type="string", length=32, nullable=false)
+     */
+    private $salt;
+
+    public function id($value = null)
+    {
         if (!$value)
             return $this->id;
 
@@ -64,7 +60,8 @@ class Cliente {
 
         return $this;
     }
-    public function cedula($value = null) {
+    public function cedula($value = null)
+    {
         if (!$value)
             return $this->cedula;
 
@@ -72,7 +69,8 @@ class Cliente {
 
         return $this;
     }
-    public function nombre($value = null) {
+    public function nombre($value = null)
+    {
         if (!$value)
             return $this->nombre;
 
@@ -80,7 +78,8 @@ class Cliente {
 
         return $this;
     }
-    public function apellido($value = null) {
+    public function apellido($value = null)
+    {
         if (!$value)
             return $this->apellido;
 
@@ -88,15 +87,8 @@ class Cliente {
 
         return $this;
     }
-    public function estadocivil($value = null) {
-        if (!$value)
-            return $this->estadocivil;
-
-        $this->estadocivil = $value;
-
-        return $this;
-    }
-    public function direccion($value = null) {
+    public function direccion($value = null)
+    {
         if (!$value)
             return $this->direccion;
 
@@ -104,7 +96,8 @@ class Cliente {
 
         return $this;
     }
-    public function telefono($value = null) {
+    public function telefono($value = null)
+    {
         if (!$value)
             return $this->telefono;
 
@@ -112,7 +105,8 @@ class Cliente {
 
         return $this;
     }
-    public function movil($value = null) {
+    public function movil($value = null)
+    {
         if (!$value)
             return $this->movil;
 
@@ -120,7 +114,8 @@ class Cliente {
 
         return $this;
     }
-    public function email($value = null) {
+    public function email($value = null)
+    {
         if (!$value)
             return $this->email;
 
@@ -129,6 +124,25 @@ class Cliente {
         return $this;
     }
 
-
+    public function getRoles()
+    {
+        return [
+            $this->rol->nombre()
+        ];
+    }
+    public function getPassword()
+    {
+        return $this->password;
+    }
+    public function getSalt()
+    {
+        return $this->salt;
+    }
+    public function getUsername()
+    {
+        return $this->email;
+    }
+    public function eraseCredentials()
+    {
+    }
 }
-    
