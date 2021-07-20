@@ -626,7 +626,7 @@ pre code {
   .container-md,
   .container-lg,
   .container-xl {
-    max-width: 1140px;
+    max-width: 1114px;
   }
 }
 
@@ -1941,6 +1941,7 @@ pre code {
 
 .form-control {
   display: block;
+  width: 100%;
   height: calc(1.5em + 0.75rem + 2px);
   padding: 0.375rem 0.75rem;
   font-size: 1rem;
@@ -1954,23 +1955,7 @@ pre code {
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
-.position {
-  text-align: -webkit-right;
-}
 
-.form-control-block {
-  width: 37%;
-  margin: 0 auto;
-}
-
-.form-control-inline {
-  width: 70%;
-}
-
-.form-control-complete {
-  width: 70%;
-  margin: 0 auto;
-}
 
 @media (prefers-reduced-motion: reduce) {
   .form-control {
@@ -3202,7 +3187,7 @@ fieldset:disabled a.btn {
 
 .btn-block {
   display: block;
-  width: 37%;
+  width: 100%;
   margin: 0 auto;
 }
 
