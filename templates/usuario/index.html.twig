@@ -1,26 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
-
 	<head>
-
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 		<meta name="description" content="">
 		<meta name="author" content="">
-
 		<title>Usuario</title>
-
 		<!-- Custom fonts for this template-->
 		<link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
 		<link
 		href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
-
 		<!-- Custom styles for this template-->
 		<link href="css/sb-admin-2.css" rel="stylesheet">
-
 	</head>
-
 	<body
 		id="page-top">
 
@@ -52,53 +45,32 @@
 											</div>
 											<form class="user">
 												<div class="form-group row">
-													<div class="col-sm-6 mb-3 mb-sm-0">
-														<select class="form-control form-control-user">
-															<option></option>
-														</select>
-													</div>
+													{{ render(controller('App\\Controller\\UsuarioController::getRol')) }}
 													<div class="col-sm-6">
-														<input type="text" class="form-control form-control-user" id="exampleLastName" name="celular" placeholder="Cédula">
-													</div>
-												</div>
-
-												<div class="form-group row">
-													<div class="col-sm-6 mb-3 mb-sm-0">
-														<input type="text" class="form-control form-control-user" id="exampleFirstName" name="telefono" placeholder="Nombre">
-													</div>
-													<div class="col-sm-6">
-														<input type="text" class="form-control form-control-user" id="exampleLastName" name="celular" placeholder="Apellido">
+														<input type="text" class="form-control form-control-user" id="identification" name="cedula" placeholder="Cédula">
 													</div>
 												</div>
 												<div class="form-group row">
 													<div class="col-sm-6 mb-3 mb-sm-0">
-														<select class="form-control form-control-user">
-															<option></option>
-														</select>
-													</div>
-
-													<div class="col-sm-6">
-														<input type="text" class="form-control form-control-user" id="exampleLastName" name="celular" placeholder="Dirección">
-													</div>
-												</div>
-												<div class="form-group row">
-													<div class="col-sm-6 mb-3 mb-sm-0">
-														<input type="text" class="form-control form-control-user" id="exampleFirstName" name="telefono" placeholder="Télefono">
+														<input type="text" class="form-control form-control-user" id="name" name="nombre" placeholder="Nombre">
 													</div>
 													<div class="col-sm-6">
-														<input type="text" class="form-control form-control-user" id="exampleLastName" name="celular" placeholder="Movil">
+														<input type="text" class="form-control form-control-user" id="lastName" name="apellido" placeholder="Apellido">
 													</div>
 												</div>
-
-
 												<div class="form-group row">
 													<div class="col-sm-12 mb-3 mb-sm-0">
-														<input type="text" class="form-control form-control-user" id="email" name="correo" placeholder="Email"></div>
+														<input type="text" class="form-control form-control-user" id="email" name="correo" placeholder="Email">
+													</div>
 												</div>
-
-												<a href="tables.html" class="btn btn-primary btn-user btn-block">
+												<div class="form-group row">
+													<div class="col-sm-12 mb-3 mb-sm-0">
+														<input type="password" class="form-control form-control-user" id="password" name="password" placeholder="Contraseña">
+													</div>
+												</div>
+												<button class="btn btn-primary btn-user btn-block" type="submit">
 													Registrar
-												</a>
+												</button>
 											</form>
 										</div>
 									</div>
@@ -165,5 +137,9 @@
 		<!-- Page level custom scripts -->
 		<script src="js/demo/chart-area-demo.js"></script>
 		<script src="js/demo/chart-pie-demo.js"></script>
+		<script src="js/register.js"></script>
+		<script>
+			PAGE.init();
+		</script>
 	</body>
 </html></body></html>
