@@ -3,6 +3,10 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+
+
 
 /** 
  * @ORM\Entity
@@ -21,7 +25,34 @@ class TipoTramite {
      * @ORM\Column(name="NOMBRE_TIPO", type="string",nullable=false)
      */
     private $tipoTramite;
-   
+
+
+    /**
+     *@ORM\OneToMany(targetEntity="App\Entity\Tramite", mappedBy="tipoTramite") 
+    */
+    private $tramites;
+
+    public function __construct()
+    {
+        $this->tramites = new ArrayCollection();
+    }
+
+      /**
+     * @return Collection|Tramite[]
+     */
+
+    public function getTramites(): Collection
+    {
+        return $this->tramites;
+    }
+    
+    public function addTramites(Tramite $tramite): self
+    {
+        $this->tramites[] = $tramite;       
+        return $this;
+    }
+
+  
 
     public function id($value = null) {
         if (!$value)
@@ -32,6 +63,7 @@ class TipoTramite {
         return $this;
     }
     
+
     public function tipoTramite($value = null) {
         if(!$value)
             return $this->tipoTramite;

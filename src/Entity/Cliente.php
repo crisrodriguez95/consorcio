@@ -31,6 +31,10 @@ class Cliente {
      * @ORM\Column(name="APELLIDO", type="string",nullable=false)
      */
     private $apellido;
+    /**       
+     * @ORM\Column(name="ESTADO_CIVIL", type="string",nullable=false)
+     */
+    private $estadocivil;
 
     /**       
      * @ORM\Column(name="DIRECCION", type="string",nullable=false)
@@ -81,6 +85,14 @@ class Cliente {
             return $this->apellido;
 
         $this->apellido = $value;
+
+        return $this;
+    }
+    public function estadocivil($value = null) {
+        if (!$value)
+            return $this->estadocivil;
+
+        $this->estadocivil = $value;
 
         return $this;
     }
