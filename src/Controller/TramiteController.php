@@ -8,9 +8,8 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
-
-use App\Entity\TipoTramite;
 use App\Entity\Tramite;
+use App\Entity\TipoTramite;
 
 class TramiteController extends AbstractController
 {
@@ -40,8 +39,10 @@ class TramiteController extends AbstractController
 
         $tipoTramite = $em->getRepository(TipoTramite::class)
                        ->find($request->query->get("tipo_tramite"));
+
+        
        
-        // dd($tipoTramite);
+        dd($tipoTramite);
         $tramite = new Tramite();
          // relates this tramite to the tipoTramite
         $tramite->setTipoTramite($tipoTramite);
@@ -58,7 +59,8 @@ class TramiteController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $tipoTramite = $em->getRepository(TipoTramite::class)->findAll();
 
-        return $this->render('/components/_tramite.html.twig', ["tiposTramite" => $tipoTramite]);
+        
+        return $this->render('/components/_tipoTramite.html.twig', ["tiposTramite" => $tipoTramite]);
     }
 
 

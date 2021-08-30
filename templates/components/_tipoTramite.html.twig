@@ -1,0 +1,6 @@
+	<select class="form-control " name="tipo_tramite">
+		{% for key,tipo  in tiposTramite  %}
+			<option value={{tipo.id}}>{{tipo.tipoTramite}}</option>
+		{% endfor %}
+	</select>
+

@@ -7,7 +7,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 
 
-
 /** 
  * @ORM\Entity
  * @ORM\Table(name="tipo_tramite")
@@ -26,11 +25,17 @@ class TipoTramite {
      */
     private $tipoTramite;
 
-
     /**
      *@ORM\OneToMany(targetEntity="App\Entity\Tramite", mappedBy="tipoTramite") 
     */
     private $tramites;
+
+    /**
+     *@ORM\OneToMany(targetEntity="App\Entity\TramiteProceso", mappedBy="idTipoTramite")
+     */
+     private $tramiteProceso;
+
+
 
     public function __construct()
     {
@@ -52,7 +57,6 @@ class TipoTramite {
         return $this;
     }
 
-  
 
     public function id($value = null) {
         if (!$value)

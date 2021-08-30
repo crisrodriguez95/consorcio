@@ -31,13 +31,6 @@ class Tramite {
     private $tipoTramite;
 
 
-    // public function setTipoTramite(TipoTramite $tipoTramite): self
-    // {
-    //     $this->tipoTramite = $tipoTramite;
-
-    //     return $this;
-    // }
-
     public function setTipoTramite(TipoTramite $tipoTramite){
         
         $tipoTramite->addTramites($this);

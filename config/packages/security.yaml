@@ -35,5 +35,6 @@ security:
   access_control:
     - { path: ^/logout, roles: IS_AUTHENTICATED_ANONYMOUSLY }
     - { path: ^/login$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-    - { path: ^/tramite$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+    - { path: ^/procesoTramite$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
     - { path: ^/*, roles: [ROLE_USER, ROLE_ADMIN] }
+
