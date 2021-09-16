@@ -143,6 +143,7 @@ class Usuario implements UserInterface
 
     //return array_unique($roles);
   }
+  
   public function getPassword()
   {
     return $this->password;
