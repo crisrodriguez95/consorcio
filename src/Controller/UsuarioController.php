@@ -14,9 +14,7 @@ use App\Entity\Usuario;
 
 class UsuarioController extends AbstractController
 {
-    /**
-     * @Route("/login", name="app_login")
-     */
+   
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
 
@@ -24,7 +22,7 @@ class UsuarioController extends AbstractController
 
         $lastUsername = $authenticationUtils->getLastUsername();
 
-        return $this->render('security/login.html.twig', [
+        return $this->render('auth/login.html.twig', [
             'last_username' => $lastUsername,
             'error' => $error
         ]);
@@ -65,19 +63,16 @@ class UsuarioController extends AbstractController
 
     public function registrar()
     {
-
         $request = $this->container->get('request_stack')->getCurrentRequest();
 
         $em = $this->getDoctrine()->getManager();
-
-        //  die('<pre>'.print_r($request->query->get('rol'),true).'</pre>');
 
         if ($this->getDoctrine()->getRepository(Usuario::class)->find($request->query->get('cedula')))
             return 'El usuario que desea registrar ya esta registrado';
 
         $usuario = new Usuario();
 
-        $usuario->getRoles($request->query->get('rol'));
+        $usuario->setRoles($request->query->get('id_rol'));
         $usuario->cedula($request->query->get('cedula'));
         $usuario->nombre($request->query->get('nombre'));
         $usuario->apellido($request->query->get('apellido'));

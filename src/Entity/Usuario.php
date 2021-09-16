@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 use App\Entity\Rol;
 
@@ -11,6 +12,7 @@ use App\Entity\Rol;
  * @ORM\Entity
  * @ORM\Table(name="funcionario")
  * @ORM\HasLifecycleCallbacks
+ * @UniqueEntity(fields="email", message="Email already taken")
  */
 class Usuario implements UserInterface
 {
@@ -22,7 +24,7 @@ class Usuario implements UserInterface
   private $id;
 
   /**
-   * @ORM\OneToOne(targetEntity="Rol", mappedBy="rol")
+   * @ORM\ManyToOne(targetEntity="Rol")
    * @ORM\JoinColumn(name="ID_ROL", referencedColumnName="ID_ROL")
    */
   private $roles;
@@ -46,11 +48,6 @@ class Usuario implements UserInterface
    * @ORM\Column(name="EMAIL", type="string",nullable=false)
    */
   private $email;
-
-  /**
-   * @ORM\Column(name="salt",type="string", length=32, nullable=true)
-   */
-  private $salt;
 
   public function id($value = null)
   {
@@ -125,15 +122,26 @@ class Usuario implements UserInterface
     return $this;
   }
 
+  public function getUsername()
+  {
+    return $this->email;
+  }
   public function getRoles()
   {
-    if (empty($roles)) {
-      $roles[] = 'ROLE_USER';
-    }
-    return array_unique($roles);
-    return [
-      $this->roles->rol()
-    ];
+
+    $rol = $this->rol;
+
+    $rol[] = 'ROLE_USER';
+    return array_unique($rol);
+  }
+  public function setRoles(Rol $rol)
+  {
+    $this->rol = $rol;
+
+    // $rol[] = 'ROLE_USER';
+    return $this;
+
+    //return array_unique($roles);
   }
   public function getPassword()
   {
@@ -141,29 +149,9 @@ class Usuario implements UserInterface
   }
   public function getSalt()
   {
-    return $this->salt;
-  }
-  public function getUsername()
-  {
-    return $this->email;
+    // return $this->salt;
   }
   public function eraseCredentials()
   {
-  }
-  public function encodePassword($raw, $salt)
-  {
-    if (\strlen($raw) > self::MAX_PASSWORD_LENGTH) {
-    }
-
-    // Ignore $salt, the auto-generated one is always the best
-
-    $encoded = password_hash($raw, $this->algo, $this->options);
-
-    if (72 < \strlen($raw) && 0 === strpos($encoded, '$2')) {
-      // BCrypt encodes only the first 72 chars
-
-
-      return $encoded;
-    }
   }
 }

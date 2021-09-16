@@ -2,7 +2,7 @@
 
 namespace App\Security;
 
-use App\Entity\Usuario;
+use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -48,13 +48,14 @@ class LoginFormAuthenticateAuthenticator extends AbstractFormLoginAuthenticator 
     public function getCredentials(Request $request)
     {
         $credentials = [
-            'username' => $request->request->get('username'),
+            'email' => $request->request->get('email'),
             'password' => $request->request->get('password'),
             'csrf_token' => $request->request->get('_csrf_token'),
         ];
+
         $request->getSession()->set(
             Security::LAST_USERNAME,
-            $credentials['username']
+            $credentials['email']
         );
 
         return $credentials;
@@ -67,11 +68,11 @@ class LoginFormAuthenticateAuthenticator extends AbstractFormLoginAuthenticator 
             throw new InvalidCsrfTokenException();
         }
 
-        $user = $this->entityManager->getRepository(Usuario::class)->findOneBy(['username' => $credentials['username']]);
+        $user = $this->entityManager->getRepository(User::class)->findOneBy(['email' => $credentials['email']]);
 
         if (!$user) {
             // fail authentication with a custom error
-            throw new CustomUserMessageAuthenticationException('Username could not be found.');
+            throw new CustomUserMessageAuthenticationException('Email could not be found.');
         }
 
         return $user;
@@ -96,8 +97,9 @@ class LoginFormAuthenticateAuthenticator extends AbstractFormLoginAuthenticator 
             return new RedirectResponse($targetPath);
         }
 
-        // For example : return new RedirectResponse($this->urlGenerator->generate('some_route'));
-        throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);
+        // For example : 
+        return new RedirectResponse($this->urlGenerator->generate('usuario'));
+        //throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);
     }
 
     protected function getLoginUrl()
