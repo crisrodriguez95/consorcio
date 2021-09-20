@@ -14,7 +14,7 @@ use App\Entity\Usuario;
 
 class UsuarioController extends AbstractController
 {
-   
+
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
 
@@ -36,9 +36,7 @@ class UsuarioController extends AbstractController
         throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
     }
 
-    /**
-     * @Route("/usuario", name="usuario")
-     */
+
     public function index(Request $request)
     {
         if ($request->isXmlHttpRequest()) {
@@ -50,7 +48,7 @@ class UsuarioController extends AbstractController
                 }
             }
         }
-        return $this->render('usuario/index.html.twig');
+        // return $this->render('usuario/index.html.twig');
     }
 
     public function getRol()
