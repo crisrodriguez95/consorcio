@@ -135,6 +135,7 @@ class Usuario implements UserInterface
       $this->roles->rol()
     ];
   }
+  
   public function getPassword()
   {
     return $this->password;
