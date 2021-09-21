@@ -56,6 +56,11 @@ class Cliente {
      */
     private $email;
 
+    // /**
+    // *@ORM\OneToMany(targetEntity="App\Entity\ClienteTramite", mappedBy="idCliente")
+    // */
+    // private $clienteTramite;
+
     public function id($value = null) {
         if (!$value)
             return $this->id;

@@ -21,6 +21,7 @@ class TramiteProceso {
    *@ORM\JoinColumn(name="ID_PROCESO", referencedColumnName="ID_PROCESO")
    */
   private $idProceso;
+  
   /**
    *@ORM\ManyToOne(targetEntity="App\Entity\TipoTramite", inversedBy="tramiteProceso")
    *@ORM\JoinColumn(name="ID_TIPO", referencedColumnName="ID_TIPO")

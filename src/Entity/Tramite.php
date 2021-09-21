@@ -30,6 +30,11 @@ class Tramite {
      */
     private $tipoTramite;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\ClienteTramite", mappedBy="idTramite")
+    */
+    private $clienteTramite;
+
 
     public function setTipoTramite(TipoTramite $tipoTramite){
         
