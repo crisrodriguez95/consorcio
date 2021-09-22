@@ -52,49 +52,21 @@
 									<div class="col-lg-6">
 										<div class="p-5">
 											<div class="text-center">
-												<h1 class="h4 text-gray-900 mb-4">Crear un nuevo cliente</h1>
+												<h1 class="h4 text-gray-900 mb-4">Asignar Trámite a un Cliente</h1>
 											</div>
 											<form class="user">
-										
-												<div class="form-group row">
-													<div class="col-sm-6 mb-3 mb-sm-0">
-														<input type="text" class="form-control form-control-user" id="exampleInputEmail" name="cedula" placeholder="Cedula">
-													</div>
-													<div class="col-sm-6">
-														<input type="text" class="form-control form-control-user" id="exampleFirstName" name="nombre" placeholder="Nombres">									
-													</div>
+																					
+												<div class="form-group">
+													{{ render(controller('App\\Controller\\ClienteTramiteController::getTramite')) }}																					
 												</div>
-
-												<div class="form-group row">
-													<div class="col-sm-6 mb-3 mb-sm-0">
-														<select name="estcivil" class="form-control">
-															<option class="form-control ">Soltero</option>
-															<option class="form-control ">Divorciado</option>
-															<option class="form-control ">Casado</option>
-															<option class="form-control ">Viudo</option>
-															<option class="form-control ">Union Libre</option>
-														</select>
-													</div>
-													<div class="col-sm-6">
-														<input type="text" class="form-control form-control-user" id="exampleLastName" name="apellido" placeholder="Apellidos">									
-													</div>
+																							
+												<div class="form-group">
+													{{ render(controller('App\\Controller\\ClienteTramiteController::getCliente')) }}
 												</div>
-											
 												
-												<div class="form-group">
-													<input type="text" class="form-control form-control-user" id="exampleInputEmail" name="direccion" placeholder="Direccion">
-												</div>
 
-												<div class="form-group row">
-													<div class="col-sm-6 mb-3 mb-sm-0">
-														<input type="text" class="form-control form-control-user" id="exampleFirstName" name="telefono" placeholder="Telefono">
-													</div>
-													<div class="col-sm-6">
-														<input type="text" class="form-control form-control-user" id="exampleLastName" name="celular" placeholder="Celular">
-													</div>
-												</div>
 												<div class="form-group">
-													<input type="text" class="form-control form-control-user" id="exampleInputEmail" name="correo" placeholder="Correo">
+													<input type="date" class="form-control form-control-user" id="date" name="fecha" placeholder="fecha">
 												</div>
 
 												<button class="btn btn-primary btn-user btn-block" type="submit">
@@ -149,7 +121,7 @@
 					<div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
 					<div class="modal-footer">
 						<button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-						<a class="btn btn-primary" href="{{ path('app_logout') }}">Logout</a>
+						<a class="btn btn-primary" href="login.html">Logout</a>
 					</div>
 				</div>
 			</div>

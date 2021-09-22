@@ -11,7 +11,6 @@ var PAGE = (function () {
   var ingreso = function (f) {
     var formulario = {},
     dataform = form.serializeArray();
-    console.log(dataform);
     formulario.tipo = 1;
 
     for (i in dataform) {
