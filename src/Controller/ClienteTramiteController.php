@@ -9,7 +9,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 use App\Entity\ClienteTramite;
-use App\Entity\Tramite;
+use App\Entity\TipoTramiteTransferencia;
 use App\Entity\Cliente;
 
 class ClienteTramiteController extends AbstractController {
@@ -23,13 +23,33 @@ class ClienteTramiteController extends AbstractController {
                 $tipo = $request->query->get('tipo');
                 if ($tipo) {
                     if ($tipo == 1) {
-                        // return new JsonResponse($this->registerTramite());
-                        return new JsonResponse($this->funcionairio());
+                        return new JsonResponse($this->registerClienteTramite());
+                        // return new JsonResponse($this->funcionairio());
                     }
                 }
             }
         }
-        return $this->render('cliente/asignarClienteTramite.html.twig');
+        return $this->render('admin/asignarClienteTramite.html.twig');
+    }
+
+    public function registerClienteTramite(){
+      $request = $this->container->get('request_stack')->getCurrentRequest();
+      $em = $this->getDoctrine()->getManager();
+
+      $cliente = $em->getRepository(Cliente::class)->find($request->query->get('cliente'));
+      $TipoTramite = $em->getRepository(TipoTramiteTransferencia::class)->find($request->query->get('tipo_tramite'));
+
+      $clienteTramite = new ClienteTramite();
+
+      $clienteTramite->setIdCliente($cliente);
+      $clienteTramite->setIdTipoTramite($TipoTramite);
+      $clienteTramite->fechaInicio($request->query->get('fecha'));
+
+      $em->persist($clienteTramite);
+      $em->flush();
+
+
+
     }
 
     public function funcionairio() {
@@ -56,7 +76,7 @@ class ClienteTramiteController extends AbstractController {
           "funcionario" => "David", 
           "value" => 0
         ]
-      ]:
+      ];
 
 
 
@@ -73,43 +93,22 @@ class ClienteTramiteController extends AbstractController {
   
     }
 
-    public function registerTramite() {
-      $request = $this->container->get('request_stack')->getCurrentRequest();
-        $em = $this->getDoctrine()->getManager();
-            
-        $tramite = $em->getRepository(Tramite::class)
-                       ->find($request->query->get("tramite"));
-
-        $cliente = $em->getRepository(Cliente::class)
-                       ->find($request->query->get("cliente"));
-             
-        $funcionario = $this->funcionairio();
-        // dd($funcionario);
-
-        $clienteTramite = new ClienteTramite();
-        
-        $clienteTramite->setIdTramite($tramite);
-        $clienteTramite->setIdCliente($cliente);
-        $clienteTramite->funcionario($funcionario);
-        $em->persist($clienteTramite);
-        $em->flush();
-        
-        return "Saved new tramite";
-
-    }
-
-    public function getTramite() {
-      $em = $this->getDoctrine()->getManager();
-      $tramite = $em->getRepository(Tramite::class)->findAll();
-
-      return $this->render('/components/_tramite.html.twig', ['tramite' => $tramite]);
-    }
+    
 
     public function getCliente() {
       $em = $this->getDoctrine()->getManager();
-      $cliente = $em->getRepository(Cliente::class)->findAll();
+      $clientes = $em->getRepository(Cliente::class)->findAll();
 
-      return $this->render('/components/_cliente.html.twig', ['cliente' => $cliente]);
+      return $this->render('/components/_cliente.html.twig', ['clientes' => $clientes]);
     }
+
+    public function getTipoTramite() {
+      $em = $this->getDoctrine()->getManager();
+      $tramite = $em->getRepository(TipoTramiteTransferencia::class)->findAll();
+
+      return $this->render('/components/_tipoTramite.html.twig', ['tiposTramite' => $tramite]);
+    }
+
+   
 
 }

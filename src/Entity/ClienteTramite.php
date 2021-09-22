@@ -9,69 +9,61 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="cliente_tramite")
  * @ORM\HasLifecycleCallbacks
  */
+class ClienteTramite
+{
+    /**
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\Column(name="ID_CLIENTETRAMITE", type="integer")
+     */
+    private $id;
 
- class ClienteTramite {
+    /**
+     *@ORM\ManyToOne(targetEntity="App\Entity\Cliente", inversedBy="clienteTramite")
+     *@ORM\JoinColumn(name="ID_CLIENTE", referencedColumnName="ID_CLIENTE")
+     */
+    private $idCliente;
 
-  /**
-   * @ORM\Id
-   * @ORM\GeneratedValue(strategy="AUTO")
-   * @ORM\Column(name="ID_CLIENTETRAMITE", type="integer")
-   */
-  private $id;
+    /**
+     *@ORM\ManyToOne(targetEntity="App\Entity\TipoTramiteTransferencia", inversedBy="clienteTramite")
+     *@ORM\JoinColumn(name="ID_TRAMITE", referencedColumnName="ID_TRAMITE")
+     */
+    private $idTipoTramite;
 
-   /**
-   *@ORM\ManyToOne(targetEntity="App\Entity\Tramite", inversedBy="clienteTramite")
-   *@ORM\JoinColumn(name="ID_TRAMITE", referencedColumnName="ID_TRAMITE")
-   */
-  private $idTramite;
+    /**
+     * @ORM\Column(name = "FECHA_INICIO", type = "string", nullable = false)
+     */
+    private $fechaInicio;
 
-  /**
-   *@ORM\ManyToOne(targetEntity="App\Entity\Cliente", inversedBy="clienteTramite")
-   *@ORM\JoinColumn(name="ID_CLIENTE", referencedColumnName="ID_CLIENTE")
-   */
-  private $idCliente;
+    function id($value = null)
+    {
+        if (!$value) {
+            return $this->id;
+        }
 
-  /**
-   * @ORM\Column(name="FUNCIONARIO", type="string", nullable=false)
-   */
+        $this->id = $value;
+        return $this;
+    }
 
-  private $funcionario;
+    public function setIdCliente(Cliente $cliente): self
+    {
+        $this->idCliente = $cliente;
+        return $this;
+    }
 
+    public function setIdTipoTramite(TipoTramiteTransferencia $TipoTramite): self
+    {
+        $this->idTipoTramite = $TipoTramite;
+        return $this;
+    }
 
-  function id($value = null){
-    if(!$value)
-      return $this->id;
+    public function fechaInicio($value = null)
+    {
+        if (!$value) {
+            return $this->fechaInicio;
+        }
 
-    $this->id = $value;
-    return $this;
-  }
-
-  public function setIdTramite(Tramite $tramite): self {
-
-    $this->idTramite = $tramite;
-    return $this;
-    
-  }
-
-  public function setIdCliente(Cliente $cliente): self {
-
-    $this->idCliente = $cliente;
-    return $this;
-
-  }
-
-  public function funcionario($value = null){
-    if(!$value)
-      return $this->funcionario;
-    
-    $this->funcionario = $value;
-    return $this;
-
-  }
-
-
- }
-
-
-
-
+        $this->fechaInicio = $value;
+        return $this;
+    }
+}
