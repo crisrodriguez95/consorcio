@@ -4,12 +4,16 @@ namespace App\Entity;
 
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity(repositoryClass=UserRepository::class)
- * @UniqueEntity(fields={"email"}, message="There is already an account with this email")
+ * @ORM\Entity(repositoryClass=UserRepository::class) 
+ * @UniqueEntity("email")
+ * 
  */
 class User implements UserInterface
 {
@@ -22,6 +26,7 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
+     * @Assert\Email
      */
     private $email;
 
@@ -40,6 +45,17 @@ class User implements UserInterface
      * @ORM\Column(type="string", length=50)
      */
     private $nombre;
+
+    /**
+     * @ORM\Column(type="string", length=50)
+     */
+    private $apellido;
+
+    /**
+     * @ORM\Column(type="integer", length=10)
+     */
+    private $cedula;
+
 
     public function getId(): ?int
     {
@@ -121,6 +137,17 @@ class User implements UserInterface
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
     }
+    public function getCedula(): ?int
+    {
+        return $this->cedula;
+    }
+
+    public function setCedula(int $cedula): self
+    {
+        $this->cedula = $cedula;
+
+        return $this;
+    }
 
     public function getNombre(): ?string
     {
@@ -130,6 +157,18 @@ class User implements UserInterface
     public function setNombre(string $nombre): self
     {
         $this->nombre = $nombre;
+
+        return $this;
+    }
+
+    public function getApellido(): ?string
+    {
+        return $this->apellido;
+    }
+
+    public function setApellido(string $apellido): self
+    {
+        $this->apellido = $apellido;
 
         return $this;
     }
