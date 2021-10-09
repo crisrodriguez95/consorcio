@@ -31,9 +31,14 @@ class RegistrationController extends AbstractController
                 }
             }
         }
+
+        $em = $this->getDoctrine()->getManager();
+        $usuarios = $em->getRepository(User::class)->findAll();
+
         return $this->render('usuario/index.html.twig');
     }
-
+    
+    
     public function register($request, $passwordEncoder, \Swift_Mailer $mailer= null)
     {
        
@@ -58,9 +63,7 @@ class RegistrationController extends AbstractController
         );
 
         $entityManager->persist($user);
-        $entityManager->flush();
-
-        
+        $entityManager->flush();        
 
 
         // $asunto = 'CREACION DE CUENTA';
@@ -90,4 +93,13 @@ class RegistrationController extends AbstractController
 
        // return $this->render('usuario/index.html.twig');
     }
+
+    public function getUsuariosList()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $usuarios = $em->getRepository(User::class)->findAll();
+
+        return $this->render('/components/_usuariosList.html.twig', ["usuarios" => $usuarios]);
+    }
+
 }

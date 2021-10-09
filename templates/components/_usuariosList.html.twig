@@ -1,0 +1,58 @@
+
+	{% if usuarios|length > 0 %}
+		<!-- DataTales Example -->
+		<div class="card shadow mb-4">
+			<div class="card-header py-3">
+				<h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
+			</div>
+			<div class="card-body">
+				<div class="table-responsive">
+					<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+						<thead>
+							<tr>
+								<th>id</th>
+								<th>Cedula</th>
+								<th>Nombre</th>								
+								<th>Correo</th>
+								<th>Estado</th>
+								<th colspan="2">Acciones</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for key,user  in usuarios  %}
+								<tr>
+									<td>{{user.id}}</td>
+									<td>{{user.cedula}}</td>
+									<td>{{ "#{user.nombre}  #{user.apellido}"}}</td>									
+									<td>{{user.email}}</td>
+									<td>{{user.estado}}</td>
+									<td colspan="2">
+									<a href="#" class="btn btn-warning ">                                        
+                                        <span class="text">Editar</span>
+                                    </a>
+                                    <div class="m-2"></div>
+                                    <a href="#" class="btn btn-danger ">
+                                        
+                                        <span class="text">Eliminar</span>
+                                    </a>
+									
+									</td>
+								</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+
+
+	{% else  %}
+		<div>
+		<img src="./img/agregar.jpeg "/>
+			
+		
+		</div>
+		
+	{% endif %}
+
+

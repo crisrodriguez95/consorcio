@@ -51,10 +51,16 @@ class User implements UserInterface
      */
     private $apellido;
 
+
     /**
      * @ORM\Column(type="integer", length=10)
      */
     private $cedula;
+
+    /**
+     * @ORM\Column(type="string", length=50)
+     */
+    private $estado;
 
 
     public function getId(): ?int
@@ -169,6 +175,17 @@ class User implements UserInterface
     public function setApellido(string $apellido): self
     {
         $this->apellido = $apellido;
+
+        return $this;
+    }
+    public function getEstado(): ?string
+    {
+        return $this->estado;
+    }
+
+    public function setEstado(string $estado): self
+    {
+        $this->estado = $estado;
 
         return $this;
     }
