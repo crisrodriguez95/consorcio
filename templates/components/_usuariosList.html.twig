@@ -19,6 +19,9 @@
                   {{ campo }}
                 </th>
               {% endfor %}
+			    <th>
+                  Acciones
+                </th>
             </tr>
           </thead>
           <tbody>
@@ -30,13 +33,15 @@
                   </td>
                 {% endfor %}
                 <td colspan="2">
-                  <a href="#" class="btn btn-warning">
-                    <span class="text">Editar</span>
-                  </a>
-                  <div class="m-2"></div>
-                  <a href="#" class="btn btn-danger">
-                    <span class="text">Eliminar</span>
-                  </a>
+                  <div class="dropdown">
+  <button class="btn btn-primary" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <i class="fas fa-ellipsis-v"></i>
+  </button>
+  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+    <a class="dropdown-item" href="#">Eliminar</a>
+    <a class="dropdown-item" href="#">Editar</a>   
+  </div>
+</div>
                 </td>
               </tr>
             {% endfor %}
