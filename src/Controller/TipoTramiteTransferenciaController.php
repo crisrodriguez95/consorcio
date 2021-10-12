@@ -44,6 +44,9 @@ class TipoTramiteTransferenciaController extends AbstractController
 
 				$em->persist($tipoTramite);
 				$em->flush();
+    }
+
+    public function getTipoTramiteTransferencia(){
 
     }
 }

@@ -98,8 +98,22 @@ class RegistrationController extends AbstractController
     {
         $em = $this->getDoctrine()->getManager();
         $usuarios = $em->getRepository(User::class)->findAll();
+        $campos = ['Id', 'Cédula', 'Nombre', 'Correo', 'Estado'];
+        // dd($usuarios);
+        $users = [];
+        foreach($usuarios as $key => $dato){
+            $users[$key] = [
+                $dato->getId(),
+                $dato->getCedula(),
+                $dato->getNombre(),
+                $dato->getEmail(),
+                $dato->getEstado()
+            ];
+        }
+						
+        // dd($users);
 
-        return $this->render('/components/_usuariosList.html.twig', ["usuarios" => $usuarios]);
+        return $this->render('/components/_usuariosList.html.twig', ["datos" => $users, "campos" => $campos ]);
     }
 
 }
