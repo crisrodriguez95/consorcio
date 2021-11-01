@@ -1,178 +1,139 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <title>
+      Administracion
+    </title>
 
-	<head>
+    <!-- Custom fonts for this template -->
+    <link href="vendor/fontawesome-free/css/all.min.css"
+      rel="stylesheet"
+      type="text/css" />
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+      rel="stylesheet" />
 
-		<meta charset="utf-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-		<meta name="description" content="">
-		<meta name="author" content="">
+    <!-- Custom styles for this template -->
+    <link href="css/sb-admin-2.css" rel="stylesheet" />
+  </head>
 
-		<title>Administracion</title>
+  <body id="page-top">
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+      <!-- Sidebar -->
+      {{ include('./assets/sidebar.html.twig') }}
+      <!-- End of Sidebar -->
 
-		<!-- Custom fonts for this template-->
-		<link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-		<link
-		href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+      <!-- Content Wrapper -->
+      <div id="content-wrapper" class="d-flex flex-column">
+        <!-- Main Content -->
+        <div id="content">
+          <!-- Topbar -->
+          {{ include('./assets/navbar.html.twig') }}
+          <!-- End of Topbar -->
 
-		<!-- Custom styles for this template-->
-		<link href="css/sb-admin-2.css" rel="stylesheet">
+          <!-- Begin Page Content -->
+              
+                  {# <div class="col-lg-5 d-none d-lg-block bg-register-image"></div> #}
+					<div class="col-lg-12">
+            {# <div>
+              <a href="#" class="btn btn-primary btn-icon-split">
+                  <span class="text">Agregar</span>
+              </a>
+            </div> #}
+           
+            <div class="my-2"></div>
+            {{ render(controller('App\\Controller\\ClienteTramiteController::getClienteList')) }}
+        	</div>
+             
+          {{ include('/components/cliente/_modalCliente.html.twig') }}
+          <!-- /.container-fluid -->
+        </div>
+        <!-- End of Main Content -->
 
-	</head>
+        <!-- Footer -->
+        <footer class="sticky-footer bg-white">
+          <div class="container my-auto">
+            <div class="copyright text-center my-auto">
+              <span>Copyright &copy; <script> document.write(new Date().getFullYear()); </script></span> 
+            </div>
+          </div>
+        </footer>
+        <!-- End of Footer -->
+      </div>
+      <!-- End of Content Wrapper -->
+    </div>
+    <!-- End of Page Wrapper -->
 
-	<body id="page-top">
+    <!-- Scroll to Top Button -->
+    <a class="scroll-to-top rounded" href="#page-top">
+      <i class="fas fa-angle-up"></i>
+    </a>
 
-		<!-- Page Wrapper -->
-		<div id="wrapper">
-			<!-- Sidebar -->
-			{{ include('./assets/sidebar.html.twig') }}
-			<!-- End of Sidebar -->
+    <!-- Logout Modal -->
+    <div class="modal fade"
+      id="logoutModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">
+              Ready to Leave?
+            </h5>
+            <button class="close"
+              type="button"
+              data-dismiss="modal"
+              aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            Select "Logout" below if you are ready to end your current session.
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary"
+              type="button"
+              data-dismiss="modal">
+              Cancel
+            </button>
+            <a class="btn btn-primary" href="{{ path('app_logout') }}">
+              Logout
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
 
-			<!-- Content Wrapper -->
-				<div id="content-wrapper" class="d-flex flex-column"> <!-- Main Content -->
-				<div id="content">
+    <!-- Bootstrap core JavaScript -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-					<!-- Topbar -->
-					{{ include('./assets/navbar.html.twig') }}
-					<!-- End of Topbar -->
+    <!-- Core plugin JavaScript -->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
 
-					<!-- Begin Page Content -->
-						<div class="container">
-						 <div class="card o-hidden border-0 shadow-lg my-5">
-							<div
-								class="card-body p-0">
-								<!-- Nested Row within Card Body -->
-								<div class="row">
-									{# <div class="col-lg-5 d-none d-lg-block bg-register-image"></div> #}
-									<div class="col-lg-12">
-										<div class="p-5">
-											<div class="text-center">
-												<h1 class="h4 text-gray-900 mb-4">Crear un nuevo cliente</h1>
-											</div>
-											<form class="user">
-										
-												<div class="form-group row">
-													<div class="col-sm-6 mb-3 mb-sm-0">
-														<input type="text" class="form-control form-control-user" id="exampleInputEmail" name="cedula" placeholder="Cedula">
-													</div>
-													<div class="col-sm-6">
-														<input type="text" class="form-control form-control-user" id="exampleFirstName" name="nombre" placeholder="Nombres">									
-													</div>
-												</div>
+    <!-- Custom scripts for all pages -->
+    <script src="js/sb-admin-2.min.js"></script>
 
-												<div class="form-group row">
-													<div class="col-sm-6 mb-3 mb-sm-0">
-														<select name="estcivil" class="form-control">
-															<option class="form-control ">Soltero</option>
-															<option class="form-control ">Divorciado</option>
-															<option class="form-control ">Casado</option>
-															<option class="form-control ">Viudo</option>
-															<option class="form-control ">Union Libre</option>
-														</select>
-													</div>
-													<div class="col-sm-6">
-														<input type="text" class="form-control form-control-user" id="exampleLastName" name="apellido" placeholder="Apellidos">									
-													</div>
-												</div>
-											
-												
-												<div class="form-group">
-													<input type="text" class="form-control form-control-user" id="exampleInputEmail" name="direccion" placeholder="Direccion">
-												</div>
+    <!-- Page level plugins -->
+    <script src="vendor/chart.js/Chart.min.js"></script>
 
-												<div class="form-group row">
-													<div class="col-sm-6 mb-3 mb-sm-0">
-														<input type="text" class="form-control form-control-user" id="exampleFirstName" name="telefono" placeholder="Telefono">
-													</div>
-													<div class="col-sm-6">
-														<input type="text" class="form-control form-control-user" id="exampleLastName" name="celular" placeholder="Celular">
-													</div>
-												</div>
-												<div class="form-group">
-													<input type="text" class="form-control form-control-user" id="exampleInputEmail" name="correo" placeholder="Correo">
-												</div>
+    <!-- Page level custom scripts -->
+    <script src="js/demo/chart-area-demo.js"></script>
+    <script src="js/demo/chart-pie-demo.js"></script>
 
-												<button class="btn btn-primary btn-user btn-block" type="submit">
-													Registrar
-												</button>
-
-											</form>
-
-										</div>
-									</div>
-								</div>
-							</div>
-						 </div>
-
-					    </div>
-					<!-- /.container-fluid -->
-
-				</div>
-				<!-- End of Main Content -->
-
-				<!-- Footer -->
-				<footer class="sticky-footer bg-white">
-					<div class="container my-auto">
-						<div
-							class="copyright text-center my-auto"><!--<span>Copyright &copy; Your Website 2021</span>-->
-						</div>
-					</div>
-				</footer>
-				<!-- End of Footer -->
-
-			</div>
-			<!-- End of Content Wrapper -->
-
-		</div>
-		<!-- End of Page Wrapper -->
-
-		<!-- Scroll to Top Button-->
-		<a class="scroll-to-top rounded" href="#page-top">
-			<i class="fas fa-angle-up"></i>
-		</a>
-
-		<!-- Logout Modal-->
-		<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-			<div class="modal-dialog" role="document">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-						<button class="close" type="button" data-dismiss="modal" aria-label="Close">
-							<span aria-hidden="true">×</span>
-						</button>
-					</div>
-					<div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-					<div class="modal-footer">
-						<button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-						<a class="btn btn-primary" href="{{ path('app_logout') }}">Logout</a>
-					</div>
-				</div>
-			</div>
-		</div>
-
-		<!-- Bootstrap core JavaScript-->
-		<script src="vendor/jquery/jquery.min.js"></script>
-		<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-		<!-- Core plugin JavaScript-->
-		<script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-
-		<!-- Custom scripts for all pages-->
-		<script src="js/sb-admin-2.min.js"></script>
-
-		<!-- Page level plugins -->
-		<script src="vendor/chart.js/Chart.min.js"></script>
-
-		<!-- Page level custom scripts -->
-		<script src="js/demo/chart-area-demo.js"></script>
-		<script src="js/demo/chart-pie-demo.js"></script>
-
-		<script src="js/register.js"></script>
-		<script>
-			PAGE.init();
-		</script>
-
-	</body>
-
+    <script src="js/register.js"></script>
+    <script>
+      PAGE.init();
+    </script>
+  </body>
 </html>

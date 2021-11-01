@@ -111,9 +111,7 @@ class RegistrationController extends AbstractController
             ];
         }
 						
-        // dd($users);
-
-        return $this->render('/components/_usuariosList.html.twig', ["datos" => $users, "campos" => $campos ]);
+        return $this->render('/components/_tabla.html.twig', ["datos" => $users, "campos" => $campos ]);
     }
 
 }

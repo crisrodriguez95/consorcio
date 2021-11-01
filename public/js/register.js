@@ -1,43 +1,42 @@
 var PAGE = (function () {
-  var form = $("form.user");
+  var form = $('form.user')
   var inicio = function () {
-    form.unbind().on("submit", function () {
-      
-      ingreso(this);
+    form.unbind().on('submit', function () {
+      ingreso(this)
 
-      return false;
-    });
-  };
+      return false
+    })
+  }
   var ingreso = function (f) {
     var formulario = {},
-    dataform = form.serializeArray();
-    formulario.tipo = 1;
+      dataform = form.serializeArray()
+    formulario.tipo = 1
 
+    console.log(form)
     for (i in dataform) {
-      formulario[dataform[i]["name"]] = dataform[i]["value"];
-      console.log(dataform[i]["name"]);
+      formulario[dataform[i]['name']] = dataform[i]['value']
     }
-    console.log(formulario);
+    console.log(formulario)
     $.ajax({
       data: formulario,
       error: function () {
-        alert("error");
+        alert('error')
       },
     }).done(function (data) {
-      if (data.Estado == "Error") {
-        alert("hay un error");
+      if (data.Estado == 'Error') {
+        alert('hay un error')
 
-        return false;
+        return false
       } else {
-        alert("Afiliado ingresado correctamente");
-        form[0].reset();
+        alert('Afiliado ingresado correctamente')
+        form[0].reset()
       }
-    });
-  };
+    })
+  }
 
   return {
     init: () => {
-      inicio();
+      inicio()
     },
-  };
-})();
+  }
+})()

@@ -1,3 +1,4 @@
+
 {% if (datos|length) > 0 %}
   <!-- DataTales Example -->
   <div class="card shadow mb-4">
@@ -6,7 +7,11 @@
         DataTables Example
       </h6>
     </div>
+      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        Crear
+      </button>
     <div class="card-body">
+
       <div class="table-responsive">
         <table class="table table-bordered"
           id="dataTable"
@@ -46,7 +51,12 @@
     </div>
   </div>
 {% else %}
-  <div>
-    |<img src="./img/agregar.jpeg " />
+  <div style="text-align: center">
+    <img src="./img/agregar.png " />
+    <h3 style="color: #172B4D, font-size: 20px">Create User</h3>
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+      Crear
+    </button>
   </div>
 {% endif %}

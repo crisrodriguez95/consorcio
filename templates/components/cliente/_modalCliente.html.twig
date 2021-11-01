@@ -1,0 +1,100 @@
+<!-- Modal -->
+<div class="modal fade"
+  id="exampleModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">
+          Crear Cliente
+        </h5>
+        <button type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close">
+
+        </button>
+      </div>
+      <div class="modal-body">
+        <form class="user">
+          <div class="form-group">
+            <label for="exampleFormControlInput1">Cédula</label>
+            <input type="text" class="form-control" id="id" name="cedula" />
+          </div>
+          <div class="form-group">
+            <label for="exampleFormControlInput1">Nombre</label>
+            <input type="text" class="form-control" id="name" name="nombre" />
+          </div>
+          <div class="form-group">
+            <label for="exampleFormControlInput1">Apellido</label>
+            <input type="text"
+              class="form-control"
+              id="lastName"
+              name="apellido" />
+          </div>
+          <div class="form-group">
+            <label for="exampleFormControlInput1">Estado Civil</label>
+            <select class="form-select"
+              id="civil"
+              name="estadoCivil"
+              aria-label="Default select example">
+              <option selected></option>
+              <option value="Soltero">
+                Soltero
+              </option>
+              <option value="Casado">
+                Casado/a
+              </option>
+              <option value="Divorciado">
+                Divorciado
+              </option>
+              <option value="Unión Libre">
+                Unión Libre
+              </option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="exampleFormControlInput1">Dirección</label>
+            <input type="text"
+              class="form-control"
+              id="address"
+              name="direccion" />
+          </div>
+          <div class="form-group">
+            <label for="exampleFormControlInput1">Teléfono</label>
+            <input type="text"
+              class="form-control"
+              id="phone"
+              name="telefono" />
+          </div>
+          <div class="form-group">
+            <label for="exampleFormControlInput1">Celular</label>
+            <input type="text" class="form-control" id="mobil" name="celular" />
+          </div>
+          <div class="form-group">
+            <label for="exampleFormControlInput1">Correo Electronico</label>
+            <input type="text" class="form-control" id="text" name="correo" />
+          </div>
+          <button type="submit"
+            class="btn btn-primary data"
+            data-bs-dismiss="modal">
+            Save changes
+          </button>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  /*let button = document.querySelector('.data');
+  button.addEventListener("click", () => { setTimeout(() => { location.reload(
+  true ); }, 1500); });*/
+</script>
