@@ -12,7 +12,6 @@ var PAGE = (function () {
       dataform = form.serializeArray()
     formulario.tipo = 1
 
-    console.log(form)
     for (i in dataform) {
       formulario[dataform[i]['name']] = dataform[i]['value']
     }

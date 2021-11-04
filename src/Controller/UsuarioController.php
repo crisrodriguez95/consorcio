@@ -14,17 +14,15 @@ use App\Entity\Usuario;
 
 class UsuarioController extends AbstractController
 {
-
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
-
         $error = $authenticationUtils->getLastAuthenticationError();
 
         $lastUsername = $authenticationUtils->getLastUsername();
 
         return $this->render('auth/login.html.twig', [
             'last_username' => $lastUsername,
-            'error' => $error
+            'error' => $error,
         ]);
     }
 
@@ -33,9 +31,10 @@ class UsuarioController extends AbstractController
      */
     public function logout()
     {
-        throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
+        throw new \LogicException(
+            'This method can be blank - it will be intercepted by the logout key on your firewall.'
+        );
     }
-
 
     public function index(Request $request)
     {
@@ -43,8 +42,9 @@ class UsuarioController extends AbstractController
             if ($request->getMethod() == 'GET') {
                 $tipo = $request->query->get('tipo');
                 if ($tipo) {
-                    if ($tipo == 1)
-                        return new JsonResponse($this->registrar());
+                    if ($tipo == 1) {
+                        return new JsonResponse($this->registerUsuario());
+                    }
                 }
             }
         }
@@ -56,17 +56,22 @@ class UsuarioController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $rol = $em->getRepository(Rol::class)->findAll();
 
-        return $this->render('/components/_rol.html.twig', ["roles" => $rol]);
+        return $this->render('/components/_rol.html.twig', ['roles' => $rol]);
     }
 
-    public function registrar()
+    public function registerUsuario()
     {
         $request = $this->container->get('request_stack')->getCurrentRequest();
 
         $em = $this->getDoctrine()->getManager();
 
-        if ($this->getDoctrine()->getRepository(Usuario::class)->find($request->query->get('cedula')))
+        if (
+            $this->getDoctrine()
+                ->getRepository(Usuario::class)
+                ->find($request->query->get('cedula'))
+        ) {
             return 'El usuario que desea registrar ya esta registrado';
+        }
 
         $usuario = new Usuario();
 

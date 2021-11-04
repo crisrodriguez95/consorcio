@@ -20,6 +20,7 @@ class TipoTramiteTransferenciaController extends AbstractController
         if ($request->isXmlHttpRequest()) {
             if ($request->getMethod() == 'GET') {
                 $tipo = $request->query->get('tipo');
+
                 if ($tipo) {
                     if ($tipo == 1) {
                         return new JsonResponse($this->registerTipoTramite());
@@ -27,8 +28,7 @@ class TipoTramiteTransferenciaController extends AbstractController
                 }
             }
         }
-
-        return $this->render('admin/crearTipoTramiteTransferencia.html.twig');
+        return $this->render('tramite/tipoTramiteTransferencia.html.twig');
     }
 
     function registerTipoTramite()
@@ -36,17 +36,26 @@ class TipoTramiteTransferenciaController extends AbstractController
         $request = $this->container->get('request_stack')->getCurrentRequest();
         $em = $this->getDoctrine()->getManager();
 
+        $tipoTramite = new TipoTramiteTransferencia();
 
-				$tipoTramite = new TipoTramiteTransferencia();
-
-				$tipoTramite->tramite($request->query->get('tramite'));
-				$tipoTramite->Observa($request->query->get('descripcion'));
-
-				$em->persist($tipoTramite);
-				$em->flush();
+        $tipoTramite->tramite($request->query->get('tramite'));
+        $tipoTramite->Observa($request->query->get('descripcion'));
+        $em->persist($tipoTramite);
+        $em->flush();
     }
 
-    public function getTipoTramiteTransferencia(){
+    public function getTipoTramiteTransferencia()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $tipoTramites = $em
+            ->getRepository(TipoTramiteTransferencia::class)
+            ->findAll();
+        $campos = ['Trámite', 'Observación'];
 
+        $tipos = [];
+        foreach ($tipoTramites as $data) {
+            $tipos += [$data->id(), $data->tramite(), $data->Observa()];
+        }
+        dd($tipoTramites[0]);
     }
 }

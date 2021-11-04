@@ -9,7 +9,7 @@
     <meta name="author" content="" />
 
     <title>
-      Tipo trámite
+      Administracion
     </title>
 
     <!-- Custom fonts for this template -->
@@ -45,14 +45,15 @@
                 <!-- Nested Row within Card Body -->
                 <div class="row">
                   {# <div class="col-lg-5 d-none d-lg-block bg-register-image"></div> #}
-                  <div class="col-lg-6">
+                  <div class="col-lg-12">
                     <div class="p-5">
-                      <div class="text-center">
-                        <h1 class="h4 text-gray-900 mb-4">
-                          Crear un tipo de trámite
-                        </h1>
-                      </div>
-                      
+                      {{
+                        render(
+                          controller(
+                            'App\\Controller\\TipoTramiteTransferenciaController::getTipoTramiteTransferencia'
+                          )
+                        )
+                      }}
                     </div>
                   </div>
                 </div>
@@ -111,7 +112,7 @@
               data-dismiss="modal">
               Cancel
             </button>
-            <a class="btn btn-primary" href="{{ path('app_logout') }}">Logout</a>
+            <a class="btn btn-primary" href="login.html">Logout</a>
           </div>
         </div>
       </div>
@@ -133,6 +134,7 @@
     <!-- Page level custom scripts -->
     <script src="js/demo/chart-area-demo.js"></script>
     <script src="js/demo/chart-pie-demo.js"></script>
+
     <script src="js/register.js"></script>
     <script>
       PAGE.init();
