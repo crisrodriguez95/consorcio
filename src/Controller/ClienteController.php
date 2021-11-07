@@ -61,4 +61,40 @@ class ClienteController extends AbstractController
 
         return 'heythere';
     }
+
+    // -------------------- Rendering clients --------------------
+    public function getClienteList()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $clientes = $em->getRepository(Cliente::class)->findAll();
+
+        $campos = [
+            'Cédula',
+            'Nombre',
+            'Estado Civil',
+            'Dirección',
+            'Teléfono',
+            'Movil',
+            'Email',
+        ];
+        $clients = [];
+
+        foreach ($clientes as $key => $data) {
+            $clients[$key] = [
+                $data->cedula(),
+                $data->nombre(),
+                $data->estadocivil(),
+                $data->direccion(),
+                $data->telefono(),
+                $data->movil(),
+                $data->email(),
+            ];
+        }
+
+        return $this->render('/components/_tabla.html.twig', [
+            'datos' => $clients,
+            'campos' => $campos,
+            'tituloTabla' => 'Clientes',
+        ]);
+    }
 }
