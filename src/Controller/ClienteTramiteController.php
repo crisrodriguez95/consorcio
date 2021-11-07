@@ -52,7 +52,7 @@ class ClienteTramiteController extends AbstractController
 
         $clienteTramite->setIdCliente($cliente);
         $clienteTramite->setIdTipoTramite($TipoTramite);
-        $clienteTramite->fechaInicio($request->query->get('fecha'));
+        $clienteTramite->fechaInicio(date('Y-m-d'));
 
         $em->persist($clienteTramite);
         $em->flush();
@@ -100,8 +100,9 @@ class ClienteTramiteController extends AbstractController
     {
         $em = $this->getDoctrine()->getManager();
         $clientes = $em->getRepository(Cliente::class)->findAll();
+        
 
-        return $this->render('/components/_cliente.html.twig', [
+        return $this->render('/components/cliente/_cliente.html.twig', [
             'clientes' => $clientes,
         ]);
     }
@@ -113,7 +114,7 @@ class ClienteTramiteController extends AbstractController
             ->getRepository(TipoTramiteTransferencia::class)
             ->findAll();
 
-        return $this->render('/components/_tipoTramite.html.twig', [
+        return $this->render('/components/tramite/_tipoTramite.html.twig', [
             'tiposTramite' => $tramite,
         ]);
     }
@@ -147,6 +148,7 @@ class ClienteTramiteController extends AbstractController
         return $this->render('/components/_tabla.html.twig', [
             'datos' => $clientsTramite,
             'campos' => $campos,
+            'tituloTabla' => 'Asignacion'
         ]);
     }
 }
