@@ -33,7 +33,7 @@ class ClienteTramiteController extends AbstractController
                 }
             }
         }
-        return $this->render('admin/asignarClienteTramite.html.twig');
+        return $this->render('tramite/clienteTramite.html.twig');
     }
 
     public function registerClienteTramite()
@@ -52,7 +52,7 @@ class ClienteTramiteController extends AbstractController
 
         $clienteTramite->setIdCliente($cliente);
         $clienteTramite->setIdTipoTramite($TipoTramite);
-        $clienteTramite->fechaInicio($request->query->get('fecha'));
+        $clienteTramite->fechaInicio(date('Y-m-d'));
 
         $em->persist($clienteTramite);
         $em->flush();
@@ -100,8 +100,9 @@ class ClienteTramiteController extends AbstractController
     {
         $em = $this->getDoctrine()->getManager();
         $clientes = $em->getRepository(Cliente::class)->findAll();
+        
 
-        return $this->render('/components/_cliente.html.twig', [
+        return $this->render('/components/cliente/_cliente.html.twig', [
             'clientes' => $clientes,
         ]);
     }
@@ -113,10 +114,41 @@ class ClienteTramiteController extends AbstractController
             ->getRepository(TipoTramiteTransferencia::class)
             ->findAll();
 
-        return $this->render('/components/_tipoTramite.html.twig', [
+        return $this->render('/components/tramite/_tipoTramite.html.twig', [
             'tiposTramite' => $tramite,
         ]);
     }
 
     
+    public function getClienteTramiteList()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $clientesTramites = $em->getRepository(ClienteTramite::class)->findAll();
+    // dd($clientesTramites[0]->getIdTipoTramiteTransferencia()->tramite());
+     //print_r($clientesTramites->getIdCliente()->id, true);
+
+        $campos = [
+            'Id',
+            'Cliente',
+            'Tramite',
+            'Fecha de Incio',                  
+        ];
+        $clientsTramite = [];
+
+        foreach ($clientesTramites as $key => $data) {
+            
+            $clientsTramite[$key] = [
+                $data->id(),
+                $data->getIdCliente()->nombre(),
+                $data->getIdTipoTramiteTransferencia()->tramite(),                
+                $data->fechaInicio(),               
+            ];
+        }
+
+        return $this->render('/components/_tabla.html.twig', [
+            'datos' => $clientsTramite,
+            'campos' => $campos,
+            'tituloTabla' => 'Asignacion'
+        ]);
+    }
 }
