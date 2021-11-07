@@ -38,8 +38,8 @@ class TipoTramiteTransferenciaController extends AbstractController
 
         $tipoTramite = new TipoTramiteTransferencia();
 
-        $tipoTramite->tramite($request->query->get('tramite'));
-        $tipoTramite->Observa($request->query->get('descripcion'));
+        $tipoTramite->tramite($request->query->get('tipoTramite'));
+        $tipoTramite->Observa($request->query->get('observacion'));
         $em->persist($tipoTramite);
         $em->flush();
     }
@@ -50,12 +50,19 @@ class TipoTramiteTransferenciaController extends AbstractController
         $tipoTramites = $em
             ->getRepository(TipoTramiteTransferencia::class)
             ->findAll();
+
         $campos = ['Trámite', 'Observación'];
 
         $tipos = [];
-        foreach ($tipoTramites as $data) {
-            $tipos += [$data->id(), $data->tramite(), $data->Observa()];
+        foreach ($tipoTramites as $key => $data) {
+            array_push($tipos, [$data->tramite(), $data->Observa()]);
         }
-        dd($tipoTramites[0]);
+
+        return $this->render('/components/_tabla.html.twig', [
+            'datos' => $tipos,
+            'campos' => $campos,
+            'crear' => 'Crear tipo de trámite',
+            'tituloTabla' => 'TIPO DE TRÁMITE',
+        ]);
     }
 }
