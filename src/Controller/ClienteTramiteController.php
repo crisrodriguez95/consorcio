@@ -33,7 +33,7 @@ class ClienteTramiteController extends AbstractController
                 }
             }
         }
-        return $this->render('admin/asignarClienteTramite.html.twig');
+        return $this->render('tramite/clienteTramite.html.twig');
     }
 
     public function registerClienteTramite()
@@ -129,8 +129,7 @@ class ClienteTramiteController extends AbstractController
             'Dirección',
             'Teléfono',
             'Movil',
-            'Email',
-            'Acciones',
+            'Email',            
         ];
         $clients = [];
 
@@ -148,6 +147,37 @@ class ClienteTramiteController extends AbstractController
 
         return $this->render('/components/_tabla.html.twig', [
             'datos' => $clients,
+            'campos' => $campos,
+        ]);
+    }
+
+    public function getClienteTramiteList()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $clientesTramites = $em->getRepository(ClienteTramite::class)->findAll();
+    // dd($clientesTramites[0]->getIdTipoTramiteTransferencia()->tramite());
+     //print_r($clientesTramites->getIdCliente()->id, true);
+
+        $campos = [
+            'Id',
+            'Cliente',
+            'Tramite',
+            'Fecha de Incio',                  
+        ];
+        $clientsTramite = [];
+
+        foreach ($clientesTramites as $key => $data) {
+            
+            $clientsTramite[$key] = [
+                $data->id(),
+                $data->getIdCliente()->nombre(),
+                $data->getIdTipoTramiteTransferencia()->tramite(),                
+                $data->fechaInicio(),               
+            ];
+        }
+
+        return $this->render('/components/_tabla.html.twig', [
+            'datos' => $clientsTramite,
             'campos' => $campos,
         ]);
     }

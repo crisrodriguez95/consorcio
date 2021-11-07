@@ -35,7 +35,7 @@ class RegistrationController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $usuarios = $em->getRepository(User::class)->findAll();
 
-        return $this->render('usuario/index.html.twig');
+        return $this->render('user/index.html.twig');
     }
     
     

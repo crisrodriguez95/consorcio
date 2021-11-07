@@ -51,10 +51,20 @@ class ClienteTramite
         return $this;
     }
 
+    public function getIdCliente(): Cliente
+    {       
+        return $this->idCliente;
+    }
+
     public function setIdTipoTramite(TipoTramiteTransferencia $TipoTramite): self
     {
         $this->idTipoTramite = $TipoTramite;
         return $this;
+    }
+
+    public function getIdTipoTramiteTransferencia(): TipoTramiteTransferencia
+    {
+        return $this->idTipoTramite;
     }
 
     public function fechaInicio($value = null)
