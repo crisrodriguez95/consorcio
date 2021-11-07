@@ -2537,14 +2537,13 @@ fieldset:disabled a.btn {
 
 .btn-primary {
   color: #fff;
-  background: linear-gradient(30deg, #386ea3, #3dbbc4);
-
+  background: linear-gradient(180deg, #253d53 90%, #242526 100%);
   border-color: #fff;
 }
 
 .btn-primary:hover {
   color: #fff;
-  background: linear-gradient(30deg, #2a4c6d, #319197);
+  background: linear-gradient(180deg, #253d53 10%, #242526 100%);
 }
 
 .btn-primary:focus,
