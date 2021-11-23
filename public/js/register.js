@@ -1,15 +1,25 @@
 var PAGE = (function () {
+  const form1 = document.querySelector('.user')
   var form = $('form.user')
-  var inicio = function () {
-    form.unbind().on('submit', function () {
-      ingreso(this)
 
+  var inicio = function () {
+    form.unbind().on('submit', function (e) {
+      const formData = new FormData(form1)
+      for (let [key, entry] of formData) {
+        console.log(key, entry)
+        if (entry == '') {
+          return
+        }
+      }
+      e.preventDefault()
+      ingreso(this)
       return false
     })
   }
-  var ingreso = function (f) {
+  var ingreso = (f) => {
     var formulario = {},
       dataform = form.serializeArray()
+    console.log(dataform)
     formulario.tipo = 1
 
     for (i in dataform) {

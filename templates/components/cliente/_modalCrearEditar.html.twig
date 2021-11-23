@@ -14,24 +14,30 @@
           class="btn-close"
           data-bs-dismiss="modal"
           aria-label="Close">
-
         </button>
+  
       </div>
       <div class="modal-body">
-        <form class="user">
+        <form class="user needs-validation" novalidate>
           {# ------------ Fila 1 ------------------ #}
           <div class="form-group">
             <div class="row">
               <div class="col-md-6">
-                <label for="exampleFormControlInput1">Cédula</label>
-                <input type="text" class="form-control" id="id" name="cedula" />
+                <label for="id" class="form-label">Cédula</label>
+                <input type="text"
+                  class="form-control"
+                  id="id"
+                  name="cedula"
+                  maxlength="10"
+                  required />
               </div>
               <div class="col-md-6">
-                <label for="exampleFormControlInput1">Nombre</label>
+                <label for="name">Nombre</label>
                 <input type="text"
                   class="form-control"
                   id="name"
-                  name="nombre" />
+                  name="nombre" 
+                  required/>
               </div>
             </div>
           </div>
@@ -40,15 +46,17 @@
           <div class="form-group">
             <div class="row">
               <div class="col-md-6">
-                <label for="exampleFormControlInput1">Apellido</label>
+                <label for="lastName">Apellido</label>
                 <input type="text"
                   class="form-control"
                   id="lastName"
-                  name="apellido" />
+                  name="apellido" 
+                  
+                  required/>
               </div>
               <div class="col-md-6">
-                <label for="exampleFormControlInput1">Estado Civil</label>
-                <select class="form-select"
+                <label for="civil">Estado Civil</label>
+                <select class="form-select" required
                   id="civil"
                   name="estadoCivil"
                   aria-label="Default select example">
@@ -73,42 +81,49 @@
           <div class="form-group">
             <div class="row">
               <div class="col-md-6">
-                <label for="exampleFormControlInput1">Celular</label>
+                <label for="mobil">Celular</label>
                 <input type="text"
                   class="form-control"
                   id="mobil"
-                  name="celular" />
+                  name="celular" 
+                  maxlength="10"
+                  required/>
               </div>
               <div class="col-md-6">
-                <label for="exampleFormControlInput1">Teléfono</label>
+                <label for="phone">Teléfono</label>
                 <input type="text"
                   class="form-control"
                   id="phone"
-                  name="telefono" />
+                  name="telefono" 
+                  maxlength="7"
+                  required/>
               </div>
             </div>
           </div>
 
           {# ------------ Fila 4 ------------------ #}
           <div class="form-group">
-            <label for="exampleFormControlInput1">Dirección</label>
+            <label for="address">Dirección</label>
             <input type="text"
               class="form-control"
               id="address"
-              name="direccion" />
+              name="direccion" 
+              required/>
           </div>
 
           <div class="form-group">
-            <label for="exampleFormControlInput1">Correo Electronico</label>
-            <input type="text" class="form-control" id="text" name="correo" />
+            <label for="email">Correo Electronico</label>
+            <input type="text" class="form-control" id="email" name="correo" required/>
           </div>
           {# ------------ Fila 5 Buttons ------------------ #}
           <div class="form-group">
             <div class="row">
               <div class="col-md-6">
+              
                 <button type="submit"
                   class="btn btn-primary data"
-                  data-bs-dismiss="modal">
+                  {# data-bs-dismiss="modal" #}
+                  >
                   Crear cliente
                 </button>
               </div>
@@ -134,4 +149,47 @@
   /*let button = document.querySelector('.data');
   button.addEventListener("click", () => { setTimeout(() => { location.reload(
   true ); }, 1500); });*/
+  // Example starter JavaScript for disabling form submissions if there are invalid fields
+(function () {
+  'use strict'
+
+  // Fetch all the forms we want to apply custom Bootstrap validation styles to
+  var forms = document.querySelectorAll('.needs-validation')
+  let cedula = document.querySelector('#id');  
+  let mobile = document.querySelector('#mobil');  
+  let phone = document.querySelector('#phone');  
+  let currentValue = "";
+  let mobileValue = "";
+  let phoneValue = "";
+
+  function validarNumber(field, aux){
+    field.addEventListener('input', (e)=>{
+      field.value = e.target.value.trim();
+      if(isNaN(field.value)) {
+        field.value = aux;
+      }else{
+      aux = field.value;
+      }
+    });
+  }
+
+  validarNumber(cedula, currentValue);
+  validarNumber(mobile, mobileValue);
+  validarNumber(phone, phoneValue);
+
+
+
+  // Loop over them and prevent submission
+  Array.prototype.slice.call(forms)
+    .forEach((form) => {
+      form.addEventListener('submit', function (event) {
+        if (!form.checkValidity()) {
+          event.preventDefault()
+          event.stopPropagation()
+        }
+
+        form.classList.add('was-validated')
+      }, false)
+    })
+})()
 </script>

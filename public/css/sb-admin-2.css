@@ -4918,7 +4918,7 @@ input[type='button'].btn-block {
 .card-header {
   margin: 0 1.25rem;
   margin-bottom: 0;
-  background: rgb(148, 148, 148);
+  background: #253d53;
   border-bottom: 1px solid rgb(148, 148, 148);
 }
 
@@ -10043,7 +10043,7 @@ button.bg-dark:focus {
 }
 
 .text-primary {
-  color: #b4b7bf !important;
+  color: #fff !important;
   text-align: center;
 }
 

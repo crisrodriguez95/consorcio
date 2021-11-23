@@ -11,6 +11,8 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use App\Entity\ClienteTramite;
 use App\Entity\TipoTramiteTransferencia;
 use App\Entity\Cliente;
+use App\Entity\User;
+use App\Entity\UsuarioTramite;
 
 class ClienteTramiteController extends AbstractController
 {
@@ -28,7 +30,6 @@ class ClienteTramiteController extends AbstractController
                         return new JsonResponse(
                             $this->registerClienteTramite()
                         );
-                        // return new JsonResponse($this->funcionairio());
                     }
                 }
             }
@@ -41,6 +42,7 @@ class ClienteTramiteController extends AbstractController
         $request = $this->container->get('request_stack')->getCurrentRequest();
         $em = $this->getDoctrine()->getManager();
 
+        // _------ Registering table Cliente trámite ------
         $cliente = $em
             ->getRepository(Cliente::class)
             ->find($request->query->get('cliente'));
@@ -56,51 +58,114 @@ class ClienteTramiteController extends AbstractController
 
         $em->persist($clienteTramite);
         $em->flush();
-    }
 
-    public function funcionairio()
-    {
-        $request = $this->container->get('request_stack')->getCurrentRequest();
-        $em = $this->getDoctrine()->getManager();
+        // ------ Registering table Usuario trámite ------
 
-        $query = $em->createQuery(" SELECT c.funcionario, count(c.funcionario) 
-                                  FROM App\Entity\ClienteTramite c
-                                  GROUP BY c.funcionario");
+        $users = $em
+            ->getRepository(User::class)
+            ->findBy(['estado' => 'Activo']);
 
-        $tramites = $query->getResult();
+        $usuariosTramites = $em
+            ->getRepository(UsuarioTramite::class)
+            ->findAll();
 
-        $funcionarios = [
-            [
-                'funcionario' => 'Cristina',
-                'value' => 0,
-            ],
-            [
-                'funcionario' => 'Daniela',
-                'value' => 0,
-            ],
-            [
-                'funcionario' => 'David',
-                'value' => 0,
-            ],
-        ];
+        $idUsuarios = [];
 
-        $funcionario = rand(1, 3);
-        // $min = $tramites[0];
-        dd($funcionario);
+        foreach ($users as $key => $user) {
+            $idUsuarios[$key] = $user->getId();
+        }
 
-        // for ($i = 0; $i < count($tramites); $i++) {
-        //   if ($tramites[$i][1] < $min[1]) {
-        //       $min = $tramites[$i];
-        //    }
-        // }
-        // return $min['funcionario'];
+        $countUsuarios = count($idUsuarios);
+
+        if (count($usuariosTramites) > 0) {
+            $usersTramites = [];
+
+            foreach ($idUsuarios as $key => $idUsuario) {
+                $users = $em
+                    ->getRepository(UsuarioTramite::class)
+                    ->findByIdUser($idUsuario);
+
+                $tipoTramitesId = [];
+                if (count($users) <= 0) {
+                    $tipoTramitesId = 0;
+                } else {
+                    foreach ($users as $key => $user) {
+                        $tipoTramiteId = $user
+                            ->getIdClienteTramite()
+                            ->getIdTipoTramiteTransferencia()
+                            ->id();
+
+                        $tipoTramitesId[] = $tipoTramiteId;
+                    }
+                }
+                $usersTramites[$idUsuario] = $tipoTramitesId;
+            }
+            $cargaUsuario = [];
+            foreach ($usersTramites as $key => $userTramite) {
+                $suma = 0;
+                if ($userTramite != 0) {
+                    foreach ($userTramite as $tipoTramite) {
+                        $tiposTramites = $em
+                            ->getRepository(TipoTramiteTransferencia::class)
+                            ->find($tipoTramite);
+
+                        $tiempo = $tiposTramites->pesoOne();
+                        $carga = $tiposTramites->pesoTwo();
+
+                        $suma += $tiempo + $carga;
+                    }
+                    $cargaUsuario[$key] = $suma;
+                } else {
+                    $cargaUsuario[$key] = $userTramite;
+                }
+            }
+
+            $menor = min($cargaUsuario);
+            $id = [];
+
+            function getUsuario($x, $menor)
+            {
+                foreach ($x as $key => $usuario) {
+                    if ($usuario == $menor) {
+                        $id[] = $key;
+                    }
+                }
+                return $id;
+            }
+
+            $u = getUsuario($cargaUsuario, $menor);
+            if (count($u) > 1) {
+                $randomUsuario = rand(0, count($u) - 1);
+                $getUsuario = $idUsuarios[$randomUsuario];
+                $user = $em->getRepository(User::class)->find($getUsuario);
+            } else {
+                $user = $em->getRepository(User::class)->find($u[0]);
+            }
+        } else {
+            $randomUsuario = rand(0, $countUsuarios - 1);
+            $getUsuario = $idUsuarios[$randomUsuario];
+            $user = $em->getRepository(User::class)->find($getUsuario);
+        }
+
+        $clienTrami = $em
+            ->getRepository(ClienteTramite::class)
+            ->find($clienteTramite->id());
+
+        $usuarioTramite = new UsuarioTramite();
+        $usuarioTramite->setIdClienteTramite($clienTrami);
+        $usuarioTramite->setIdUsuario($user);
+        $usuarioTramite->estado('Y');
+        $usuarioTramite->fecha(date('Y-m-d'));
+        $usuarioTramite->describe('');
+
+        $em->persist($usuarioTramite);
+        $em->flush();
     }
 
     public function getCliente()
     {
         $em = $this->getDoctrine()->getManager();
         $clientes = $em->getRepository(Cliente::class)->findAll();
-        
 
         return $this->render('/components/cliente/_cliente.html.twig', [
             'clientes' => $clientes,
@@ -113,42 +178,37 @@ class ClienteTramiteController extends AbstractController
         $tramite = $em
             ->getRepository(TipoTramiteTransferencia::class)
             ->findAll();
-
         return $this->render('/components/tramite/_tipoTramite.html.twig', [
             'tiposTramite' => $tramite,
         ]);
     }
 
-    
     public function getClienteTramiteList()
     {
         $em = $this->getDoctrine()->getManager();
-        $clientesTramites = $em->getRepository(ClienteTramite::class)->findAll();
-    // dd($clientesTramites[0]->getIdTipoTramiteTransferencia()->tramite());
-     //print_r($clientesTramites->getIdCliente()->id, true);
+        $clientesTramites = $em
+            ->getRepository(ClienteTramite::class)
+            ->findAll();
+        // dd($clientesTramites[0]->getIdTipoTramiteTransferencia()->tramite());
+        //print_r($clientesTramites->getIdCliente()->id, true);
 
-        $campos = [
-            'Id',
-            'Cliente',
-            'Tramite',
-            'Fecha de Incio',                  
-        ];
+        $campos = ['Id', 'Cliente', 'Tramite', 'Fecha de Incio'];
         $clientsTramite = [];
 
         foreach ($clientesTramites as $key => $data) {
-            
             $clientsTramite[$key] = [
                 $data->id(),
                 $data->getIdCliente()->nombre(),
-                $data->getIdTipoTramiteTransferencia()->tramite(),                
-                $data->fechaInicio(),               
+                $data->getIdTipoTramiteTransferencia()->tramite(),
+                $data->fechaInicio(),
             ];
         }
 
         return $this->render('/components/_tabla.html.twig', [
             'datos' => $clientsTramite,
             'campos' => $campos,
-            'tituloTabla' => 'Asignacion'
+            'crear' => ' Asignar tipo trámite a cliente',
+            'tituloTabla' => 'Asignacion',
         ]);
     }
 }

@@ -35,6 +35,11 @@ class ClienteTramite
      */
     private $fechaInicio;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\UsuarioTramite", mappedBy="idClienteTramite")
+     */
+    private $usuarioTramite;
+
     function id($value = null)
     {
         if (!$value) {
@@ -52,12 +57,13 @@ class ClienteTramite
     }
 
     public function getIdCliente(): Cliente
-    {       
+    {
         return $this->idCliente;
     }
 
-    public function setIdTipoTramite(TipoTramiteTransferencia $TipoTramite): self
-    {
+    public function setIdTipoTramite(
+        TipoTramiteTransferencia $TipoTramite
+    ): self {
         $this->idTipoTramite = $TipoTramite;
         return $this;
     }

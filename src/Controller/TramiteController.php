@@ -11,11 +11,13 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use App\Entity\Tramite;
 use App\Entity\TipoTramite;
 
-class TramiteController extends AbstractController {
+class TramiteController extends AbstractController
+{
     /**
      * @Route("/tramite", name="tramite")
      */
-    public function getViewTramite(Request $request) {
+    public function getViewTramite(Request $request)
+    {
         if ($request->isXmlHttpRequest()) {
             if ($request->getMethod() == 'GET') {
                 $tipo = $request->query->get('tipo');
@@ -29,60 +31,32 @@ class TramiteController extends AbstractController {
         return $this->render('usuario/crearTramite.html.twig');
     }
 
-    public function registerTramite() {
+    public function registerTramite()
+    {
         $request = $this->container->get('request_stack')->getCurrentRequest();
         $em = $this->getDoctrine()->getManager();
 
+        $tipoTramite = $em
+            ->getRepository(TipoTramite::class)
+            ->find($request->query->get('tipo_tramite'));
 
-        $tipoTramite = $em->getRepository(TipoTramite::class)
-                       ->find($request->query->get("tipo_tramite"));
-
-       
         $tramite = new Tramite();
-         // relates this tramite to the tipoTramite
+        // relates this tramite to the tipoTramite
         $tramite->setTipoTramite($tipoTramite);
         $tramite->tramite($request->query->get('tramite'));
         $em->persist($tramite);
         $em->flush();
 
-        return "Saved new tramite";
+        return 'Saved new tramite';
     }
 
-    public function getTipoTramite() {
+    public function getTipoTramite()
+    {
         $em = $this->getDoctrine()->getManager();
         $tipoTramite = $em->getRepository(TipoTramite::class)->findAll();
-        
-        return $this->render('/components/_tipoTramite.html.twig', ["tiposTramite" => $tipoTramite]);
-    }
 
-
-    /**
-     * @Route("/tipoTramite", name="tipo")
-     */
-    public function getViewType(Request $request) {
-        if ($request->isXmlHttpRequest()) {
-            if ($request->getMethod() == 'GET') {
-                $tipo = $request->query->get('tipo');
-                if ($tipo) {
-                    if ($tipo == 1) {
-                        return new JsonResponse($this->registerTipoTramite());
-                    }
-                }
-            }
-        }
-        return $this->render('usuario/crearTipoTramite.html.twig');
-    }
-
-    public function registerTipoTramite() {
-        $request = $this->container->get('request_stack')->getCurrentRequest();
-        $em = $this->getDoctrine()->getManager();
-
-        $tipo_tramite = new TipoTramite();
-
-        $tipo_tramite->tipoTramite($request->query->get('tipoTramite'));
-        $em->persist($tipo_tramite);
-        $em->flush();
-
-        return 'heythere';
+        return $this->render('/components/_tipoTramite.html.twig', [
+            'tiposTramite' => $tipoTramite,
+        ]);
     }
 }
