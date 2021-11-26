@@ -40,6 +40,8 @@ class TipoTramiteTransferenciaController extends AbstractController
 
         $tipoTramite->tramite($request->query->get('tipoTramite'));
         $tipoTramite->Observa($request->query->get('observacion'));
+        $tipoTramite->pesoTiempo($request->query->get('tiempo'));
+        $tipoTramite->pesoCarga($request->query->get('carga'));
         $em->persist($tipoTramite);
         $em->flush();
     }

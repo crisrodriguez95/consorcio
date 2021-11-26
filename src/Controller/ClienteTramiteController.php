@@ -46,6 +46,7 @@ class ClienteTramiteController extends AbstractController
         $cliente = $em
             ->getRepository(Cliente::class)
             ->find($request->query->get('cliente'));
+
         $TipoTramite = $em
             ->getRepository(TipoTramiteTransferencia::class)
             ->find($request->query->get('tipo_tramite'));
@@ -100,17 +101,19 @@ class ClienteTramiteController extends AbstractController
                 }
                 $usersTramites[$idUsuario] = $tipoTramitesId;
             }
+
             $cargaUsuario = [];
             foreach ($usersTramites as $key => $userTramite) {
                 $suma = 0;
+
                 if ($userTramite != 0) {
                     foreach ($userTramite as $tipoTramite) {
                         $tiposTramites = $em
                             ->getRepository(TipoTramiteTransferencia::class)
                             ->find($tipoTramite);
 
-                        $tiempo = $tiposTramites->pesoOne();
-                        $carga = $tiposTramites->pesoTwo();
+                        $tiempo = $tiposTramites->pesoTiempo();
+                        $carga = $tiposTramites->pesoCarga();
 
                         $suma += $tiempo + $carga;
                     }
@@ -122,7 +125,6 @@ class ClienteTramiteController extends AbstractController
 
             $menor = min($cargaUsuario);
             $id = [];
-
             function getUsuario($x, $menor)
             {
                 foreach ($x as $key => $usuario) {
@@ -136,7 +138,7 @@ class ClienteTramiteController extends AbstractController
             $u = getUsuario($cargaUsuario, $menor);
             if (count($u) > 1) {
                 $randomUsuario = rand(0, count($u) - 1);
-                $getUsuario = $idUsuarios[$randomUsuario];
+                $getUsuario = $u[$randomUsuario];
                 $user = $em->getRepository(User::class)->find($getUsuario);
             } else {
                 $user = $em->getRepository(User::class)->find($u[0]);

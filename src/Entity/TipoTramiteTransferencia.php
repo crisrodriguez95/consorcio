@@ -29,11 +29,11 @@ class TipoTramiteTransferencia
      */
     private $observacion;
     /**
-     * @ORM\Column(name = "pTIEMPO", type = "string", nullable = false)
+     * @ORM\Column(name = "PESOTIEMPO", type = "string", nullable = false)
      */
     private $pesoTiempo;
     /**
-     * @ORM\Column(name = "pCARGA", type = "string", nullable = false)
+     * @ORM\Column(name = "PESOCARGA", type = "string", nullable = false)
      */
     private $pesoCarga;
 
@@ -71,22 +71,22 @@ class TipoTramiteTransferencia
         $this->observacion = $value;
         return $this;
     }
-    public function pesoOne($value = null)
+    public function pesoTiempo($value = null)
     {
         if (!$value) {
             return $this->pesoTiempo;
         }
 
-        $this->peso1 = $value;
+        $this->pesoTiempo = $value;
         return $this;
     }
-    public function pesoTwo($value = null)
+    public function pesoCarga($value = null)
     {
         if (!$value) {
             return $this->pesoCarga;
         }
 
-        $this->peso2 = $value;
+        $this->pesoCarga = $value;
         return $this;
     }
 }

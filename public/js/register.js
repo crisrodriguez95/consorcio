@@ -1,17 +1,17 @@
 var PAGE = (function () {
   const form1 = document.querySelector('.user')
+
   var form = $('form.user')
 
   var inicio = function () {
     form.unbind().on('submit', function (e) {
       const formData = new FormData(form1)
       for (let [key, entry] of formData) {
-        console.log(key, entry)
         if (entry == '') {
           return
         }
+        console.log(key)
       }
-      e.preventDefault()
       ingreso(this)
       return false
     })
@@ -25,7 +25,7 @@ var PAGE = (function () {
     for (i in dataform) {
       formulario[dataform[i]['name']] = dataform[i]['value']
     }
-    console.log(formulario)
+
     $.ajax({
       data: formulario,
       error: function () {
@@ -39,6 +39,10 @@ var PAGE = (function () {
       } else {
         alert('Afiliado ingresado correctamente')
         form[0].reset()
+        $('.modal').modal('hide')
+        // setTimeout(() => {
+        //   location.reload(true)
+        // }, 0)
       }
     })
   }
