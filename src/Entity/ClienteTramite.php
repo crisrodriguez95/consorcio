@@ -34,6 +34,10 @@ class ClienteTramite
      * @ORM\Column(name = "FECHA_INICIO", type = "string", nullable = false)
      */
     private $fechaInicio;
+    /**
+     *@ORM\OneToMany(targetEntity="App\Entity\TramiteTransferencia", mappedBy="idClienteTramite")
+     */
+    private $tramiteTransferencia;
 
     function id($value = null)
     {

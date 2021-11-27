@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous" />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"></script>
+      <link href="https://fonts.googleapis.com/css?family=Karla:400,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.materialdesignicons.com/4.8.95/css/materialdesignicons.min.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/bd-wizard.css">
+
+    <title>
+      Tramite
+    </title>
+
+    <!-- Custom fonts for this template -->
+    <link href="vendor/fontawesome-free/css/all.min.css"
+      rel="stylesheet"
+      type="text/css" />
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+      rel="stylesheet" />
+
+    <!-- Custom styles for this template -->
+    <link href="css/sb-admin-2.css" rel="stylesheet" />
+  </head>
+
+  <body id="page-top">
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+      <!-- Sidebar -->
+      {{ include('./assets/sidebar.html.twig') }}
+      <!-- End of Sidebar -->
+
+      <!-- Content Wrapper -->
+      <div id="content-wrapper" class="d-flex flex-column">
+        <!-- Main Content -->
+        <div id="content">
+          <!-- Topbar -->
+          {{ include('./assets/navbar.html.twig') }}
+          <!-- End of Topbar -->
+
+          <!-- Begin Page Content -->       
+           
+            
+    <div class=" my-2 container" style="max-width: 950px;">
+      <div id="wizard">
+        <h3>
+          <div class="media">
+            <div class="bd-wizard-step-icon"><i class="mdi mdi-account-outline"></i></div>
+            <div class="media-body">
+              <div class="bd-wizard-step-title">Personal Details</div>
+              <div class="bd-wizard-step-subtitle">Paso 1</div>
+            </div>
+          </div>
+        </h3>
+        <section>
+          <div class="content-wrapper">
+            <h4 class="section-heading">Documentos personales </h4>           
+            <div class="form-check">
+              <label class="form-check-label">
+                <input type="checkbox" class="form-check-input" name="" id="" value="checkedValue" >
+               Copia de cedula 
+              </label>
+            </div>
+            <div class="form-check">
+              <label class="form-check-label">
+                <input type="checkbox" class="form-check-input" name="" id="" value="checkedValue" >
+               Copia de papeleta de votación
+              </label>
+            </div>
+            <div class="form-check">
+              <label class="form-check-label">
+                <input type="checkbox" class="form-check-input" name="" id="" value="checkedValue" >
+               Escritura de bienes
+              </label>
+            </div> 
+             <div class="form-check">
+              <label class="form-check-label">
+                <input type="checkbox" class="form-check-input" name="" id="" value="checkedValue" >
+               Bien enagenado
+              </label>
+            </div> 
+            <hr>  
+            
+              <div class="form-group col-md-12">
+                <label for="minuta" class="">Minuta</label>
+                <input type="file" name="minura" id="minuta" class="form-control" placeholder="Cargar minuta">
+              </div>  
+              <div class="form-group col-md-12">
+                <label for="minuta" class="">Insinuacion de donación</label>
+                <input type="file" name="minura" id="minuta" class="form-control" placeholder="Cargar insinuacion de donacion">
+              </div>  
+              <div class="form-group col-md-12">
+                <label for="minuta" class="">Valores a pagar</label>
+                <input type="text" name="minura" id="minuta" class="form-control" placeholder="Cargar minuta">
+              </div> 
+              <div class="form-check">
+              <label class="form-check-label">
+                <input type="checkbox" class="form-check-input" name="" id="" value="checkedValue" >
+               Peticion de valores
+              </label>
+              </div>
+              <div class="form-check">
+              <label class="form-check-label">
+                <input type="checkbox" class="form-check-input" name="" id="" value="checkedValue" >
+                Aprobacion de pago de valores de cliente
+              </label>
+              </div>
+              <div class="form-group col-md-12">
+                <label for="minuta" class="">Subir comprobante de pago</label>
+                <input type="file" name="minura" id="minuta" class="form-control" placeholder="Cargar minuta">
+              </div>           
+
+                        
+          </div>
+        </section>
+        <h3>
+          <div class="media">
+            <div class="bd-wizard-step-icon"><i class="mdi mdi-bank"></i></div>
+            <div class="media-body">
+              <div class="bd-wizard-step-title">Employ Details</div>
+              <div class="bd-wizard-step-subtitle">Paso 2</div>
+            </div>
+          </div>
+        </h3>
+        <section>
+          <div class="content-wrapper">
+            <h4 class="section-heading">Enter your Employment details </h4>
+            <div class="row">
+              <div class="form-group col-md-6">
+                <label for="designation" class="">Fecha para firmar</label>
+                <input type="date" name="designation" id="designation" class="form-control" >          
+
+              </div>
+              <div class="form-group col-md-6">
+                <label for="department" class="">Hora para firmar</label>
+                  <input type="time" name="designation" id="designation" class="form-control" >
+              </div>
+              <div class="form-group col-md-6">
+                <label for="designation" class="">Fecha de ejecucion</label>
+                <input type="date" name="designation" id="designation" class="form-control" >          
+
+              </div>
+              <div class="form-group col-md-6">
+                <label for="department" class="">Valor tasa notarial</label>
+                  <input type="text" name="designation" id="designation" class="form-control" >
+              </div>
+              <div class="form-check">
+              <label class="form-check-label">
+                <input type="checkbox" class="form-check-input" name="" id="" value="checkedValue" >
+               Pago tasa notarial
+              </label>
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="form-check col-md-12">
+                <label class="form-check-label">
+                <input type="checkbox" class="form-check-input" name="" id="" value="checkedValue" >
+               ¿Es mutualista?
+              </label>
+              </div>
+              
+              <div class="form-check col-md-12">
+                <label class="form-check-label">
+                <input type="checkbox" class="form-check-input" name="" id="" value="checkedValue" >
+               Documentacion entregada a mutualista
+              </label>
+              </div>              
+              <div class="form-group col-md-12">
+                <label for="minuta" class="">Subir documentacion firmada</label>
+                <input type="file" name="minura" id="minuta" class="form-control" placeholder="Cargar minuta">
+              </div> 
+              <div class="form-check col-md-12">
+                <label class="form-check-label">
+                <input type="checkbox" class="form-check-input" name="" id="" value="checkedValue" >
+               Documentacion entregada en notaria
+              </label>
+              </div>            
+              <div class="form-group col-md-12">
+                <label for="minuta" class="">Subir escritura</label>
+                <input type="file" name="minura" id="minuta" class="form-control" placeholder="Cargar minuta">
+              </div> 
+              <div class="form-check col-md-12">
+                <label class="form-check-label">
+                <input type="checkbox" class="form-check-input" name="" id="" value="checkedValue" >
+               Documentacion entregada a registro de la propiedad
+              </label>
+              </div>  
+              <div class="form-check">
+              <label class="form-check-label">
+                <input type="checkbox" class="form-check-input" name="" id="" value="checkedValue" >
+                Aprobacion de pago de valores de cliente
+              </label>
+              </div>          
+
+            </div>
+          </div>
+        </section>
+        <h3>
+          <div class="media">
+            <div class="bd-wizard-step-icon"><i class="mdi mdi-account-check-outline"></i></div>
+            <div class="media-body">
+              <div class="bd-wizard-step-title">Review </div>
+              <div class="bd-wizard-step-subtitle">Paso 3</div>
+            </div>
+          </div>
+        </h3>
+        <section>
+          <div class="content-wrapper">
+          <h4 class="section-heading mb-5">Detalles</h4>
+          <h6 class="font-weight-bold">Personal Details</h6>
+           <div class="form-check col-md-12">
+                <label class="form-check-label">
+                <input type="checkbox" class="form-check-input" name="" id="" value="checkedValue" >
+               Titulo de pago entregado
+              </label>
+            </div> 
+            <div class="form-check col-md-12">
+                <label class="form-check-label">
+                <input type="checkbox" class="form-check-input" name="" id="" value="checkedValue" >
+             Pago de valores
+              </label>
+            </div> 
+            <div class="form-check col-md-12">
+                <label class="form-check-label">
+                <input type="checkbox" class="form-check-input" name="" id="" value="checkedValue" >
+              Escritura valida
+              </label>
+            </div> 
+            
+            <div class="form-group col-md-12">
+                <label for="minuta" class="">Subir acta de inscripcion</label>
+                <input type="file" name="minura" id="minuta" class="form-control" placeholder="Cargar minuta">
+              </div> 
+              <div class="form-group col-md-12">
+                <label for="minuta" class="">Subir informe de gastos</label>
+                <input type="file" name="minura" id="minuta" class="form-control" placeholder="Cargar minuta">
+              </div> 
+            
+              <div class="form-check col-md-12">
+                <label class="form-check-label">
+                <input type="checkbox" class="form-check-input" name="" id="" value="checkedValue" >
+               Pago de gastos
+              </label>
+              </div>
+          </div>
+        </section>
+        
+        <h3>
+          <div class="media">
+            <div class="bd-wizard-step-icon"><i class="mdi mdi-emoticon-outline"></i></div>
+            <div class="media-body">
+              <div class="bd-wizard-step-title">Submit</div>
+              <div class="bd-wizard-step-subtitle">Step 4</div>
+            </div>
+          </div>
+        </h3>
+        <section>
+          <div class="content-wrapper">
+            <h4 class="section-heading mb-5">Resumen de Tramite</h4>
+            <div class="form-check">
+              <label class="form-check-label">
+                <input type="checkbox" class="form-check-input" name="" id="" value="checkedValue" checked>
+                I hereby declare that I had read all the <a href="#!">terms and conditions</a>  and all the details provided my me in this form are true.
+              </label>
+            </div>
+          </div>  
+        </section>
+      </div>
+    </div>
+ 
+          
+
+          {{
+            include(
+              './components/tramite/_modalTipoTramiteCrearEditar.html.twig'
+            )
+          }}
+
+          <!-- /.container-fluid -->
+        </div>
+        <!-- End of Main Content -->
+
+        <!-- Footer -->
+        {{ include('./assets/footer.html.twig') }}
+        <!-- End of Footer -->
+      </div>
+      <!-- End of Content Wrapper -->
+    </div>
+    <!-- End of Page Wrapper -->
+
+    <!-- Scroll to Top Button -->
+    <a class="scroll-to-top rounded" href="#page-top">
+      <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- Logout Modal -->
+    <div class="modal fade"
+      id="logoutModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">
+              Ready to Leave?
+            </h5>
+            <button class="close"
+              type="button"
+              data-dismiss="modal"
+              aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            Select "Logout" below if you are ready to end your current session.
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary"
+              type="button"
+              data-dismiss="modal">
+              Cancel
+            </button>
+            <a class="btn btn-primary" href="login.html">Logout</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript -->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages -->
+    <script src="js/sb-admin-2.min.js"></script>
+
+    <!-- Page level plugins -->
+    <script src="vendor/chart.js/Chart.min.js"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="js/demo/chart-area-demo.js"></script>
+    <script src="js/demo/chart-pie-demo.js"></script>
+
+    <script src="js/register.js"></script>
+    <script>
+      PAGE.init();
+    </script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+  <script src="js/jquery.steps.min.js"></script>
+  <script src="js/bd-wizard.js"></script>
+  </body>
+</html>

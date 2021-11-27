@@ -1,6 +1,16 @@
 var PAGE = (function () {
   var form = $('form.user')
   var inicio = function () {
+    $('.cb-value').click(function() {
+      var mainParent = $(this).parent('.toggle-btn');
+      if($(mainParent).find('input.cb-value').is(':checked')) {
+        $(mainParent).addClass('active');
+      } else {
+        $(mainParent).removeClass('active');
+      }
+    
+    })
+    
     form.unbind().on('submit', function () {
       ingreso(this)
 

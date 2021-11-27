@@ -148,6 +148,7 @@ class ClienteTramiteController extends AbstractController
         return $this->render('/components/_tabla.html.twig', [
             'datos' => $clientsTramite,
             'campos' => $campos,
+            'crear' => 'Crear tipo de trámite',
             'tituloTabla' => 'Asignacion'
         ]);
     }

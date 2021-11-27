@@ -85,4 +85,12 @@ class TramiteController extends AbstractController {
 
         return 'heythere';
     }
+
+    /**
+     * @Route("/procesotramite", name="procesotramite")
+     */
+    public function getProcesoTramite(Request $request) {
+        
+        return $this->render('tramite/procesotramite.html.twig');
+    }
 }
