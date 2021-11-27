@@ -68,8 +68,8 @@ class UsuarioTramiteController extends AbstractController
     public function getClienteTramite()
     {
         $em = $this->getDoctrine()->getManager();
-        $clienteTramite = $em->getRepository(ClienteTramite::class)->findAll();
-        dd($clienteTramite);
+        $usuariosTramite = $em->getRepository(UsuarioTramite::class)->findAll();
+        dd($usuariosTramite);
         return $this->render('/components/usuario/_usuario.html.twig', [
             'clienteTramite' => $clienteTramite,
         ]);
@@ -79,18 +79,45 @@ class UsuarioTramiteController extends AbstractController
     {
         $em = $this->getDoctrine()->getManager();
         $usuarioTramites = $em->getRepository(UsuarioTramite::class)->findAll();
-        // dd($clientesTramites[0]->getIdTipoTramiteTransferencia()->tramite());
-        //print_r($clientesTramites->getIdCliente()->id, true);
-        // dd(usuarioTramites);
-        $campos = ['Id', 'Cliente', 'Tramite', 'Fecha de Incio'];
+
+        $campos = [
+            'Usuario',
+            'Nombre',
+            'Apellido',
+            'Cliente',
+            'Nombre',
+            'Apellido',
+            'Tipo de Trámite',
+            'Fecha',
+        ];
         $usuariosTramite = [];
 
         foreach ($usuarioTramites as $key => $data) {
-            $clientsTramite[$key] = [
-                $data->id(),
-                $data->getIdCliente()->nombre(),
-                $data->getIdTipoTramiteTransferencia()->tramite(),
-                $data->fechaInicio(),
+            // dd($data->getIdClienteTramite()->id());
+            $usuariosTramite[$key] = [
+                $data->getIdUsuario()->getCedula(),
+                $data->getIdUsuario()->getNombre(),
+                $data->getIdUsuario()->getApellido(),
+
+                $data
+                    ->getIdClienteTramite()
+                    ->getIdCliente()
+                    ->cedula(),
+                $data
+                    ->getIdClienteTramite()
+                    ->getIdCliente()
+                    ->nombre(),
+                $data
+                    ->getIdClienteTramite()
+                    ->getIdCliente()
+                    ->apellido(),
+
+                $data
+                    ->getIdClienteTramite()
+                    ->getIdTipoTramiteTransferencia()
+                    ->tramite(),
+
+                $data->fecha(),
             ];
         }
 
