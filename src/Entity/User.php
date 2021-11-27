@@ -11,9 +11,9 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity(repositoryClass=UserRepository::class) 
+ * @ORM\Entity(repositoryClass=UserRepository::class)
  * @UniqueEntity("email")
- * 
+ *
  */
 class User implements UserInterface
 {
@@ -51,7 +51,6 @@ class User implements UserInterface
      */
     private $apellido;
 
-
     /**
      * @ORM\Column(type="integer", length=10)
      */
@@ -62,6 +61,10 @@ class User implements UserInterface
      */
     private $estado;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\UsuarioTramite", mappedBy="idUser")
+     */
+    private $usuarioTramite;
 
     public function getId(): ?int
     {

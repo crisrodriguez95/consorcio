@@ -48,18 +48,17 @@
           <!-- Begin Page Content -->
 
           <!-- Nested Row within Card Body -->
-         
-            {# <div class="col-lg-5 d-none d-lg-block bg-register-image"></div> #}
-            <div class="my-2">
-              {{
-                render(
-                  controller(
-                    'App\\Controller\\TipoTramiteTransferenciaController::getTipoTramiteTransferencia'
-                  )
+
+          {# <div class="col-lg-5 d-none d-lg-block bg-register-image"></div> #}
+          <div class="my-2">
+            {{
+              render(
+                controller(
+                  'App\\Controller\\TipoTramiteTransferenciaController::getTipoTramiteTransferencia'
                 )
-              }}
-            </div>
-          
+              )
+            }}
+          </div>
 
           {{
             include(
@@ -137,6 +136,7 @@
     <script src="js/demo/chart-pie-demo.js"></script>
 
     <script src="js/register.js"></script>
+    <script src="js/validation.js"></script>
     <script>
       PAGE.init();
     </script>

@@ -1,0 +1,5 @@
+<select class="form-select" name="cliente">
+  {% for key,usuario in usuarios %}
+    <option value={{usuario.id}}> {{ usuario.nombre }}</option>
+  {% endfor %}
+</select>

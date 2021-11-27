@@ -18,20 +18,26 @@
         </button>
       </div>
       <div class="modal-body">
-        <form class="user">
+        <form class="user needs-validation" novalidate>
           {# ------------ Fila 1 ------------------ #}
           <div class="form-group">
             <div class="row">
               <div class="col-md-6">
-                <label for="exampleFormControlInput1">Cédula</label>
-                <input type="text" class="form-control" id="id" name="cedula" />
-              </div>
-              <div class="col-md-6">
-                <label for="exampleFormControlInput1">Nombre</label>
+                <label for="id" class="form-label">Cédula</label>
                 <input type="text"
                   class="form-control"
+                  id="id"
+                  name="cedula"
+                  maxlength="10"
+                  required />
+              </div>
+              <div class="col-md-6">
+                <label for="name">Nombre</label>
+                <input type="text"
+                  class="form-control inputText"
                   id="name"
-                  name="nombre" />
+                  name="nombre"
+                  required />
               </div>
             </div>
           </div>
@@ -40,15 +46,17 @@
           <div class="form-group">
             <div class="row">
               <div class="col-md-6">
-                <label for="exampleFormControlInput1">Apellido</label>
+                <label for="lastName">Apellido</label>
                 <input type="text"
-                  class="form-control"
+                  class="form-control inputText"
                   id="lastName"
-                  name="apellido" />
+                  name="apellido"
+                  required />
               </div>
               <div class="col-md-6">
-                <label for="exampleFormControlInput1">Estado Civil</label>
+                <label for="civil">Estado Civil</label>
                 <select class="form-select"
+                  required
                   id="civil"
                   name="estadoCivil"
                   aria-label="Default select example">
@@ -73,42 +81,49 @@
           <div class="form-group">
             <div class="row">
               <div class="col-md-6">
-                <label for="exampleFormControlInput1">Celular</label>
+                <label for="mobil">Celular</label>
                 <input type="text"
                   class="form-control"
                   id="mobil"
-                  name="celular" />
+                  name="celular"
+                  maxlength="10"
+                  required />
               </div>
               <div class="col-md-6">
-                <label for="exampleFormControlInput1">Teléfono</label>
+                <label for="phone">Teléfono</label>
                 <input type="text"
                   class="form-control"
                   id="phone"
-                  name="telefono" />
+                  name="telefono"
+                  maxlength="7"
+                  required />
               </div>
             </div>
           </div>
 
           {# ------------ Fila 4 ------------------ #}
           <div class="form-group">
-            <label for="exampleFormControlInput1">Dirección</label>
+            <label for="address">Dirección</label>
             <input type="text"
               class="form-control"
               id="address"
-              name="direccion" />
+              name="direccion"
+              required />
           </div>
 
           <div class="form-group">
-            <label for="exampleFormControlInput1">Correo Electronico</label>
-            <input type="text" class="form-control" id="text" name="correo" />
+            <label for="email">Correo Electronico</label>
+            <input type="text"
+              class="form-control"
+              id="email"
+              name="correo"
+              required />
           </div>
           {# ------------ Fila 5 Buttons ------------------ #}
           <div class="form-group">
             <div class="row">
               <div class="col-md-6">
-                <button type="submit"
-                  class="btn btn-primary data"
-                  data-bs-dismiss="modal">
+                <button type="submit" class="btn btn-primary data">
                   Crear cliente
                 </button>
               </div>
@@ -129,9 +144,3 @@
     </div>
   </div>
 </div>
-
-<script>
-  /*let button = document.querySelector('.data');
-  button.addEventListener("click", () => { setTimeout(() => { location.reload(
-  true ); }, 1500); });*/
-</script>

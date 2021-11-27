@@ -94,6 +94,7 @@ class ClienteController extends AbstractController
         return $this->render('/components/_tabla.html.twig', [
             'datos' => $clients,
             'campos' => $campos,
+            'crear' => 'Crear nuevo cliente',
             'tituloTabla' => 'Clientes',
         ]);
     }

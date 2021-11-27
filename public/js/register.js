@@ -1,31 +1,31 @@
 var PAGE = (function () {
-  var form = $('form.user')
-  var inicio = function () {
-    $('.cb-value').click(function() {
-      var mainParent = $(this).parent('.toggle-btn');
-      if($(mainParent).find('input.cb-value').is(':checked')) {
-        $(mainParent).addClass('active');
-      } else {
-        $(mainParent).removeClass('active');
-      }
-    
-    })
-    
-    form.unbind().on('submit', function () {
-      ingreso(this)
+  const form1 = document.querySelector('.user')
 
+  var form = $('form.user')
+
+  var inicio = function () {
+    form.unbind().on('submit', function (e) {
+      const formData = new FormData(form1)
+      for (let [key, entry] of formData) {
+        if (entry == '') {
+          return
+        }
+        console.log(key)
+      }
+      ingreso(this)
       return false
     })
   }
-  var ingreso = function (f) {
+  var ingreso = (f) => {
     var formulario = {},
       dataform = form.serializeArray()
+    console.log(dataform)
     formulario.tipo = 1
 
     for (i in dataform) {
       formulario[dataform[i]['name']] = dataform[i]['value']
     }
-    console.log(formulario)
+
     $.ajax({
       data: formulario,
       error: function () {
@@ -39,6 +39,10 @@ var PAGE = (function () {
       } else {
         alert('Afiliado ingresado correctamente')
         form[0].reset()
+        $('.modal').modal('hide')
+        // setTimeout(() => {
+        //   location.reload(true)
+        // }, 0)
       }
     })
   }

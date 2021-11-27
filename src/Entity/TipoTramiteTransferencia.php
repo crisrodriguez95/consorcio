@@ -10,55 +10,83 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\HasLifecycleCallbacks
  */
 
-class TipoTramiteTransferencia {
+class TipoTramiteTransferencia
+{
+    /**
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\Column(name = "ID_TRAMITE", type = "integer")
+     */
+    private $id;
 
-  /**
-   * @ORM\Id
-   * @ORM\GeneratedValue(strategy="AUTO")    
-   * @ORM\Column(name = "ID_TRAMITE", type = "integer")
-   */
-  private $id;
+    /**
+     * @ORM\Column(name = "TRAMITE", type = "string", nullable = false)
+     */
+    private $tramite;
 
-  /**
-   * @ORM\Column(name = "TRAMITE", type = "string", nullable = false)
-   */
-  private $tramite; 
+    /**
+     * @ORM\Column(name = "OBSERVACION", type = "string", nullable = false)
+     */
+    private $observacion;
+    /**
+     * @ORM\Column(name = "PESOTIEMPO", type = "string", nullable = false)
+     */
+    private $pesoTiempo;
+    /**
+     * @ORM\Column(name = "PESOCARGA", type = "string", nullable = false)
+     */
+    private $pesoCarga;
 
-  /**
-   * @ORM\Column(name = "OBSERVACION", type = "string", nullable = false)
-   */
-  private $observacion; 
+    /**
+     *@ORM\OneToMany(targetEntity="App\Entity\ClienteTramite", mappedBy="idTipoTramite")
+     */
+    private $clienteTramite;
 
-  /**
-    *@ORM\OneToMany(targetEntity="App\Entity\ClienteTramite", mappedBy="idTipoTramite")
-    */
-  private $clienteTramite;
+    public function id($value = null)
+    {
+        if (!$value) {
+            return $this->id;
+        }
 
-  public function id($value = null){
-    if(!$value)
-      return $this->id;
-    
-    $this->id = $value;
-    return $this;
+        $this->id = $value;
+        return $this;
+    }
 
-  }
+    public function tramite($value = null)
+    {
+        if (!$value) {
+            return $this->tramite;
+        }
 
-  public function tramite($value = null){
-    if(!$value)
-      return $this->tramite;
-    
-    $this->tramite = $value;
-    return $this;
+        $this->tramite = $value;
+        return $this;
+    }
 
-  }
+    public function Observa($value = null)
+    {
+        if (!$value) {
+            return $this->observacion;
+        }
 
-  public function Observa($value = null){
-    if(!$value)
-      return $this->observacion;
-    
-    $this->observacion = $value;
-    return $this;
+        $this->observacion = $value;
+        return $this;
+    }
+    public function pesoTiempo($value = null)
+    {
+        if (!$value) {
+            return $this->pesoTiempo;
+        }
 
-  }
+        $this->pesoTiempo = $value;
+        return $this;
+    }
+    public function pesoCarga($value = null)
+    {
+        if (!$value) {
+            return $this->pesoCarga;
+        }
 
+        $this->pesoCarga = $value;
+        return $this;
+    }
 }
