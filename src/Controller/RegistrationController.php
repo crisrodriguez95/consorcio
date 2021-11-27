@@ -124,4 +124,14 @@ class RegistrationController extends AbstractController
             'tituloTabla' => 'Usuarios',
         ]);
     }
+
+    /**
+     * 
+     * @Route("/tablero", name="tablero")
+     */
+    public function getDashboard()
+    {     
+
+        return $this->render('dashboard/index.html.twig');
+    }
 }
