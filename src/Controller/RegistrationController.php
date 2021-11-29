@@ -47,7 +47,7 @@ class RegistrationController extends AbstractController
     public function register(
         $request,
         $passwordEncoder,
-        \Swift_Mailer $mailer = null
+       \Swift_Mailer $mailer =null
     ) {
         $user = new User();
         $entityManager = $this->getDoctrine()->getManager();
@@ -74,29 +74,29 @@ class RegistrationController extends AbstractController
         $entityManager->persist($user);
         $entityManager->flush();
 
-        // $asunto = 'CREACION DE CUENTA';
+         $asunto = 'CREACION DE CUENTA';
 
-        // $message = (new \Swift_Message($asunto))
-        //         ->setFrom('crisbieber9569@gmail.com')
-        //         ->setTo('danylove9569@hotmail.com')
-        //         ->setBody(
-        //         $this->renderView(
-        //                 'email/registration.html.twig', ['nombre' => $request->query->get('nombre').' '.$request->query->get('apellido'),
-        //                                             'correo'=>$request->query->get('correo'),
-        //                                            'contraseña' => $codePassword,
-        //                                            ]
-        //         ), 'text/html'
-        //         );
+         $message = (new \Swift_Message($asunto))
+                 ->setFrom('crisbieber9569@gmail.com')
+                 ->setTo('danylove9569@hotmail.com')
+                 ->setBody(
+                 $this->renderView(
+                         'email/registration.html.twig', ['nombre' => $request->query->get('nombre').' '.$request->query->get('apellido'),
+                                                     'correo'=>$request->query->get('correo'),
+                                                    'contraseña' => $codePassword,
+                                                    ]
+                 ), 'text/html'
+                 );
 
-        //         $success = $mailer->send($message);
-        //         return $success;
-        // return new Response(
-        //         'ok', Response::HTTP_OK
-        // );
+               $success = $mailer->send($message);
+                 return $success;
+         return new Response(
+                 'ok', Response::HTTP_OK
+         );
         // do anything else you need here, like send an email
 
         return 'si se pudo, si se puede y siempre se podra';
-        // }
+        
 
         // return $this->render('usuario/index.html.twig');
     }

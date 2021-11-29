@@ -77,7 +77,7 @@ class ClienteTramiteController extends AbstractController
         }
 
         $countUsuarios = count($idUsuarios);
-
+        //dd($idUsuarios);
         if (count($usuariosTramites) > 0) {
             $usersTramites = [];
 
@@ -169,7 +169,7 @@ class ClienteTramiteController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $clientes = $em->getRepository(Cliente::class)->findAll();
 
-        return $this->render('/components/cliente/_cliente.html.twig', [
+        return $this->render('client/modal/_cliente.html.twig', [
             'clientes' => $clientes,
         ]);
     }
@@ -180,7 +180,7 @@ class ClienteTramiteController extends AbstractController
         $tramite = $em
             ->getRepository(TipoTramiteTransferencia::class)
             ->findAll();
-        return $this->render('/components/tramite/_tipoTramite.html.twig', [
+        return $this->render('tramite/modal/_tipoTramite.html.twig', [
             'tiposTramite' => $tramite,
         ]);
     }

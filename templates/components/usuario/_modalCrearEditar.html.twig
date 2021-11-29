@@ -44,12 +44,26 @@
 
           {# ------------ Fila 2 ------------------ #}
           <div class="form-group">
-            <label for="email">Correo Electronico</label>
+             <div class="row">
+              <div class="col-md-6">
+                <label for="id" class="form-label">Apellido</label>
+                <input type="text"
+                  class="form-control"
+                  id="id"
+                  name="apellido"
+                  maxlength="10"
+                  required />
+              </div>
+              <div class="col-md-6">
+                <label for="email">Correo Electronico</label>
             <input type="text"
               class="form-control"
               id="email"
               name="correo"
               required />
+              </div>
+            </div>
+            
           </div>
           {# ------------ Fila 3 Buttons ------------------ #}
           <div class="form-group">

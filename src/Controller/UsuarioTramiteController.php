@@ -71,7 +71,7 @@ class UsuarioTramiteController extends AbstractController
         $usuariosTramite = $em->getRepository(UsuarioTramite::class)->findAll();
         dd($usuariosTramite);
         return $this->render('/components/usuario/_usuario.html.twig', [
-            'clienteTramite' => $clienteTramite,
+            'clienteTramite' => $usuariosTramite,
         ]);
     }
 
@@ -121,7 +121,7 @@ class UsuarioTramiteController extends AbstractController
             ];
         }
 
-        return $this->render('/components/_tabla.html.twig', [
+        return $this->render('tramite/modal/_tabla.html.twig', [
             'datos' => $usuariosTramite,
             'campos' => $campos,
             'crear' => ' Asignar usuario',
