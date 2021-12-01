@@ -61,7 +61,7 @@ class TramiteController extends AbstractController
     }
 
     /**
-     * @Route("/procesotramite", name="procesotramite")
+     * @Route("/procesotramite/{idTramite}", name="procesotramite", requirements={"idTramite"="\d+"})
      */
     public function getProcesoTramite(Request $request) {
         

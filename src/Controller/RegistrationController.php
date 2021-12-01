@@ -12,6 +12,8 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
 
 class RegistrationController extends AbstractController
 {
@@ -46,8 +48,7 @@ class RegistrationController extends AbstractController
 
     public function register(
         $request,
-        $passwordEncoder,
-       \Swift_Mailer $mailer =null
+        $passwordEncoder       
     ) {
         $user = new User();
         $entityManager = $this->getDoctrine()->getManager();
@@ -56,50 +57,23 @@ class RegistrationController extends AbstractController
         $user->setCedula($request->query->get('cedula'));
         $user->setNombre($request->query->get('nombre'));
         $user->setApellido($request->query->get('apellido'));
-        $user->setRoles([$request->query->get('id_rol')]);
-        $codePassword = substr(
-            str_shuffle(
-                $request->query->get('cedula') . $request->query->get('nombre')
-            ),
-            0,
-            9
-        );
-        //echo $codePassword;
-
-        // encode the plain password
+        $user->setRoles([$request->query->get('id_rol')]);    
+        $user->setEstado('Activo');       
+      
         $user->setPassword(
-            $passwordEncoder->encodePassword($user, $codePassword)
+            $passwordEncoder->encodePassword($user, $request->query->get('password'))
         );
 
         $entityManager->persist($user);
         $entityManager->flush();
 
-         $asunto = 'CREACION DE CUENTA';
+        return 'Usuario ingresado';     
 
-         $message = (new \Swift_Message($asunto))
-                 ->setFrom('crisbieber9569@gmail.com')
-                 ->setTo('danylove9569@hotmail.com')
-                 ->setBody(
-                 $this->renderView(
-                         'email/registration.html.twig', ['nombre' => $request->query->get('nombre').' '.$request->query->get('apellido'),
-                                                     'correo'=>$request->query->get('correo'),
-                                                    'contraseña' => $codePassword,
-                                                    ]
-                 ), 'text/html'
-                 );
-
-               $success = $mailer->send($message);
-                 return $success;
-         return new Response(
-                 'ok', Response::HTTP_OK
-         );
-        // do anything else you need here, like send an email
-
-        return 'si se pudo, si se puede y siempre se podra';
-        
-
-        // return $this->render('usuario/index.html.twig');
+   
     }
+
+    
+    
 
     public function getUsuariosList()
     {
