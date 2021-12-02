@@ -1,11 +1,40 @@
 var PAGE = (function () {
-  const form1 = document.querySelector('.user')
+  const form1 = document.querySelector('.user'), 
+  eliminar = document.querySelectorAll('.eliminar');
+
+ 
+  eliminar.forEach((elem) => {
+    elem.addEventListener('click', () => {
+      let id = elem.dataset.id;
+      $.ajax({
+        data: {
+          tipo:6,
+          id
+        },
+        error: function () {
+          alert('error')
+        },
+      }).done(function (data) {
+        if (data.Estado == 'Error') {
+          alert('hay un error')
+          return false
+        } else {
+          alert('Registro eliminado')
+          form[0].reset()
+        }
+      })
+    });
+  });
+
+  
 
   var form = $('form.user')
 
   var inicio = function () {
     form.unbind().on('submit', function (e) {
       const formData = new FormData(form1)
+
+
       for (let [key, entry] of formData) {
         if (entry == '') {
           return
@@ -40,9 +69,9 @@ var PAGE = (function () {
         alert('Afiliado ingresado correctamente')
         form[0].reset()
         $('.modal').modal('hide')
-        // setTimeout(() => {
-        //   location.reload(true)
-        // }, 0)
+        setTimeout(() => {
+          location.reload(true)
+        }, 0)
       }
     })
   }

@@ -24,6 +24,9 @@ class TipoTramiteTransferenciaController extends AbstractController
                 if ($tipo) {
                     if ($tipo == 1) {
                         return new JsonResponse($this->registerTipoTramite());
+                    }else if ($tipo == 6){
+                        return new JsonResponse($this->deleteTipoTramite());
+
                     }
                 }
             }
@@ -45,6 +48,17 @@ class TipoTramiteTransferenciaController extends AbstractController
         $em->persist($tipoTramite);
         $em->flush();
     }
+     // -------------------- Delete tipo de trámite -------------------- 
+    public function deleteTipoTramite(){
+        $request = $this->container->get('request_stack')->getCurrentRequest();
+        $id = $request->query->get('id');
+
+        $em = $this->getDoctrine()->getManager();
+        $tipoTramite = $em->getRepository(TipoTramiteTransferencia::class)->find($id);
+        
+        $em->remove($tipoTramite);
+        $em->flush();
+    }
 
     public function getTipoTramiteTransferencia()
     {
@@ -57,7 +71,7 @@ class TipoTramiteTransferenciaController extends AbstractController
 
         $tipos = [];
         foreach ($tipoTramites as $key => $data) {
-            array_push($tipos, [$data->tramite(), $data->Observa()]);
+            array_push($tipos, [$data->id(), $data->tramite(), $data->Observa()]);
         }
 
         return $this->render('/components/_tabla.html.twig', [
