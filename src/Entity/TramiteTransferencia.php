@@ -163,11 +163,40 @@ class TramiteTransferencia {
 
   }
 
-  public function tramite($value = null){
+  public function setIdClienteTramite(
+    ClienteTramite $ClienteTramite
+): self {
+    $this->idClienteTramite = $ClienteTramite;
+    return $this;
+}
+
+public function getIdClienteTramite(): ClienteTramite
+{
+    return $this->idClienteTramite;
+}
+  
+  public function cedula($value = null){
     if(!$value)
-      return $this->tramite;
+      return $this->cedula;
     
-    $this->tramite = $value;
+    $this->cedula = $value;
+    return $this;
+
+  }
+
+  public function papeleta($value = null){
+    if(!$value)
+      return $this->papeleta;
+    
+    $this->papeleta = $value;
+    return $this;
+
+  }
+  public function bienes($value = null){
+    if(!$value)
+      return $this->bienes;
+    
+    $this->bienes = $value;
     return $this;
 
   }
