@@ -54,14 +54,20 @@
             {% for key, fila in datos %}
               <tr>
                 {% for key, data in fila %}
-                  {% if key == 6 %}
-                    <td style="background: #fff; color: #484C64">
-                      {{ data }}
-                    </td>
-                  {% else %}
-                    <td style="background: #fff; color: #484C64">
-                      {{ data }}
-                    </td>
+                  {% if key > 0 %}
+                    {% if data == "Activo" %}
+                      <td style="background: #fff; color: #1CCA51">
+                        {{ data }}
+                      </td>
+                    {% elseif data == "Inactivo" %}
+                      <td style="background: #fff; color: #E32222">
+                        {{ data }}
+                      </td>
+                    {% else %}
+                      <td style="background: #fff; color: #484C64">
+                        {{ data }}
+                      </td>
+                    {% endif %}
                   {% endif %}
                 {% endfor %}
                 <td style="background: #fff" colspan="2">
@@ -74,11 +80,15 @@
                       aria-expanded="false">
                       <i class="fas fa-ellipsis-v"></i>
                     </button>
-                    <div class="dropdown-menu"
-                      aria-labelledby="dropdownMenuButton">
-                      <a class="dropdown-item" href="#">Eliminar</a>
-                      <a class="dropdown-item" href="#">Editar</a>
-                    </div>
+
+                      <div class="dropdown-menu"
+                        aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item eliminar" data-id="{{ fila[0] }}" href="">
+                          Eliminar
+                        </a>
+                        <a class="dropdown-item" href="#">Editar</a>
+                    
+                      </div>
                   </div>
                 </td>
               </tr>

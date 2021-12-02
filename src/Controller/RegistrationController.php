@@ -35,6 +35,8 @@ class RegistrationController extends AbstractController
                         return new JsonResponse(
                             $this->register($request, $passwordEncoder)
                         );
+                    }else if($tipo == 6){
+                        return new JsonResponse($this->changeEstado());
                     }
                 }
             }
@@ -72,14 +74,24 @@ class RegistrationController extends AbstractController
    
     }
 
-    
-    
+    public function changeEstado(){
+        $request = $this->container->get('request_stack')->getCurrentRequest();
+        $id = $request->query->get('id');
 
+        $em = $this->getDoctrine()->getManager();
+        $usuario = $em->getRepository(User::class)->find($id);
+        
+        
+        $usuario->setEstado("Inactivo");
+        $em->flush();
+    }
+
+    
     public function getUsuariosList()
     {
         $em = $this->getDoctrine()->getManager();
         $usuarios = $em->getRepository(User::class)->findAll();
-        $campos = ['Id', 'Cédula', 'Nombre', 'Correo', 'Estado'];
+        $campos = ['Cédula', 'Nombre', 'Correo', 'Estado'];
         // dd($usuarios);
         $users = [];
         foreach ($usuarios as $key => $dato) {

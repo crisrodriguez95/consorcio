@@ -56,6 +56,10 @@ class Cliente
      * @ORM\Column(name="EMAIL", type="string",nullable=false)
      */
     private $email;
+    /**
+     * @ORM\Column(name="estado", type="string",nullable=false)
+     */
+    private $estado;
 
     /**
      *@ORM\OneToMany(targetEntity="App\Entity\ClienteTramite", mappedBy="idCliente")
@@ -149,6 +153,17 @@ class Cliente
         }
 
         $this->email = $value;
+
+        return $this;
+    }
+
+    public function estado($value = null)
+    {
+        if (!$value) {
+            return $this->estado;
+        }
+
+        $this->estado = $value;
 
         return $this;
     }

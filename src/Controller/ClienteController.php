@@ -23,6 +23,9 @@ class ClienteController extends AbstractController
                 if ($tipo) {
                     if ($tipo == 1) {
                         return new JsonResponse($this->registrar());
+                    }else if($tipo == 6){
+                        return new JsonResponse($this->deleteClient());
+                        
                     }
                 }
             }
@@ -56,13 +59,26 @@ class ClienteController extends AbstractController
         $cliente->telefono($request->query->get('telefono'));
         $cliente->movil($request->query->get('celular'));
         $cliente->email($request->query->get('correo'));
+        $cliente->estado('Activo');
         $em->persist($cliente);
         $em->flush();
 
         return 'heythere';
     }
+    // -------------------- Delete cliente -------------------- 
+    public function deleteClient(){
+        $request = $this->container->get('request_stack')->getCurrentRequest();
+        $id = $request->query->get('id');
 
-    // -------------------- Rendering clients --------------------
+        $em = $this->getDoctrine()->getManager();
+        $cliente = $em->getRepository(Cliente::class)->find($id);
+        
+        
+        $cliente->estado("Inactivo");
+        $em->flush();
+    }
+
+    // -------------------- Rendering clientes --------------------
     public function getClienteList()
     {
         $em = $this->getDoctrine()->getManager();
@@ -76,11 +92,17 @@ class ClienteController extends AbstractController
             'Teléfono',
             'Movil',
             'Email',
+            'Estado'
         ];
         $clients = [];
+        
+        // $idClients = [];
 
         foreach ($clientes as $key => $data) {
+            // print_r($data->id());
+            // array_push($idClients, $data->id());
             $clients[$key] = [
+                $data->id(),
                 $data->cedula(),
                 $data->nombre(),
                 $data->estadocivil(),
@@ -88,14 +110,18 @@ class ClienteController extends AbstractController
                 $data->telefono(),
                 $data->movil(),
                 $data->email(),
+                $data->estado()
             ];
         }
-
+        // dd($clients);
+        
         return $this->render('/components/_tabla.html.twig', [
             'datos' => $clients,
             'campos' => $campos,
             'crear' => 'Crear nuevo cliente',
             'tituloTabla' => 'Clientes',
+            
+            
         ]);
     }
 }

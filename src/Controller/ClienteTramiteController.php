@@ -167,7 +167,7 @@ class ClienteTramiteController extends AbstractController
     public function getCliente()
     {
         $em = $this->getDoctrine()->getManager();
-        $clientes = $em->getRepository(Cliente::class)->findAll();
+        $clientes = $em->getRepository(Cliente::class)->findBy(['estado' => 'Activo']);;
 
         return $this->render('client/modal/_cliente.html.twig', [
             'clientes' => $clientes,
@@ -194,7 +194,7 @@ class ClienteTramiteController extends AbstractController
         // dd($clientesTramites[0]->getIdTipoTramiteTransferencia()->tramite());
         //print_r($clientesTramites->getIdCliente()->id, true);
 
-        $campos = ['Id', 'Cliente', 'Tramite', 'Fecha de Incio'];
+        $campos = ['Cliente', 'Tramite', 'Fecha de Incio'];
         $clientsTramite = [];
 
         foreach ($clientesTramites as $key => $data) {
