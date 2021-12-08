@@ -138,6 +138,16 @@ body {
   background-color: #fff;
 }
 
+@keyframes alerta {
+  0%   {opacity: 1;}
+  90%  {opacity: 1;}
+  100% {opacity: 0;}
+}
+  .success {
+    animation: alerta 2s forwards;
+  }
+
+
 [tabindex='-1']:focus:not(:focus-visible) {
   outline: 0 !important;
 }

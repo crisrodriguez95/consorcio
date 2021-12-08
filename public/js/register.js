@@ -6,7 +6,13 @@ var PAGE = (function () {
   eliminar = document.querySelectorAll('.eliminar'),
   crear = document.querySelector('.crear'),
   estado = document.querySelector('.estado'),
-  update = document.querySelectorAll('.update');
+  update = document.querySelectorAll('.update'),
+  success = document.querySelector('.message');
+
+  // console.log(success);
+
+  success.style.display= 'none';
+
   let tipo = "";
   let id = "";
 
@@ -93,12 +99,15 @@ var PAGE = (function () {
 
         return false
       } else {
-        alert('Afiliado ingresado correctamente')
         form[0].reset()
         $('.modal').modal('hide')
+        success.style.display= 'block';  
+        success.setAttribute('class', 'success');
+        
         setTimeout(() => {
+          success.setAttribute('class', 'message');
           location.reload(true)
-        }, 0)
+        }, 3000)
       }
     })
   }

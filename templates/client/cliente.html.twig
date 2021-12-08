@@ -27,6 +27,7 @@
 
     <!-- Custom styles for this template -->
     <link href="css/sb-admin-2.css" rel="stylesheet" />
+
   </head>
 
   <body id="page-top">
@@ -53,10 +54,13 @@
                   <span class="text">Agregar</span>
               </a>
             </div> #}
-    <div class="alert alert-warning alert-dismissible fade show" role="alert">
-  <strong>Holy guacamole!</strong> You should check in on some of those fields below.
-  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-</div>
+          <div class='message'>
+            {{ include('components/_mensajeRegistro.html.twig') }}
+          </div>
+          <div class='message-error'>
+            {{ include('components/_mensajeError.html.twig') }}
+          </div>
+
 
             <div class="my-2"></div>
             {{
@@ -147,8 +151,10 @@
       PAGE.init();
     </script>
     <script>
-var myAlert = document.getElementById('myAlert')
-var bsAlert = new bootstrap.Alert(myAlert)
+var alertList = document.querySelectorAll('.alert')
+alertList.forEach(function (alert) {
+  new bootstrap.Alert(alert)
+})
     </script>
   </body>
 </html>
