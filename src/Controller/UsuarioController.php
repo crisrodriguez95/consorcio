@@ -44,6 +44,9 @@ class UsuarioController extends AbstractController
                 if ($tipo) {
                     if ($tipo == 1) {
                         return new JsonResponse($this->registerUsuario());
+                    }else if ($tipo == 7){
+                        
+                        return new JsonResponse($this->dataUsuario());
                     }
                 }
             }
@@ -85,4 +88,7 @@ class UsuarioController extends AbstractController
 
         return 'heythere';
     }
+
+
+   
 }

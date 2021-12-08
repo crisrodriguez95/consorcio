@@ -27,6 +27,15 @@ class Cliente
      * @ORM\Column(name="NOMBRE", type="string",nullable=false)
      */
     private $nombre;
+    /**
+     * @ORM\Column(name="CEDULA_CONYUGUE", type="integer")
+     */
+    private $conyugueId;
+
+    /**
+     * @ORM\Column(name="NOMBRE_CONYUGUE", type="string")
+     */
+    private $conyugueNombre;
 
     /**
      * @ORM\Column(name="APELLIDO", type="string",nullable=false)
@@ -96,6 +105,27 @@ class Cliente
 
         return $this;
     }
+
+    public function getConyugueCedula(): ?int
+    {
+        return $this->conyugueId;
+    }
+
+    public function setConyugueCedula($cedulaCon = null ): self
+    {
+        
+        $this->conyugueId = $cedulaCon;
+
+        return $this;
+    }
+    public function setConyugueNombre(?string $nombre): self
+    {
+        $this->conyugueNombre = $nombre;
+
+        return $this;
+    }
+
+
     public function apellido($value = null)
     {
         if (!$value) {

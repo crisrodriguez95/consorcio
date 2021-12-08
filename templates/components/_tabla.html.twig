@@ -22,7 +22,7 @@
       {# </div> #}
     </div>
    <button type="button"
-      class="btn btn-primary"
+      class="btn btn-primary crear"
       data-bs-toggle="modal"
       data-bs-target="#exampleModal">
       Crear
@@ -86,8 +86,13 @@
                         <a class="dropdown-item eliminar" data-id="{{ fila[0] }}" href="">
                           Eliminar
                         </a>
-                        <a class="dropdown-item" href="#">Editar</a>
-                    
+                        <a class="dropdown-item update"
+                          data-bs-toggle="modal"
+                          data-bs-target="#exampleModal"
+                          data-id="{{ fila[0] }}" 
+                          href="">
+                          Editar
+                        </a>
                       </div>
                   </div>
                 </td>
@@ -106,7 +111,7 @@
     </h3>
     <!-- Button trigger modal -->
     <button type="button"
-      class="btn btn-primary"
+      class="btn btn-primary crear"
       data-bs-toggle="modal"
       data-bs-target="#exampleModal">
       Crear

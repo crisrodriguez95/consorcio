@@ -44,27 +44,48 @@
 
           {# ------------ Fila 2 ------------------ #}
           <div class="form-group">
-             <div class="row">
+            <div class="row">
               <div class="col-md-6">
                 <label for="id" class="form-label">Apellido</label>
                 <input type="text"
                   class="form-control"
-                  id="id"
+                  id="lastName"
                   name="apellido"
                   maxlength="10"
                   required />
               </div>
               <div class="col-md-6">
                 <label for="email">Correo Electronico</label>
-            <input type="text"
-              class="form-control"
-              id="email"
-              name="correo"
-              required />
+                <input type="text"
+                  class="form-control"
+                  id="email"
+                  name="correo"
+                  required />
               </div>
-            </div>
-            
+            </div>    
           </div>
+          {# ------------ Fila 3 Buttons ------------------ #}
+          <div class="form-group estado">
+             <div class="row">
+              <div class="col-md-6">
+                <label for="id" class="form-label">Estado</label>
+                  <select class="form-select"
+                  required
+                  id="estatus"
+                  name="estado"
+                  aria-label="Default select example">
+                  <option value="Inactivo">
+                    Inactivo
+                  </option>
+                  <option value="Activo">
+                    Activo
+                  </option>
+                </select>
+              </div>      
+            </div>            
+          </div>
+
+          {# ------------ Fila 4 Buttons ------------------ #}
            <div class="form-group">
              <div class="row">
               <div class="col-md-12">
@@ -75,12 +96,11 @@
                   name="password"
                   maxlength="30"
                   required />
-              </div>
-              
-            </div>
-            
+              </div>      
+            </div>            
           </div>
-          {# ------------ Fila 3 Buttons ------------------ #}
+           
+          {# ------------ Fila 5 Buttons ------------------ #}
           <div class="form-group">
             <div class="row">
               <div class="col-md-6">

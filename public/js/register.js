@@ -1,14 +1,38 @@
-var PAGE = (function () {
-  const form1 = document.querySelector('.user'), 
-  eliminar = document.querySelectorAll('.eliminar');
 
+var PAGE = (function () {
+  
+  var form = $('form.user');
+  const form1 = document.querySelector('.user'), 
+  eliminar = document.querySelectorAll('.eliminar'),
+  crear = document.querySelector('.crear'),
+  estado = document.querySelector('.estado'),
+  update = document.querySelectorAll('.update');
+  let tipo = "";
+  let id = "";
+
+  crear.addEventListener("click", () => {
+    tipo = 1; 
+    form[0].reset();
+    estado.style.display = 'none';
+
+  });
+
+  
+  update.forEach((elem) => {
+    elem.addEventListener('click', () => {
+      tipo = 2;
+      id = elem.dataset.id;
+      estado.style.display = 'block';    
+    });
+  });
  
+
   eliminar.forEach((elem) => {
     elem.addEventListener('click', () => {
       let id = elem.dataset.id;
       $.ajax({
         data: {
-          tipo:6,
+          tipo: 6,
           id
         },
         error: function () {
@@ -28,33 +52,36 @@ var PAGE = (function () {
 
   
 
-  var form = $('form.user')
+
 
   var inicio = function () {
     form.unbind().on('submit', function (e) {
       const formData = new FormData(form1)
 
-
-      for (let [key, entry] of formData) {
-        if (entry == '') {
-          return
-        }
-        console.log(key)
-      }
+      // for (let [key, entry] of formData) {
+      //   if (entry == '') {
+      //     return
+      //   }
+      // }
       ingreso(this)
       return false
     })
   }
   var ingreso = (f) => {
     var formulario = {},
-      dataform = form.serializeArray()
-    console.log(dataform)
-    formulario.tipo = 1
+    dataform = form.serializeArray()
+
+    if(tipo == 2){
+      formulario.id = id; 
+    }
+
+    console.log(dataform);
+    formulario.tipo = tipo; 
 
     for (i in dataform) {
       formulario[dataform[i]['name']] = dataform[i]['value']
     }
-
+    console.log(formulario);
     $.ajax({
       data: formulario,
       error: function () {

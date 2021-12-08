@@ -14,7 +14,6 @@
           class="btn-close"
           data-bs-dismiss="modal"
           aria-label="Close">
-
         </button>
       </div>
       <div class="modal-body">
@@ -25,11 +24,12 @@
               <div class="col-md-6">
                 <label for="id" class="form-label">Cédula</label>
                 <input type="text"
-                  class="form-control"
+                  class="form-control number"
                   id="id"
                   name="cedula"
                   maxlength="10"
-                  required />
+                  required
+                  />
               </div>
               <div class="col-md-6">
                 <label for="name">Nombre</label>
@@ -41,7 +41,7 @@
               </div>
             </div>
           </div>
-
+         
           {# ------------ Fila 2 ------------------ #}
           <div class="form-group">
             <div class="row">
@@ -77,13 +77,18 @@
               </div>
             </div>
           </div>
+
           {# ------------ Fila 3 ------------------ #}
+          {{ include('client/modal/conyugueCliente.html.twig') }}
+
+           {# ------------ Fila 4 ------------------ #}
+    
           <div class="form-group">
             <div class="row">
               <div class="col-md-6">
                 <label for="mobil">Celular</label>
                 <input type="text"
-                  class="form-control"
+                  class="form-control number"
                   id="mobil"
                   name="celular"
                   maxlength="10"
@@ -92,7 +97,7 @@
               <div class="col-md-6">
                 <label for="phone">Teléfono</label>
                 <input type="text"
-                  class="form-control"
+                  class="form-control number"
                   id="phone"
                   name="telefono"
                   maxlength="7"
@@ -101,7 +106,7 @@
             </div>
           </div>
 
-          {# ------------ Fila 4 ------------------ #}
+          {# ------------ Fila 5 ------------------ #}
           <div class="form-group">
             <label for="address">Dirección</label>
             <input type="text"
@@ -110,7 +115,6 @@
               name="direccion"
               required />
           </div>
-
           <div class="form-group">
             <label for="email">Correo Electronico</label>
             <input type="text"
@@ -119,7 +123,22 @@
               name="correo"
               required />
           </div>
-          {# ------------ Fila 5 Buttons ------------------ #}
+          <div class="form-group estado">
+            <label for="email">Estado</label>
+            <select class="form-select"
+                  required
+                  id="estatus"
+                  name="estado"
+                  aria-label="Default select example">
+                  <option value="Inactivo">
+                    Inactivo
+                  </option>
+                  <option value="Activo">
+                    Activo
+                  </option>
+                </select>
+          </div>
+          {# ------------ Fila 6 Buttons ------------------ #}
           <div class="form-group">
             <div class="row">
               <div class="col-md-6">
@@ -138,9 +157,26 @@
           </div>
         </form>
       </div>
-      {# <div class="modal-footer">
-        
-      </div> #}
     </div>
   </div>
 </div>
+<script>
+
+  const select = document.querySelector('.form-select');
+  const div = document.querySelector('.conyugue'),
+   cedulaConyugue = document.querySelector('#idConyugue');
+  
+  div.style.display = 'none';
+
+  select.addEventListener("change", () => {
+    const estadoCivil = select.value;
+    if(estadoCivil == "Casado"){
+      div.style.display = 'block';
+    }else{
+      div.style.display = 'none';
+      cedulaConyugue.value = null;
+
+    }
+  });
+
+</script>
