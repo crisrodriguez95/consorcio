@@ -31,6 +31,10 @@ class ClienteTramiteController extends AbstractController
                         return new JsonResponse(
                             $this->registerClienteTramite()
                         );
+                    }else if($tipo == 2){
+                        return new JsonResponse($this->updateClienteTramite());                   
+                    }else if($tipo == 7){
+                        return new JsonResponse($this->dataClienteTramite());
                     }
                 }
             }
@@ -196,6 +200,52 @@ class ClienteTramiteController extends AbstractController
         ]);
     }
 
+    // -------------------- update cliente trámite -------------------- 
+
+    public function updateClienteTramite(){
+    
+        $request = $this->container->get('request_stack')->getCurrentRequest();
+        $em = $this->getDoctrine()->getManager();
+  
+        $id = $request->query->get('id');
+        $clienteTramite = $em->getRepository(ClienteTramite::class)->find($id);
+
+        $cliente = $em
+            ->getRepository(Cliente::class)
+            ->find($request->query->get('cliente'));
+
+        $TipoTramite = $em
+            ->getRepository(TipoTramiteTransferencia::class)
+            ->find($request->query->get('tipo_tramite'));
+
+  
+          $clienteTramite->setIdCliente($cliente);
+          $clienteTramite->setIdTipoTramite($TipoTramite);
+         
+          $em->flush();
+      }
+
+    // -----------------------Data cliente trámite--------------
+    public function dataClienteTramite(){
+        $request = $this->container->get('request_stack')->getCurrentRequest();
+        $id = $request->query->get('id');
+
+        $em = $this->getDoctrine()->getManager();
+        $clienteTramite = $em->getRepository(Cliente::class)->find($id);
+        
+        $dato = [
+          'cliente' => $clienteTramite->getIdCliente(),
+          'tipo' => $clienteTramite->getIdTipoTramiteTransferencia(),
+        ];
+
+       $data = [
+           'datooos' => $dato
+       ];
+
+        return $data;
+    
+    }
+    // --------------------------------------------------------------
     public function getClienteTramiteList()
     {
         $em = $this->getDoctrine()->getManager();
@@ -205,13 +255,14 @@ class ClienteTramiteController extends AbstractController
         // dd($clientesTramites[0]->getIdTipoTramiteTransferencia()->tramite());
         //print_r($clientesTramites->getIdCliente()->id, true);
 
-        $campos = ['Cliente', 'Tramite', 'Fecha de Incio'];
+        $campos = ['Cliente Nombre', 'Cliente Apellido', 'Tramite', 'Fecha de Incio'];
         $clientsTramite = [];
 
         foreach ($clientesTramites as $key => $data) {
             $clientsTramite[$key] = [
                 $data->id(),
                 $data->getIdCliente()->nombre(),
+                $data->getIdCliente()->apellido(),
                 $data->getIdTipoTramiteTransferencia()->tramite(),
                 $data->fechaInicio(),
             ];

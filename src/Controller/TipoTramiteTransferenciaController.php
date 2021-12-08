@@ -24,9 +24,13 @@ class TipoTramiteTransferenciaController extends AbstractController
                 if ($tipo) {
                     if ($tipo == 1) {
                         return new JsonResponse($this->registerTipoTramite());
+                    }else if ($tipo == 2){                        
+                        return new JsonResponse($this->updateTipoTramite());
                     }else if ($tipo == 6){
-                        return new JsonResponse($this->deleteTipoTramite());
-
+                        return new JsonResponse($this->deleteTipoTramite());                   
+                    }else if ($tipo == 7){
+                        return new JsonResponse($this->dataTipoTramite());
+                        
                     }
                 }
             }
@@ -34,6 +38,7 @@ class TipoTramiteTransferenciaController extends AbstractController
         return $this->render('tramite/tipoTramiteTransferencia.html.twig');
     }
 
+    // ----------------------Register tipo de trámite-----------------
     function registerTipoTramite()
     {
         $request = $this->container->get('request_stack')->getCurrentRequest();
@@ -48,6 +53,25 @@ class TipoTramiteTransferenciaController extends AbstractController
         $em->persist($tipoTramite);
         $em->flush();
     }
+
+    // ----------------------Update tipo de trámite-----------------
+    function updateTipoTramite()
+    {
+        $request = $this->container->get('request_stack')->getCurrentRequest();
+      $em = $this->getDoctrine()->getManager();
+
+      $id = $request->query->get('id');
+      $tipo = $em->getRepository(TipoTramiteTransferencia::class)->find($id);
+
+        $tipo->tramite($request->query->get('tipoTramite'));
+        $tipo->Observa($request->query->get('observacion'));
+        $tipo->pesoTiempo($request->query->get('tiempo'));
+        $tipo->pesoCarga($request->query->get('carga'));
+      
+        $em->flush();
+    }
+
+
      // -------------------- Delete tipo de trámite -------------------- 
     public function deleteTipoTramite(){
         $request = $this->container->get('request_stack')->getCurrentRequest();
@@ -59,6 +83,33 @@ class TipoTramiteTransferenciaController extends AbstractController
         $em->remove($tipoTramite);
         $em->flush();
     }
+
+     // -------------------- Data tipo de trámite -------------------- 
+
+    public function dataTipoTramite(){
+        $request = $this->container->get('request_stack')->getCurrentRequest();
+        $id = $request->query->get('id');
+
+        $em = $this->getDoctrine()->getManager();
+        $tipo = $em->getRepository(TipoTramiteTransferencia::class)->find($id);
+        
+        $dato = [
+          'tramite' => $tipo->tramite(),
+          'observacion' => $tipo->Observa(),
+          'tiempo' => $tipo->pesoTiempo(),
+          'carga' => $tipo->pesoCarga()
+        ];
+
+       $data = [
+           'datooos' => $dato
+       ];
+
+        return $data;
+        // $cliente->estado("Inactivo");
+        // $em->flush();
+    }
+
+
 
     public function getTipoTramiteTransferencia()
     {

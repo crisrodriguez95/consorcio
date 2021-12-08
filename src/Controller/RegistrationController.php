@@ -35,8 +35,14 @@ class RegistrationController extends AbstractController
                         return new JsonResponse(
                             $this->register($request, $passwordEncoder)
                         );
+                    }else if ($tipo == 2){
+                        return new JsonResponse($this->updateUsuario());
+
                     }else if($tipo == 6){
                         return new JsonResponse($this->changeEstado());
+                    }else if ($tipo == 7){
+                        return new JsonResponse($this->dataUsuario());
+
                     }
                 }
             }
@@ -72,6 +78,50 @@ class RegistrationController extends AbstractController
         return 'Registro ingresado';     
 
    
+    }
+    // -------------------- update cliente -------------------- 
+
+    public function updateUsuario(){
+    
+        $request = $this->container->get('request_stack')->getCurrentRequest();
+        $em = $this->getDoctrine()->getManager();
+  
+        $id = $request->query->get('id');
+        $usuario = $em->getRepository(User::class)->find($id);
+  
+        $usuario->setEmail($request->query->get('correo'));
+        $usuario->setCedula($request->query->get('cedula'));
+        $usuario->setNombre($request->query->get('nombre'));
+        $usuario->setApellido($request->query->get('apellido'));
+        $usuario->setEstado($request->query->get('estado'));     
+
+          $em->flush();
+      }
+
+    // ------------------------------------------
+    public function dataUsuario(){
+        $request = $this->container->get('request_stack')->getCurrentRequest();
+        $id = $request->query->get('id');
+
+        $em = $this->getDoctrine()->getManager();
+        $usuario = $em->getRepository(User::class)->find($id);
+        
+        $dato = [
+          'cedula' => $usuario->getCedula(),
+          'nombre' => $usuario->getNombre(),
+          'apellido' => $usuario->getApellido(),
+          'correo' => $usuario->getEmail(),
+          'password' => $usuario->getPassword(),
+          'estado' => $usuario->getEstado()
+        ];
+
+       $data = [
+           'datooos' => $dato
+       ];
+
+        return $data;
+        // $cliente->estado("Inactivo");
+        // $em->flush();
     }
 
     public function changeEstado(){

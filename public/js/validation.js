@@ -4,10 +4,11 @@
   'use strict'
 
   // Fetch all the forms we want to apply custom Bootstrap validation styles to
-  var forms = document.querySelectorAll('.needs-validation')
-  var inputs = document.querySelectorAll('.inputText')
-  let code = false
-  let value = ''
+  var forms = document.querySelectorAll('.needs-validation');
+  const inputsText = document.querySelectorAll('.inputText'), 
+  inputsNumber = document.querySelectorAll('.number');
+  let code = false, value = '', aux = '';
+
 
   // Obtener valores números
   function getCode(field) {
@@ -17,7 +18,7 @@
     return code
   }
 
-  inputs.forEach((input) => {
+  inputsText.forEach((input) => {
     input.addEventListener('input', () => {
       let code = getCode(input)
       if (!isNaN(input.value) || code == true) {
@@ -26,40 +27,18 @@
     })
   })
 
-  // let cedula = document.querySelector('#id'),
-  //   nombre = document.querySelector('#name'),
-  //   apellido = document.querySelector('#lastName'),
-  //   mobile = document.querySelector('#mobil'),
-  //   phone = document.querySelector('#phone'),
-  //   currentValue = '',
-  //   nameValue = '',
-  //   mobileValue = '',
-  //   phoneValue = '',
-  //   code = false
+  inputsNumber.forEach((input) => {
+    input.addEventListener('input', (e) => {
+      input.value = e.target.value.trim()
+      if (isNaN(input.value)) {
+        input.value = aux
+      } 
+      // else {
+      //   aux = input.value
+      // }
+    })
+  })
 
-  // nombre.addEventListener('input', (e) => {
-  //   let code = getCode(nombre)
-  //   if (!isNaN(nombre.value) || code == true) {
-  //     nombre.value = nameValue
-  //   } else {
-  //     nameValue = nombre.value
-  //   }
-  // })
-
-  // function validarNumber(field, aux) {
-  //   field.addEventListener('input', (e) => {
-  //     field.value = e.target.value.trim()
-  //     if (isNaN(field.value)) {
-  //       field.value = aux
-  //     } else {
-  //       aux = field.value
-  //     }
-  //   })
-  // }
-
-  // validarNumber(cedula, currentValue)
-  // validarNumber(mobile, mobileValue)
-  // validarNumber(phone, phoneValue)
 
   // Loop over them and prevent submission
   Array.prototype.slice.call(forms).forEach((form) => {
