@@ -15,9 +15,9 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item">
-                <a class="nav-link" href=" {{ path('tablero')}} ">
+                <a class="nav-link" href=" {{ path('usuarioTramiteIndividual')}} ">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Dashboard</span></a>
+                    <span>Tramites asignados a mi</span></a>
             </li>
 
             <!-- Divider -->
@@ -25,16 +25,18 @@
 
             <!-- Heading -->
             <div class="sidebar-heading">
-                Administracion
+                Panel
             </div>
 
             <!-- Nav Item - Pages Collapse Menu -->
+            {% if is_granted('ROLE_ADMIN') %}
             <li class="nav-item">
                 <a class="nav-link collapsed" href="{{ path('app_register')}}" >
                     <i class="fas fa-fw fa-users"></i>
                     <span>Usuarios</span>
                 </a>
             </li>
+             {% endif %}
 
             <li class="nav-item">
                 <a class="nav-link collapsed" href="{{ path('cliente')}} " >
@@ -44,7 +46,7 @@
             </li>
 
              <!-- Nav Item - Trámites Menu -->
-
+             
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTramites"
                     aria-expanded="true" aria-controls="collapseTramites">
@@ -55,16 +57,20 @@
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Custom Utilities:</h6>
+
                         <a class="collapse-item" href=" {{ path('tipoTransferencia')}} ">Tipo de Tramites</a>
                         <a class="collapse-item" href= " {{ path('clienteTramite')}} " >Tramites</a>
-                    
+                        {% if is_granted('ROLE_ADMIN') %}
+                                  
+                        <a class="collapse-item" href= " {{ path('usuarioTramite')}} " >Todos losTramites</a>
+                         {% endif %}          
                     </div>
                 </div>
             </li>
 
              <!-- Nav Item - Reportes Menu -->
+              
                {% if is_granted('ROLE_ADMIN') %}
-
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseRoles"
                     aria-expanded="true" aria-controls="collapseRoles">
