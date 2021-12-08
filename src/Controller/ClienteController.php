@@ -87,6 +87,7 @@ class ClienteController extends AbstractController
         $campos = [
             'Cédula',
             'Nombre',
+            'Apellido',
             'Estado Civil',
             'Dirección',
             'Teléfono',
@@ -105,6 +106,7 @@ class ClienteController extends AbstractController
                 $data->id(),
                 $data->cedula(),
                 $data->nombre(),
+                $data->apellido(),
                 $data->estadocivil(),
                 $data->direccion(),
                 $data->telefono(),

@@ -69,7 +69,7 @@ class RegistrationController extends AbstractController
         $entityManager->persist($user);
         $entityManager->flush();
 
-        return 'Usuario ingresado';     
+        return 'Registro ingresado';     
 
    
     }
@@ -91,15 +91,18 @@ class RegistrationController extends AbstractController
     {
         $em = $this->getDoctrine()->getManager();
         $usuarios = $em->getRepository(User::class)->findAll();
-        $campos = ['Cédula', 'Nombre', 'Correo', 'Estado'];
+        $campos = ['Cédula', 'Nombre', 'Apellido', 'Correo', 'Estado', 'Rol'];
         // dd($usuarios);
         $users = [];
         foreach ($usuarios as $key => $dato) {
+           // dd($dato->getRoles()[0]);
             $users[$key] = [
                 $dato->getId(),
                 $dato->getCedula(),
                 $dato->getNombre(),
+                $dato->getApellido(),
                 $dato->getEmail(),
+                $dato->getRoles()[0],
                 $dato->getEstado(),
             ];
         }

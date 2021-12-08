@@ -49,14 +49,10 @@
             {% for key, fila in datos %}
               <tr>
                 {% for key, data in fila %}
-                  {% if key == 6 %}
+                  {% if key > 0 %}
                     <td style="background: #fff; color: #484C64">
                       {{ data }}
-                    </td>
-                  {% else %}
-                    <td style="background: #fff; color: #484C64">
-                      {{ data }}
-                    </td>
+                    </td>                 
                   {% endif %}
                 {% endfor %}
                 <td style="background: #fff" colspan="2">
@@ -71,7 +67,7 @@
                     </button>
                     <div class="dropdown-menu"
                       aria-labelledby="dropdownMenuButton">                     
-                      <a class="dropdown-item" href="{{ path('procesotramite',{idTramite: 1}) }}">Actualizar</a>
+                      <a class="dropdown-item" href="{{ path('procesotramite',{idTramite:  fila[0] }) }}">Actualizar</a>
                       <a class="dropdown-item" href="#">Editar</a>
                        <a class="dropdown-item" href="#">Eliminar</a>
                     </div>

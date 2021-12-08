@@ -89,12 +89,14 @@ class UsuarioTramiteController extends AbstractController
             'Apellido',
             'Tipo de Trámite',
             'Fecha',
+            'Estado'
         ];
         $usuariosTramite = [];
 
         foreach ($usuarioTramites as $key => $data) {
             // dd($data->getIdClienteTramite()->id());
             $usuariosTramite[$key] = [
+                $data->id(),
                 $data->getIdUsuario()->getCedula(),
                 $data->getIdUsuario()->getNombre(),
                 $data->getIdUsuario()->getApellido(),
@@ -118,6 +120,7 @@ class UsuarioTramiteController extends AbstractController
                     ->tramite(),
 
                 $data->fecha(),
+                $data->estadoProceso()
             ];
         }
 

@@ -51,7 +51,8 @@
 
           <!-- Begin Page Content -->       
            
-            
+     <form>      
+     
     <div class=" my-2 container" style="max-width: 950px;">
       <div id="wizard">
         <h3>
@@ -64,61 +65,85 @@
           </div>
         </h3>
         <section>
+            {% for dato in informacion %}  
           <div class="content-wrapper">
             <h4 class="section-heading">Documentos personales </h4>           
             <div class="form-check">
               <label class="form-check-label">
-                <input type="checkbox" class="form-check-input" name="cedula" id="cedula" value="checkedValue" >
+                <input type="checkbox" class="form-check-input" name="cedula" id="cedula" value="checkedValue" {% if dato.cedula() == 'YES' %} checked {% endif %} >
                Copia de cedula 
               </label>
             </div>
             <div class="form-check">
               <label class="form-check-label">
-                <input type="checkbox" class="form-check-input" name="papeleta" id="papeleta" value="checkedValue" >
+                <input type="checkbox" class="form-check-input" name="papeleta" id="papeleta" value="checkedValue" {% if dato.papeleta() == 'YES' %} checked {% endif %} >
                Copia de papeleta de votación
               </label>
             </div>
             <div class="form-check">
               <label class="form-check-label">
-                <input type="checkbox" class="form-check-input" name="bienes" id="bienes" value="checkedValue" >
+                <input type="checkbox" class="form-check-input" name="bienes" id="bienes" value="checkedValue" {% if dato.escrituraBienes() == 'YES' %} checked {% endif %} >
                Escritura de bienes
               </label>
             </div> 
              <div class="form-check">
               <label class="form-check-label">
-                <input type="checkbox" class="form-check-input" name="" id="" value="checkedValue" >
+                <input type="checkbox" class="form-check-input" name="" id="" value="checkedValue" {% if dato.estaEnagenado() == 'YES' %} checked {% endif %}  >
                Bien enagenado
               </label>
             </div> 
-            <hr>  
-            
+            <hr>            
+           
               <div class="form-group col-md-12">
                 <label for="minuta" class="">Minuta</label>
+                 {% if dato.minuta() == null %} 
                 <input type="file" name="minura" id="minuta" class="form-control" placeholder="Cargar minuta">
-              </div>  
+                {% else %} 
+                {{ dato.minuta() }}
+                 {% endif %}
+              </div> 
+              
+              {% if  'DONA' in dato.getIdClienteTramite().getIdTipoTramiteTransferencia().tramite() %} 
               <div class="form-group col-md-12">
-                <label for="minuta" class="">Insinuacion de donación</label>
-                <input type="file" name="minura" id="minuta" class="form-control" placeholder="Cargar insinuacion de donacion">
-              </div>  
+                <label for="insinuacionDonacion" class="">Insinuacion de donación</label>
+                      {% if dato.insinuacionDonacion() == null %} 
+                <input type="file" name="minura" id="insinuacionDonacion" class="form-control" placeholder="Cargar insinuacion de donacion">
+                 {% else %} 
+                  {{ dato.insinuacionDonacion() }}
+                    {% endif %} 
+              </div>
+              {% endif %}                                
+
+              
               <div class="form-group col-md-12">
                 <label for="minuta" class="">Valores a pagar</label>
-                <input type="text" name="minura" id="minuta" class="form-control" placeholder="Cargar minuta">
-              </div> 
+                 {% if dato.valoresMunicipio() == null %} 
+                <input type="text" name="minura" id="minuta" class="form-control" value="{{ dato.valoresMinucipio() }}" placeholder="Cargar minuta">
+                 {% else %} 
+                  {{ dato.valoresMunicipio() }}
+                   {% endif %} 
+              </div>             
+                        
+
               <div class="form-check">
               <label class="form-check-label">
-                <input type="checkbox" class="form-check-input" name="" id="" value="checkedValue" >
+                <input type="checkbox" class="form-check-input" name="" id="" value="checkedValue"  {% if dato.peticionValores() == 'YES' %} checked {% endif %} >
                Peticion de valores
               </label>
               </div>
               <div class="form-check">
               <label class="form-check-label">
-                <input type="checkbox" class="form-check-input" name="" id="" value="checkedValue" >
+                <input type="checkbox" class="form-check-input" name="" id="" value="checkedValue" {% if dato.pagoValores() == 'YES' %} checked {% endif %} >
                 Aprobacion de pago de valores de cliente
               </label>
               </div>
               <div class="form-group col-md-12">
                 <label for="minuta" class="">Subir comprobante de pago</label>
+                {% if dato.pagoValores() == null %} 
                 <input type="file" name="minura" id="minuta" class="form-control" placeholder="Cargar minuta">
+                {% else %} 
+                  {{ dato.pagoValores() }}
+                   {% endif %} 
               </div>           
 
                         
@@ -279,7 +304,8 @@
         </section>
       </div>
     </div>
- 
+     {% endfor %}
+ </form> 
           
 
           

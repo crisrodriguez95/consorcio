@@ -37,7 +37,7 @@ class TramiteTransferencia {
    */
   private $escrituraBienes; 
   /**
-   * @ORM\Column(name = "ENAGENADO", type = "string", nullable = false)
+   * @ORM\Column(name = "ENAJENADO", type = "string", nullable = false)
    */
   private $estaEnagenado; 
   /**
@@ -53,7 +53,7 @@ class TramiteTransferencia {
   /**
    * @ORM\Column(name = "VALORES_MUNICIPIO", type = "string", nullable = false)
    */
-  private $valoresMinucipio; 
+  private $valoresMunicipio; 
 
   /**
    * @ORM\Column(name = "PETICION_VALORES", type = "string", nullable = false)
@@ -100,7 +100,7 @@ class TramiteTransferencia {
  
  
   /**
-   * @ORM\Column(name = "DOCUMENTO_FIRMADO", type = "string", nullable = false)
+   * @ORM\Column(name = "FIRMA_DOCUMENTO", type = "string", nullable = false)
    */
   private $documentoFirmado;
   
@@ -109,15 +109,15 @@ class TramiteTransferencia {
    */
   private $entregadaNotaria;
   /**
-   * @ORM\Column(name = "ESCRITURA", type = "string", nullable = false)
+   * @ORM\Column(name = "SUBIR_ESCRITURA", type = "string", nullable = false)
    */
   private $subirEscritura;
   /**
-   * @ORM\Column(name = "ENTREGADA_REGISTRO_PROPIEDAD", type = "string", nullable = false)
+   * @ORM\Column(name = "DOCUMENTOS_ENTREGADOS_REGISTRO_PROPIEDAD", type = "string", nullable = false)
    */
   private $entregadaRegistroPropiedad;
   /**
-   * @ORM\Column(name = "APROBACION_PAGOS", type = "string", nullable = false)
+   * @ORM\Column(name = "APROBACION_VALORES", type = "string", nullable = false)
    */
   private $clienteAprueba;
    /**
@@ -137,7 +137,7 @@ class TramiteTransferencia {
    */
   private $actaInscripcion;
   /**
-   * @ORM\Column(name = "SUBIR_INFORME", type = "string", nullable = false)
+   * @ORM\Column(name = "INFORME_GASTOS", type = "string", nullable = false)
    */
   private $informeGastos;
   /**
@@ -145,10 +145,8 @@ class TramiteTransferencia {
    */
   private $pagoGastos; 
 
-
-
   /**
-   * @ORM\Column(name = "OBSERVACION", type = "string", nullable = false)
+   * @ORM\Column(name = "OBSERVACIONES", type = "string", nullable = false)
    */
   private $observacion; 
 
@@ -192,14 +190,240 @@ public function getIdClienteTramite(): ClienteTramite
     return $this;
 
   }
-  public function bienes($value = null){
+  public function escrituraBienes($value = null){
     if(!$value)
-      return $this->bienes;
+      return $this->escrituraBienes;
     
-    $this->bienes = $value;
+    $this->escrituraBienes = $value;
     return $this;
 
   }
+  
+  public function estaEnagenado($value = null){
+    if(!$value)
+      return $this->estaEnagenado;
+    
+    $this->estaEnagenado = $value;
+    return $this;
+
+  }
+
+  public function minuta($value = null){
+    if(!$value)
+      return $this->minuta;
+    
+    $this->minuta = $value;
+    return $this;
+
+  }
+  
+  
+  public function insinuacionDonacion($value = null){
+    if(!$value)
+      return $this->insinuacionDonacion;
+    
+    $this->insinuacionDonacion = $value;
+    return $this;
+
+  }
+
+  public function valoresMunicipio($value = null){
+    if(!$value)
+      return $this->valoresMunicipio;
+    
+    $this->valoresMunicipio = $value;
+    return $this;
+
+  }
+
+  public function peticionValores($value = null){
+    if(!$value)
+      return $this->peticionValores;
+    
+    $this->peticionValores = $value;
+    return $this;
+
+  }
+
+  public function pagoValores($value = null){
+    if(!$value)
+      return $this->pagoValores;
+    
+    $this->pagoValores = $value;
+    return $this;
+
+  }
+  
+
+  
+  public function horaReunion($value = null){
+    if(!$value)
+      return $this->horaReunion;
+    
+    $this->horaReunion = $value;
+    return $this;
+
+  }
+
+  public function fechaReunion($value = null){
+    if(!$value)
+      return $this->fechaReunion;
+    
+    $this->fechaReunion = $value;
+    return $this;
+
+  }
+
+  public function fechaEjecucion($value = null){
+    if(!$value)
+      return $this->fechaEjecucion;
+    
+    $this->fechaEjecucion = $value;
+    return $this;
+
+  }
+
+  public function retraso($value = null){
+    if(!$value)
+      return $this->retraso;
+    
+    $this->retraso = $value;
+    return $this;
+
+  }
+  public function pagoTasaNotarial($value = null){
+    if(!$value)
+      return $this->pagoTasaNotarial;
+    
+    $this->pagoTasaNotarial = $value;
+    return $this;
+
+  }
+
+  public function pagoCompleto($value = null){
+    if(!$value)
+      return $this->pagoCompleto;
+    
+    $this->pagoCompleto = $value;
+    return $this;
+
+  }
+  public function esMutualista($value = null){
+    if(!$value)
+      return $this->esMutualista;
+    
+    $this->esMutualista = $value;
+    return $this;
+
+  }
+  public function entregadoMutualista($value = null){
+    if(!$value)
+      return $this->entregadoMutualista;
+    
+    $this->entregadoMutualista = $value;
+    return $this;
+
+  }
+
+  public function documentoFirmado($value = null){
+    if(!$value)
+      return $this->documentoFirmado;
+    
+    $this->documentoFirmado = $value;
+    return $this;
+
+  }
+  public function entregadaNotaria($value = null){
+    if(!$value)
+      return $this->entregadaNotaria;
+    
+    $this->entregadaNotaria = $value;
+    return $this;
+
+  }
+  public function subirEscritura($value = null){
+    if(!$value)
+      return $this->subirEscritura;
+    
+    $this->subirEscritura = $value;
+    return $this;
+
+  }
+  
+
+  public function entregadaRegistroPropiedad($value = null){
+    if(!$value)
+      return $this->entregadaRegistroPropiedad;
+    
+    $this->entregadaRegistroPropiedad = $value;
+    return $this;
+
+  }
+
+  public function clienteAprueba($value = null){
+    if(!$value)
+      return $this->clienteAprueba;
+    
+    $this->clienteAprueba = $value;
+    return $this;
+
+  }
+  public function tituloPagoEntregado($value = null){
+    if(!$value)
+      return $this->tituloPagoEntregado;
+    
+    $this->tituloPagoEntregado = $value;
+    return $this;
+
+  }
+  
+
+  public function tituloPago($value = null){
+    if(!$value)
+      return $this->tituloPago;
+    
+    $this->tituloPago = $value;
+    return $this;
+
+  }
+
+  public function escrituraValida($value = null){
+    if(!$value)
+      return $this->escrituraValida;
+    
+    $this->escrituraValida = $value;
+    return $this;
+
+  }
+
+  public function actaInscripcion($value = null){
+    if(!$value)
+      return $this->actaInscripcion;
+    
+    $this->actaInscripcion = $value;
+    return $this;
+
+  } 
+  
+
+  public function informeGastos($value = null){
+    if(!$value)
+      return $this->informeGastos;
+    
+    $this->informeGastos = $value;
+    return $this;
+
+  }
+  
+  public function pagoGastos($value = null){
+    if(!$value)
+      return $this->pagoGastos;
+    
+    $this->pagoGastos = $value;
+    return $this;
+
+  }
+
 
   public function Observa($value = null){
     if(!$value)
