@@ -17,21 +17,21 @@
       <link href="https://fonts.googleapis.com/css?family=Karla:400,700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.materialdesignicons.com/4.8.95/css/materialdesignicons.min.css">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-  <link rel="stylesheet" href="css/bd-wizard.css">
+  <link rel="stylesheet" href="{{ asset('css/bd-wizard.css') }}">
 
     <title>
       Tramite
     </title>
 
     <!-- Custom fonts for this template -->
-    <link href="vendor/fontawesome-free/css/all.min.css"
+    <link href="{{ asset('vendor/fontawesome-free/css/all.min.css') }}"
       rel="stylesheet"
       type="text/css" />
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
       rel="stylesheet" />
 
     <!-- Custom styles for this template -->
-    <link href="css/sb-admin-2.css" rel="stylesheet" />
+    <link href="{{ asset('css/sb-admin-2.css') }}" rel="stylesheet" />
   </head>
 
   <body id="page-top">
@@ -51,7 +51,8 @@
 
           <!-- Begin Page Content -->       
            
-            
+     <form>      
+     
     <div class=" my-2 container" style="max-width: 950px;">
       <div id="wizard">
         <h3>
@@ -64,61 +65,85 @@
           </div>
         </h3>
         <section>
+            {% for dato in informacion %}  
           <div class="content-wrapper">
             <h4 class="section-heading">Documentos personales </h4>           
             <div class="form-check">
               <label class="form-check-label">
-                <input type="checkbox" class="form-check-input" name="" id="" value="checkedValue" >
+                <input type="checkbox" class="form-check-input" name="cedula" id="cedula" value="checkedValue" {% if dato.cedula() == 'YES' %} checked {% endif %} >
                Copia de cedula 
               </label>
             </div>
             <div class="form-check">
               <label class="form-check-label">
-                <input type="checkbox" class="form-check-input" name="" id="" value="checkedValue" >
+                <input type="checkbox" class="form-check-input" name="papeleta" id="papeleta" value="checkedValue" {% if dato.papeleta() == 'YES' %} checked {% endif %} >
                Copia de papeleta de votación
               </label>
             </div>
             <div class="form-check">
               <label class="form-check-label">
-                <input type="checkbox" class="form-check-input" name="" id="" value="checkedValue" >
+                <input type="checkbox" class="form-check-input" name="bienes" id="bienes" value="checkedValue" {% if dato.escrituraBienes() == 'YES' %} checked {% endif %} >
                Escritura de bienes
               </label>
             </div> 
              <div class="form-check">
               <label class="form-check-label">
-                <input type="checkbox" class="form-check-input" name="" id="" value="checkedValue" >
+                <input type="checkbox" class="form-check-input" name="" id="" value="checkedValue" {% if dato.estaEnagenado() == 'YES' %} checked {% endif %}  >
                Bien enagenado
               </label>
             </div> 
-            <hr>  
-            
+            <hr>            
+           
               <div class="form-group col-md-12">
                 <label for="minuta" class="">Minuta</label>
+                 {% if dato.minuta() == null %} 
                 <input type="file" name="minura" id="minuta" class="form-control" placeholder="Cargar minuta">
-              </div>  
+                {% else %} 
+                {{ dato.minuta() }}
+                 {% endif %}
+              </div> 
+              
+              {% if  'DONA' in dato.getIdClienteTramite().getIdTipoTramiteTransferencia().tramite() %} 
               <div class="form-group col-md-12">
-                <label for="minuta" class="">Insinuacion de donación</label>
-                <input type="file" name="minura" id="minuta" class="form-control" placeholder="Cargar insinuacion de donacion">
-              </div>  
+                <label for="insinuacionDonacion" class="">Insinuacion de donación</label>
+                      {% if dato.insinuacionDonacion() == null %} 
+                <input type="file" name="minura" id="insinuacionDonacion" class="form-control" placeholder="Cargar insinuacion de donacion">
+                 {% else %} 
+                  {{ dato.insinuacionDonacion() }}
+                    {% endif %} 
+              </div>
+              {% endif %}                                
+
+              
               <div class="form-group col-md-12">
                 <label for="minuta" class="">Valores a pagar</label>
-                <input type="text" name="minura" id="minuta" class="form-control" placeholder="Cargar minuta">
-              </div> 
+                 {% if dato.valoresMunicipio() == null %} 
+                <input type="text" name="minura" id="minuta" class="form-control" value="{{ dato.valoresMinucipio() }}" placeholder="Cargar minuta">
+                 {% else %} 
+                  {{ dato.valoresMunicipio() }}
+                   {% endif %} 
+              </div>             
+                        
+
               <div class="form-check">
               <label class="form-check-label">
-                <input type="checkbox" class="form-check-input" name="" id="" value="checkedValue" >
+                <input type="checkbox" class="form-check-input" name="" id="" value="checkedValue"  {% if dato.peticionValores() == 'YES' %} checked {% endif %} >
                Peticion de valores
               </label>
               </div>
               <div class="form-check">
               <label class="form-check-label">
-                <input type="checkbox" class="form-check-input" name="" id="" value="checkedValue" >
+                <input type="checkbox" class="form-check-input" name="" id="" value="checkedValue" {% if dato.pagoValores() == 'YES' %} checked {% endif %} >
                 Aprobacion de pago de valores de cliente
               </label>
               </div>
               <div class="form-group col-md-12">
                 <label for="minuta" class="">Subir comprobante de pago</label>
+                {% if dato.pagoValores() == null %} 
                 <input type="file" name="minura" id="minuta" class="form-control" placeholder="Cargar minuta">
+                {% else %} 
+                  {{ dato.pagoValores() }}
+                   {% endif %} 
               </div>           
 
                         
@@ -279,7 +304,8 @@
         </section>
       </div>
     </div>
- 
+     {% endfor %}
+ </form> 
           
 
           
@@ -337,30 +363,30 @@
     </div>
 
     <!-- Bootstrap core JavaScript -->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
+    <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 
     <!-- Core plugin JavaScript -->
-    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="{{ asset('vendor/jquery-easing/jquery.easing.min.js') }}"></script>
 
     <!-- Custom scripts for all pages -->
-    <script src="js/sb-admin-2.min.js"></script>
+    <script src="{{ asset('js/sb-admin-2.min.js') }}"></script>
 
     <!-- Page level plugins -->
-    <script src="vendor/chart.js/Chart.min.js"></script>
+    <script src="{{ asset('vendor/chart.js/Chart.min.js') }}"></script>
 
     <!-- Page level custom scripts -->
-    <script src="js/demo/chart-area-demo.js"></script>
-    <script src="js/demo/chart-pie-demo.js"></script>
+    <script src="{{ asset('js/demo/chart-area-demo.js') }}"></script>
+    <script src="{{ asset('js/demo/chart-pie-demo.js') }}"></script>
 
-    <script src="js/register.js"></script>
+    <script src="{{ asset('js/register.js') }}"></script>
     <script>
       PAGE.init();
     </script>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-  <script src="js/jquery.steps.min.js"></script>
-  <script src="js/bd-wizard.js"></script>
+  <script src="{{ asset('js/jquery.steps.min.js') }}"></script>
+  <script src="{{ asset('js/bd-wizard.js') }}"></script>
   </body>
 </html>

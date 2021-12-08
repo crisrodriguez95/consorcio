@@ -88,7 +88,24 @@
           {# ------------ Fila 4 Buttons ------------------ #}
            <div class="form-group">
              <div class="row">
-              <div class="col-md-12">
+             <div class="col-md-6">
+                <label for="rol">Rol</label>
+                <select class="form-select"
+                  required
+                  id="id_rol"
+                  name="id_rol"
+                  aria-label="Default select example">
+                  <option selected>Seleccione</option>
+                  <option value="ROLE_ADMIN">
+                   Administrador
+                  </option>
+                  <option value="ROLE_USER">
+                    Colaborador
+                  </option>
+                 
+                </select>
+              </div>
+              <div class="col-md-6">
                 <label for="id" class="form-label">Contraseña</label>
                 <input type="password"
                   class="form-control"

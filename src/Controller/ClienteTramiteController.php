@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 use App\Entity\ClienteTramite;
 use App\Entity\TipoTramiteTransferencia;
+use App\Entity\TramiteTransferencia;
 use App\Entity\Cliente;
 use App\Entity\User;
 use App\Entity\UsuarioTramite;
@@ -163,9 +164,19 @@ class ClienteTramiteController extends AbstractController
         $usuarioTramite->estado('Y');
         $usuarioTramite->fecha(date('Y-m-d'));
         $usuarioTramite->describe('');
+        $usuarioTramite->estadoProceso('NO INICIADO');
+
 
         $em->persist($usuarioTramite);
+        
+
+        $tramiteTransferencia= new TramiteTransferencia();
+        $tramiteTransferencia->setIdClienteTramite($clienteTramite);
+        
+        $em->persist($tramiteTransferencia);
         $em->flush();
+
+
     }
 
     public function getCliente()

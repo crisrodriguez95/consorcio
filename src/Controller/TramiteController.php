@@ -10,6 +10,8 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 use App\Entity\Tramite;
 use App\Entity\TipoTramite;
+use App\Entity\TramiteTransferencia;
+use App\Entity\ClienteTramite;
 
 class TramiteController extends AbstractController
 {
@@ -60,11 +62,72 @@ class TramiteController extends AbstractController
         ]);
     }
 
-    /**
+   /**
      * @Route("/procesotramite/{idTramite}", name="procesotramite", requirements={"idTramite"="\d+"})
      */
-    public function getProcesoTramite(Request $request) {
+    public function getProcesoTramiteView($idTramite, Request $request) {
+        if ($request->isXmlHttpRequest()) {
+            if ($request->getMethod() == 'GET') {
+                $tipo = $request->query->get('tipo');
+                if ($tipo) {
+                    if ($tipo == 4)
+                    return new JsonResponse($this->updateProcesoTramite());
+                }
+            }
+        }
+
+        $request = $this->container->get('request_stack')->getCurrentRequest();
+        $em = $this->getDoctrine()->getManager();
+        $modi = $em->getRepository(TramiteTransferencia::class)->find($idTramite);
+        $idTipoTramiteT = $modi->getIdClienteTramite()->getIdTipoTramiteTransferencia();
         
-        return $this->render('tramite/procesotramite.html.twig');
+        if ($modi)
+        $modi = [$modi];       
+        
+        
+        return $this->render('tramite/procesotramite.html.twig',  ["informacion" => $modi, "tipoTramite" => $idTipoTramiteT ]);
     }
+    
+    public function updateProcesoTramite(int $idTramite= 0) {
+        $request = $this->container->get('request_stack')->getCurrentRequest();
+        $em = $this->getDoctrine()->getManager();
+        //dd($idTramite);
+
+       /* $clienteTramite= $em->getRepository(ClienteTramite::class)->find(1);
+        dd($idTramite);
+        $tramiteTransferencia= new TramiteTransferencia();
+        // relates this tramite to the tipoTramite
+        $tramiteTransferencia->setIdClienteTramite($clienteTramite);
+        $tramiteTransferencia->cedula('YES');
+        $tramiteTransferencia->papeleta('YES');
+        $tramiteTransferencia->escrituraBienes('YES');*/
+
+
+        $clienteTramite= $em
+        ->getRepository(ClienteTramite::class)
+        ->find($idTramite);
+
+    $tramiteTransferencia= new TramiteTransferencia();
+    // relates this tramite to the tipoTramite
+    $tramiteTransferencia->setIdClienteTramite($clienteTramite);
+    $tramiteTransferencia->cedula($request->query->get('cedula'));
+    $tramiteTransferencia->papeleta($request->query->get('papeleta'));
+    $tramiteTransferencia->escrituraBienes($request->query->get('bienes'));
+       
+        $em->persist($tramiteTransferencia);
+        $em->flush();
+
+        $response = new JsonResponse();
+        $response->setData([
+            'succes'=> false,
+            ]);
+
+
+        return $response;
+        
+        
+       
+    }
+
+
 }

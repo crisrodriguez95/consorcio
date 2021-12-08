@@ -7,16 +7,20 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Security\Core\Security;
+use Symfony\Component\Security\Core\User\UserInterface;
+
 
 use App\Entity\UsuarioTramite;
 use App\Entity\User;
 
 class UsuarioTramiteController extends AbstractController
 {
+   
+
     /**
      * @Route("/usuarioTramite", name="usuarioTramite");
      */
-
     public function getViewTramite(Request $request)
     {
         if ($request->isXmlHttpRequest()) {
@@ -89,12 +93,14 @@ class UsuarioTramiteController extends AbstractController
             'Apellido',
             'Tipo de Trámite',
             'Fecha',
+            'Estado'
         ];
         $usuariosTramite = [];
 
         foreach ($usuarioTramites as $key => $data) {
             // dd($data->getIdClienteTramite()->id());
             $usuariosTramite[$key] = [
+                $data->id(),
                 $data->getIdUsuario()->getCedula(),
                 $data->getIdUsuario()->getNombre(),
                 $data->getIdUsuario()->getApellido(),
@@ -118,6 +124,7 @@ class UsuarioTramiteController extends AbstractController
                     ->tramite(),
 
                 $data->fecha(),
+                $data->estadoProceso()
             ];
         }
 
@@ -125,7 +132,72 @@ class UsuarioTramiteController extends AbstractController
             'datos' => $usuariosTramite,
             'campos' => $campos,
             'crear' => ' Asignar usuario',
-            'tituloTabla' => 'Asignacion',
+            'tituloTabla' => 'Todos los tramites asignados',
+        ]);
+    }
+     /**
+     * @Route("/usuarioTramiteIndividual", name="usuarioTramiteIndividual");
+     */
+    public function getViewTramitePorUsuario(Request $request)
+    {
+        
+        return $this->render('tramite/usuarioTramiteIndividual.html.twig');
+    }
+
+    public function getUsuarioTramiteListPorUser(UserInterface $user)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $usuarioTramites = $em->getRepository(UsuarioTramite::class)->findBy(['idUser'=>  $user->getId() ]);
+
+        $campos = [
+            'Usuario',
+            'Nombre',
+            'Apellido',
+            'Cliente',
+            'Nombre',
+            'Apellido',
+            'Tipo de Trámite',
+            'Fecha',
+            'Estado'
+        ];
+        $usuariosTramite = [];
+
+        foreach ($usuarioTramites as $key => $data) {
+            // dd($data->getIdClienteTramite()->id());
+            $usuariosTramite[$key] = [
+                $data->id(),
+                $data->getIdUsuario()->getCedula(),
+                $data->getIdUsuario()->getNombre(),
+                $data->getIdUsuario()->getApellido(),
+
+                $data
+                    ->getIdClienteTramite()
+                    ->getIdCliente()
+                    ->cedula(),
+                $data
+                    ->getIdClienteTramite()
+                    ->getIdCliente()
+                    ->nombre(),
+                $data
+                    ->getIdClienteTramite()
+                    ->getIdCliente()
+                    ->apellido(),
+
+                $data
+                    ->getIdClienteTramite()
+                    ->getIdTipoTramiteTransferencia()
+                    ->tramite(),
+
+                $data->fecha(),
+                $data->estadoProceso()
+            ];
+        }
+
+        return $this->render('tramite/modal/_tabla.html.twig', [
+            'datos' => $usuariosTramite,
+            'campos' => $campos,
+            'crear' => ' Asignar usuario',
+            'tituloTabla' => 'Tramites asignados a mi',
         ]);
     }
 }

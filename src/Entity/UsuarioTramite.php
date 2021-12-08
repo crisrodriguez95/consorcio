@@ -42,6 +42,10 @@ class UsuarioTramite
      * @ORM\Column(name = "DESCRIPCION", type = "string", nullable = false)
      */
     private $descripcion;
+    /**
+     * @ORM\Column(name = "ESTADO_PROCESO", type = "string", nullable = false)
+     */
+    private $estadoProceso;
 
     public function setIdClienteTramite(ClienteTramite $clienteTramite): self
     {
@@ -99,6 +103,16 @@ class UsuarioTramite
         }
 
         $this->descripcion = $value;
+        return $this;
+    }
+
+    function estadoProceso($value = null)
+    {
+        if (!$value) {
+            return $this->estadoProceso;
+        }
+
+        $this->estadoProceso = $value;
         return $this;
     }
 }
