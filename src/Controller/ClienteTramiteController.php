@@ -208,6 +208,7 @@ class ClienteTramiteController extends AbstractController
         $em = $this->getDoctrine()->getManager();
   
         $id = $request->query->get('id');
+      
         $clienteTramite = $em->getRepository(ClienteTramite::class)->find($id);
 
         $cliente = $em
@@ -232,7 +233,7 @@ class ClienteTramiteController extends AbstractController
 
         $em = $this->getDoctrine()->getManager();
         $clienteTramite = $em->getRepository(Cliente::class)->find($id);
-        
+        dd($clienteTramite);
         $dato = [
           'cliente' => $clienteTramite->getIdCliente(),
           'tipo' => $clienteTramite->getIdTipoTramiteTransferencia(),

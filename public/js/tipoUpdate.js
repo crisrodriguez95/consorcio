@@ -2,7 +2,6 @@ const update = document.querySelectorAll('.update');
 
   update.forEach((elem) => {
     elem.addEventListener('click', () => {
-     tipo = 2;
       id = elem.dataset.id;
       $.ajax({
         data: {

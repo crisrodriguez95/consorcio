@@ -138,12 +138,25 @@ body {
   background-color: #fff;
 }
 
+.message, .message-error {
+  display: none;
+}
+
 @keyframes alerta {
   0%   {opacity: 1;}
   90%  {opacity: 1;}
   100% {opacity: 0;}
 }
   .success {
+    animation: alerta 2s forwards;
+  }
+
+/* @keyframes warning {
+  0%   {opacity: 1;}
+  90%  {opacity: 1;}
+  100% {opacity: 0;}
+} */
+  .err {
     animation: alerta 2s forwards;
   }
 

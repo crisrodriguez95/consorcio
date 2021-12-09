@@ -1,11 +1,8 @@
 const update = document.querySelectorAll('.update');
 
-console.log(update);
 
   update.forEach((elem) => {
-    console.log(update);
     elem.addEventListener('click', () => {
-     tipo = 2;
       id = elem.dataset.id;
       $.ajax({
         data: {

@@ -16,9 +16,7 @@ use App\Entity\User;
 
 class UsuarioTramiteController extends AbstractController
 {
-   
-
-    /**
+     /**
      * @Route("/usuarioTramite", name="usuarioTramite");
      */
     public function getViewTramite(Request $request)
@@ -60,25 +58,7 @@ class UsuarioTramiteController extends AbstractController
         $em->flush();
     }
 
-    public function getUser()
-    {
-        $em = $this->getDoctrine()->getManager();
-        $users = $em->getRepository(User::class)->findAll();
-
-        return $this->render('/components/usuario/_usuario.html.twig', [
-            'usuarios' => $users,
-        ]);
-    }
-    public function getClienteTramite()
-    {
-        $em = $this->getDoctrine()->getManager();
-        $usuariosTramite = $em->getRepository(UsuarioTramite::class)->findAll();
-        dd($usuariosTramite);
-        return $this->render('/components/usuario/_usuario.html.twig', [
-            'clienteTramite' => $usuariosTramite,
-        ]);
-    }
-
+    
     public function getUsuarioTramiteList()
     {
         $em = $this->getDoctrine()->getManager();

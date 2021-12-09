@@ -58,6 +58,7 @@ class RegistrationController extends AbstractController
         $request,
         $passwordEncoder       
     ) {
+       
         $user = new User();
         $entityManager = $this->getDoctrine()->getManager();
 
@@ -93,10 +94,11 @@ class RegistrationController extends AbstractController
         $usuario->setCedula($request->query->get('cedula'));
         $usuario->setNombre($request->query->get('nombre'));
         $usuario->setApellido($request->query->get('apellido'));
+        $usuario->setRoles([$request->query->get('id_rol')]);    
         $usuario->setEstado($request->query->get('estado'));     
 
-          $em->flush();
-      }
+        $em->flush();
+    }
 
     // ------------------------------------------
     public function dataUsuario(){
@@ -105,13 +107,15 @@ class RegistrationController extends AbstractController
 
         $em = $this->getDoctrine()->getManager();
         $usuario = $em->getRepository(User::class)->find($id);
-        
+       
+        $rol = $usuario->getRoles()[0];
         $dato = [
           'cedula' => $usuario->getCedula(),
           'nombre' => $usuario->getNombre(),
           'apellido' => $usuario->getApellido(),
           'correo' => $usuario->getEmail(),
           'password' => $usuario->getPassword(),
+          'rol' => $rol,
           'estado' => $usuario->getEstado()
         ];
 
