@@ -51,7 +51,7 @@
 
           <!-- Begin Page Content -->       
            
-     <form>      
+         <form class="proceso">   
      
     <div class=" my-2 container" style="max-width: 950px;">
       <div id="wizard">
@@ -64,31 +64,32 @@
             </div>
           </div>
         </h3>
+       
         <section>
             {% for dato in informacion %}  
           <div class="content-wrapper">
             <h4 class="section-heading">Documentos personales </h4>           
             <div class="form-check">
               <label class="form-check-label">
-                <input type="checkbox" class="form-check-input" name="cedula" id="cedula" value="checkedValue" {% if dato.cedula() == 'YES' %} checked {% endif %} >
+                <input type="checkbox" class="form-check-input" name="cedula" id="cedula"  {% if dato.cedula() == 'true' %} checked {% endif %} >
                Copia de cedula 
               </label>
             </div>
             <div class="form-check">
               <label class="form-check-label">
-                <input type="checkbox" class="form-check-input" name="papeleta" id="papeleta" value="checkedValue" {% if dato.papeleta() == 'YES' %} checked {% endif %} >
+                <input type="checkbox" class="form-check-input" name="papeleta" id="papeleta"  {% if dato.papeleta() == 'true' %} checked {% endif %} >
                Copia de papeleta de votación
               </label>
             </div>
             <div class="form-check">
               <label class="form-check-label">
-                <input type="checkbox" class="form-check-input" name="bienes" id="bienes" value="checkedValue" {% if dato.escrituraBienes() == 'YES' %} checked {% endif %} >
+                <input type="checkbox" class="form-check-input" name="bienes" id="bienes"  {% if dato.escrituraBienes() == 'true' %} checked {% endif %} >
                Escritura de bienes
               </label>
             </div> 
              <div class="form-check">
               <label class="form-check-label">
-                <input type="checkbox" class="form-check-input" name="" id="" value="checkedValue" {% if dato.estaEnagenado() == 'YES' %} checked {% endif %}  >
+                <input type="checkbox" class="form-check-input" name="enagenado" id="enagenado"  {% if dato.estaEnagenado() == 'true' %} checked {% endif %}  >
                Bien enagenado
               </label>
             </div> 
@@ -97,7 +98,7 @@
               <div class="form-group col-md-12">
                 <label for="minuta" class="">Minuta</label>
                  {% if dato.minuta() == null %} 
-                <input type="file" name="minura" id="minuta" class="form-control" placeholder="Cargar minuta">
+                <input type="file" name="minuta" id="minuta" class="form-control" placeholder="Cargar minuta">
                 {% else %} 
                 {{ dato.minuta() }}
                  {% endif %}
@@ -107,7 +108,7 @@
               <div class="form-group col-md-12">
                 <label for="insinuacionDonacion" class="">Insinuacion de donación</label>
                       {% if dato.insinuacionDonacion() == null %} 
-                <input type="file" name="minura" id="insinuacionDonacion" class="form-control" placeholder="Cargar insinuacion de donacion">
+                <input type="file" name="insinuacionDonacion" id="insinuacionDonacion" class="form-control" placeholder="Cargar insinuacion de donacion">
                  {% else %} 
                   {{ dato.insinuacionDonacion() }}
                     {% endif %} 
@@ -116,37 +117,35 @@
 
               
               <div class="form-group col-md-12">
-                <label for="minuta" class="">Valores a pagar</label>
+                <label for="vmunicipio" class="">Valores a pagar</label>
                  {% if dato.valoresMunicipio() == null %} 
-                <input type="text" name="minura" id="minuta" class="form-control" value="{{ dato.valoresMinucipio() }}" placeholder="Cargar minuta">
+                <input type="text" name="vmunicipio" id="vmunicipio" class="form-control" value="{{ dato.valoresMunicipio() }}" placeholder="Valores a pagar a municipio">
                  {% else %} 
                   {{ dato.valoresMunicipio() }}
                    {% endif %} 
-              </div>             
-                        
-
+              </div>           
               <div class="form-check">
               <label class="form-check-label">
-                <input type="checkbox" class="form-check-input" name="" id="" value="checkedValue"  {% if dato.peticionValores() == 'YES' %} checked {% endif %} >
+                <input type="checkbox" class="form-check-input" name="pvalores" id="pvalores"   {% if dato.peticionValores() == 'true' %} checked {% endif %} >
                Peticion de valores
               </label>
               </div>
-              <div class="form-check">
-              <label class="form-check-label">
-                <input type="checkbox" class="form-check-input" name="" id="" value="checkedValue" {% if dato.pagoValores() == 'YES' %} checked {% endif %} >
-                Aprobacion de pago de valores de cliente
-              </label>
+              <div class="oculto"> 
+              <hr>
+              <div class="form-group col-md-6">   
+               <a class="btn btn-primary" data-bs-toggle="mi-modal" id="btn-confirm" data-bs-target="mi-modal">Aprobacion de cliente</a>
               </div>
+              <hr>
               <div class="form-group col-md-12">
-                <label for="minuta" class="">Subir comprobante de pago</label>
+                <label for="comprobantep" class="">Subir comprobante de pago</label>
                 {% if dato.pagoValores() == null %} 
-                <input type="file" name="minura" id="minuta" class="form-control" placeholder="Cargar minuta">
+                <input type="file" name="comprobantep" id="comprobantep" class="form-control" placeholder="Cargar comprobante de pago">
                 {% else %} 
                   {{ dato.pagoValores() }}
-                   {% endif %} 
-              </div>           
+                {% endif %} 
+              </div>
+              </div>
 
-                        
           </div>
         </section>
         <h3>
@@ -160,25 +159,25 @@
         </h3>
         <section>
           <div class="content-wrapper">
-            <h4 class="section-heading">Enter your Employment details </h4>
+            <h4 class="section-heading">Detalles de reunion</h4>
             <div class="row">
               <div class="form-group col-md-6">
-                <label for="designation" class="">Fecha para firmar</label>
-                <input type="date" name="designation" id="designation" class="form-control" >          
+                <label for="fechareunion" class="">Fecha para firmar</label>
+                <input type="date" name="fechareunion" id="fechareunion" class="form-control" >        
 
               </div>
               <div class="form-group col-md-6">
-                <label for="department" class="">Hora para firmar</label>
-                  <input type="time" name="designation" id="designation" class="form-control" >
+                <label for="horaFirma" class="">Hora para firmar</label>
+                  <input type="time" name="horaFirma" id="horaFirma" class="form-control" >
               </div>
               <div class="form-group col-md-6">
-                <label for="designation" class="">Fecha de ejecucion</label>
-                <input type="date" name="designation" id="designation" class="form-control" >          
+                <label for="fechaEjecucion" class="">Fecha de ejecucion</label>
+                <input type="date" name="fechaEjecucion" id="fechaEjecucion" class="form-control" >          
 
               </div>
               <div class="form-group col-md-6">
-                <label for="department" class="">Valor tasa notarial</label>
-                  <input type="text" name="designation" id="designation" class="form-control" >
+                <label for="valorTasaNotarial" class="">Valor tasa notarial</label>
+                  <input type="text" name="valorTasaNotarial" id="valorTasaNotarial" class="form-control" >
               </div>
               <div class="form-check">
               <label class="form-check-label">
@@ -303,14 +302,13 @@
           </div>  
         </section>
       </div>
+      <button class="btn btn-primary" type="submit">Guardar</button>
+      </form> 
+
     </div>
      {% endfor %}
- </form> 
-          
-
-          
-
-          <!-- /.container-fluid -->
+ 
+        <!-- /.container-fluid -->
         </div>
         <!-- End of Main Content -->
 
@@ -326,41 +324,9 @@
     <a class="scroll-to-top rounded" href="#page-top">
       <i class="fas fa-angle-up"></i>
     </a>
-
+      {{ include('tramite/modal/_modalAprobar.html.twig') }}
     <!-- Logout Modal -->
-    <div class="modal fade"
-      id="logoutModal"
-      tabindex="-1"
-      role="dialog"
-      aria-labelledby="exampleModalLabel"
-      aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">
-              Ready to Leave?
-            </h5>
-            <button class="close"
-              type="button"
-              data-dismiss="modal"
-              aria-label="Close">
-              <span aria-hidden="true">×</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            Select "Logout" below if you are ready to end your current session.
-          </div>
-          <div class="modal-footer">
-            <button class="btn btn-secondary"
-              type="button"
-              data-dismiss="modal">
-              Cancel
-            </button>
-            <a class="btn btn-primary" href="login.html">Logout</a>
-          </div>
-        </div>
-      </div>
-    </div>
+     {{ include('./assets/logoutModal.html.twig') }}
 
     <!-- Bootstrap core JavaScript -->
     <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
@@ -383,10 +349,42 @@
     <script>
       PAGE.init();
     </script>
+     <script src="{{ asset('js/procesoTramite.js') }}"></script>
+    <script>
+      PAGE.init();
+    </script>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
   <script src="{{ asset('js/jquery.steps.min.js') }}"></script>
   <script src="{{ asset('js/bd-wizard.js') }}"></script>
+ <script >
+  var modalConfirm = function(callback){
+  
+  $("#btn-confirm").on("click", function(){
+    $("#mi-modal").modal('show');
+  });
+
+  $("#modal-btn-si").on("click", function(){
+    callback(true);
+    $("#mi-modal").modal('hide');
+  });
+  
+  $("#modal-btn-no").on("click", function(){
+    callback(false);
+    $("#mi-modal").modal('hide');
+  });
+};
+
+modalConfirm(function(confirm){
+  if(confirm){
+    //Acciones si el usuario confirma
+    $("#result").html("CONFIRMADO");
+  }else{
+    //Acciones si el usuario no confirma
+    $("#result").html("NO CONFIRMADO");
+  }
+});
+</script>
   </body>
 </html>

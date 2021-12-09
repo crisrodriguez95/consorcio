@@ -118,11 +118,11 @@ class TipoTramiteTransferenciaController extends AbstractController
             ->getRepository(TipoTramiteTransferencia::class)
             ->findAll();
 
-        $campos = ['Trámite', 'Observación'];
+        $campos = ['Trámite', 'Observación','Tiempo', 'Carga'];
 
         $tipos = [];
         foreach ($tipoTramites as $key => $data) {
-            array_push($tipos, [$data->id(), $data->tramite(), $data->Observa()]);
+            array_push($tipos, [$data->id(), $data->tramite(), $data->Observa(), $data->pesoTiempo(), $data->pesoCarga()]);
         }
 
         return $this->render('/components/_tabla.html.twig', [

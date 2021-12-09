@@ -113,6 +113,7 @@ class TramiteController extends AbstractController
     $tramiteTransferencia->cedula($request->query->get('cedula'));
     $tramiteTransferencia->papeleta($request->query->get('papeleta'));
     $tramiteTransferencia->escrituraBienes($request->query->get('bienes'));
+    
        
         $em->persist($tramiteTransferencia);
         $em->flush();
