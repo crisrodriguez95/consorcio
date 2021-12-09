@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 use App\Entity\Tramite;
 use App\Entity\TipoTramite;
+use App\Entity\UsuarioTramite;
 use App\Entity\TramiteTransferencia;
 use App\Entity\ClienteTramite;
 
@@ -78,14 +79,34 @@ class TramiteController extends AbstractController
 
         $request = $this->container->get('request_stack')->getCurrentRequest();
         $em = $this->getDoctrine()->getManager();
+       
         $modi = $em->getRepository(TramiteTransferencia::class)->find($idTramite);
         $idTipoTramiteT = $modi->getIdClienteTramite()->getIdTipoTramiteTransferencia();
         
+
+        $usuario = $em->getRepository(UsuarioTramite::class)->find($idTramite);
+        $fecha = $usuario->fecha();
+
+        $userName = $usuario->getIdUsuario()->getNombre();
+        $userLastName = $usuario->getIdUsuario()->getApellido();
+        $clientName = $usuario->getIdClienteTramite()->getIdCliente()->nombre();
+        $clientLastName = $usuario->getIdClienteTramite()->getIdCliente()->apellido();
+        $tipoTramite = $usuario->getIdClienteTramite()->getIdTipoTramiteTransferencia()->tramite();
+
         if ($modi)
         $modi = [$modi];       
         
         
-        return $this->render('tramite/procesotramite.html.twig',  ["informacion" => $modi, "tipoTramite" => $idTipoTramiteT ]);
+        return $this->render('tramite/procesotramite.html.twig',  [
+            "informacion" => $modi, 
+            "tipoTramite" => $idTipoTramiteT, 
+            'fecha' => $fecha,
+            'nombreUsuario' => $userName,
+            'apellidoUsuario' => $userLastName,
+            'nombreCliente' => $clientName, 
+            'apellidoCliente' => $clientLastName,
+            'tipo' => $tipoTramite
+        ]);
     }
     
     public function updateProcesoTramite(int $idTramite= 0) {
@@ -123,12 +144,20 @@ class TramiteController extends AbstractController
             'succes'=> false,
             ]);
 
-
         return $response;
-        
-        
+                
        
     }
 
-
+    public function getData($idTramite){
+    //   $request = $this->container->get('request_stack')->getCurrentRequest();
+    // $request = $this->container->get('request_stack')->getCurrentRequest();
+    // $em = $this->getDoctrine()->getManager();
+    // $clienteTramite= $em
+    // ->getRepository(ClienteTramite::class)
+    // ->find($idTramite);
+    dd($idTramite);
+    // dd($clienteTramite);
+        return $this->render('tramite/modal/_datosProceso.html.twig');
+    }
 }

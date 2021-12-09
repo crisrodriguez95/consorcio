@@ -1,0 +1,66 @@
+<!-- Modal -->
+
+<style>
+  .data{
+    background: #fff;
+    max-width: 90%;
+    margin: 0 auto 30px auto; 
+   
+  }
+  .container-data{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-areas: "usuario" "cliente" "historial"; 
+  }
+  .usuario{
+    display: inline-block;
+    padding: 10px 0 10px 20px; 
+  }
+  .cliente{
+    display: inline-block;
+    padding: 10px 0 10px 30px; 
+  }
+  .historial{
+    display: inline-block;
+    padding: 10px 0 10px 30px; 
+  }
+
+</style>
+
+<div class="data" >
+  <div class="card-header" 
+      style="background: #4A2950; margin: 0; color: #fff;  text-align: center;">
+    Datos del trámite
+  </div>
+ 
+  <div class="container-data">
+    <div class="usuario">    
+      <p class="card-text">
+        <i class="fas fa-fw fa-calendar"></i>
+        Fecha: {{ fecha }}
+      </p>
+      <p class="card-text">
+        <i class="fas fa-fw fa-user"></i>
+        Usuario: {{ nombreUsuario }} {{ apellidoUsuario }}
+      </p>
+    </div>
+    <div class="cliente">
+      <p class="card-text">
+          <i class="fas fa-fw fa-user-circle"></i>
+          Cliente: {{ nombreCliente }} {{ apellidoCliente }}
+        </p>
+        <p class="card-text">
+          <i class="fas fa-fw fa-file"></i>
+          Trámite: {{ tipo }}
+        </p>
+    </div>
+    <div class="historial">
+      <a class="nav-link collapsed" href="#">
+        <i class="fas fa-fw fa-gavel"></i>
+        <span>Reasignar trámite</span>
+      </a>
+    </div>
+
+  </div>
+</div>
+

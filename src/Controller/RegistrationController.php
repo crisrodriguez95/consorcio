@@ -174,7 +174,6 @@ class RegistrationController extends AbstractController
      */
     public function getDashboard()
     {     
-
         return $this->render('dashboard/index.html.twig');
     }
 }
