@@ -6,15 +6,17 @@ var PAGE = (function () {
   eliminar = document.querySelectorAll('.eliminar'),
   crear = document.querySelector('.crear'),
   estado = document.querySelector('.estado'),
-  update = document.querySelectorAll('.update');
+  update = document.querySelectorAll('.update'),
+  success = document.querySelector('.message'),
+  error = document.querySelector('.message-error');
   let tipo = "";
   let id = "";
+  
 
   crear.addEventListener("click", () => {
     tipo = 1; 
     form[0].reset();
     estado.style.display = 'none';
-
   });
 
   
@@ -22,7 +24,9 @@ var PAGE = (function () {
     elem.addEventListener('click', () => {
       tipo = 2;
       id = elem.dataset.id;
-      estado.style.display = 'block';    
+      if(estado){
+        estado.style.display = 'block';    
+      }
     });
   });
  
@@ -51,8 +55,6 @@ var PAGE = (function () {
   });
 
   
-
-
 
   var inicio = function () {
     form.unbind().on('submit', function (e) {
@@ -85,20 +87,20 @@ var PAGE = (function () {
     $.ajax({
       data: formulario,
       error: function () {
-        alert('error')
+       alert("Llene todos los campos");
       },
     }).done(function (data) {
       if (data.Estado == 'Error') {
-        alert('hay un error')
-
         return false
       } else {
-        alert('Afiliado ingresado correctamente')
         form[0].reset()
         $('.modal').modal('hide')
+        success.style.display= 'block';  
+        success.setAttribute('class', 'success');
         setTimeout(() => {
+          success.setAttribute('class', 'message');
           location.reload(true)
-        }, 0)
+        }, 1000)
       }
     })
   }

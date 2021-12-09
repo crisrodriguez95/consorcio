@@ -1,11 +1,8 @@
 const update = document.querySelectorAll('.update');
 
-console.log(update);
 
   update.forEach((elem) => {
-    console.log(update);
     elem.addEventListener('click', () => {
-     tipo = 2;
       id = elem.dataset.id;
       $.ajax({
         data: {
@@ -27,6 +24,7 @@ console.log(update);
           $('#email').val(data.datooos.correo)
           $('#email').val(data.datooos.correo)
           $('#password').val(data.datooos.password)
+          $('#id_rol').val(data.datooos.rol)
           $('#estatus').val(data.datooos.estado)
   
         }
