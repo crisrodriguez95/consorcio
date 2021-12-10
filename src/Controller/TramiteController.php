@@ -71,7 +71,7 @@ class TramiteController extends AbstractController
             if ($request->getMethod() == 'GET') {
                 $tipo = $request->query->get('tipo');
                 if ($tipo) {
-                    if ($tipo == 4)
+                    if ($tipo == 10)
                     return new JsonResponse($this->updateProcesoTramite());
                 }
             }
@@ -86,13 +86,13 @@ class TramiteController extends AbstractController
 
         $usuario = $em->getRepository(UsuarioTramite::class)->find($idTramite);
         $fecha = $usuario->fecha();
-
+        	
         $userName = $usuario->getIdUsuario()->getNombre();
         $userLastName = $usuario->getIdUsuario()->getApellido();
         $clientName = $usuario->getIdClienteTramite()->getIdCliente()->nombre();
         $clientLastName = $usuario->getIdClienteTramite()->getIdCliente()->apellido();
         $tipoTramite = $usuario->getIdClienteTramite()->getIdTipoTramiteTransferencia()->tramite();
-
+        
         if ($modi)
         $modi = [$modi];       
         
@@ -105,13 +105,26 @@ class TramiteController extends AbstractController
             'apellidoUsuario' => $userLastName,
             'nombreCliente' => $clientName, 
             'apellidoCliente' => $clientLastName,
-            'tipo' => $tipoTramite
+            'tipo' => $tipoTramite,
+            'idTramite'=>$idTramite
         ]);
     }
+
+    /**
+     * @Route("/actualizarTramite", name="actualizarTramite", methods = "POST")
+     */
     
-    public function updateProcesoTramite(int $idTramite= 0) {
-        $request = $this->container->get('request_stack')->getCurrentRequest();
-        $em = $this->getDoctrine()->getManager();
+    public function updateProcesoTramite(Request $request) {
+        //$request = $this->container->get('request_stack')->getCurrentRequest();
+        dd($request);
+        // $request2 = $request->isXmlHttpRequest();
+        
+        // $em = $this->getDoctrine()->getManager();
+
+        // $data = json_decode($request->getContent());
+
+        // dd($_REQUEST);
+
         //dd($idTramite);
 
        /* $clienteTramite= $em->getRepository(ClienteTramite::class)->find(1);
@@ -122,11 +135,17 @@ class TramiteController extends AbstractController
         $tramiteTransferencia->cedula('YES');
         $tramiteTransferencia->papeleta('YES');
         $tramiteTransferencia->escrituraBienes('YES');*/
-
-
-        $clienteTramite= $em
+        // $a = json_decode($request->getContent(), true);
+       // return $this->json($a);
+       
+        
+       dd('hols');
+        //dd($request->query->get('cedula'));
+        //dd($request->getMethod());
+       $clienteTramite= $em
         ->getRepository(ClienteTramite::class)
         ->find($idTramite);
+
 
     $tramiteTransferencia= new TramiteTransferencia();
     // relates this tramite to the tipoTramite

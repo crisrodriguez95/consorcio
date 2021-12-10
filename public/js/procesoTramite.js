@@ -38,7 +38,7 @@ var PAGE = (function () {
     }
 
     console.log(dataform);
-    formulario.tipo = tipo;
+    formulario.tipo = 10;
 
 
     for (i in dataform) {
@@ -49,31 +49,30 @@ var PAGE = (function () {
     formulario.bienes = $('#bienes').prop('checked') 
     formulario.enagenado = $('#enagenado').prop('checked') 
     formulario.pvalores = $('#pvalores').prop('checked') 
-    formulario.minuta = $('#minuta')[0].files[0].name
-    formulario.archivoMinuta = $('#minuta')[0].files[0];
-    formulario.comprobantep = $('#comprobantep')[0].files[0].name
-    formulario.archivoComprobante = $('#comprobantep')[0].files[0];
+    formulario.minuta = $('#minuta')[0].files[0].name ? $('#minuta')[0].files[0].name : null;
+    //formulario.archivoMinuta = $('#minuta')[0].files[0]? $('#minuta')[0].files[0]: null;
+    formulario.comprobantep = $('#comprobantep')[0].files[0].name ? $('#comprobantep')[0].files[0].name : null
+    //formulario.archivoComprobante = $('#comprobantep')[0].files[0] ? $('#comprobantep')[0].files[0] : null;
     formulario.aprobarPagoCliente = aprobacion
+    formulario.idTramite = $('#idTramite').val() 
     console.log(formulario);
-    // $.ajax({
-    //   data: formulario,
-    //   error: function () {
-    //    alert("Llene todos los campos");
-    //   },
-    // }).done(function (data) {
-    //   if (data.Estado == 'Error') {
-    //     return false
-    //   } else {
-    //     form[0].reset()
-    //     $('.modal').modal('hide')
-    //     success.style.display= 'block';  
-    //     success.setAttribute('class', 'success');
-    //     setTimeout(() => {
-    //       success.setAttribute('class', 'message');
-    //       location.reload(true)
-    //     }, 1000)
-    //   }
-    // })
+    
+    $.ajax({
+      type: "POST",
+      url: "../actualizarTramite",
+      data: formulario,
+      cache: false,
+      contentType: false,
+      processData: false,
+      error: function () {
+       alert('sajadh');
+      }
+  }).done(function (data) {
+      
+      //form[0].reset();
+      //swalInit('Se ha guardado postulación con éxito', 'success', 5000);
+  });
+    //return false;
   }
 
   return {
