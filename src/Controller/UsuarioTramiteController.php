@@ -75,6 +75,8 @@ class UsuarioTramiteController extends AbstractController
             'Fecha',
             'Estado'
         ];
+
+        
         $usuariosTramite = [];
 
         foreach ($usuarioTramites as $key => $data) {
@@ -127,8 +129,8 @@ class UsuarioTramiteController extends AbstractController
     public function getUsuarioTramiteListPorUser(UserInterface $user)
     {
         $em = $this->getDoctrine()->getManager();
-        $usuarioTramites = $em->getRepository(UsuarioTramite::class)->findBy(['idUser'=>  $user->getId() ]);
-
+        $usuarioTramites = $em->getRepository(UsuarioTramite::class)->findBy(['idUser'=>  $user->getId(), 'estado' => 'Y']);
+        // dd($usuarioTramites);
         $campos = [
             'Usuario',
             'Nombre',

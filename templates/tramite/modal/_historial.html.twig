@@ -1,0 +1,16 @@
+{% if (datoshistorial|length) > 0 %}
+	{% for data  in datoshistorial %}
+			<div class="friends-grids">
+				<div class="grids-left">
+					<img src="{{asset('img/a1.jpg')}}" width = "50%"/>
+				</div>	
+				<div class="grids-right">
+					<h2>{{ data[0] }} {{ data[1] }} </h2>
+					<div class="grids-right-info">
+						Comentario: {{ data[2] }}
+						<div class="clear"> </div>
+					</div>
+				</div>			
+      </div>		
+	{% endfor %}
+{% endif %}

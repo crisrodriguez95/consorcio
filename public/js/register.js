@@ -12,11 +12,12 @@ var PAGE = (function () {
   let tipo = "";
   let id = "";
   
-
   crear.addEventListener("click", () => {
     tipo = 1; 
     form[0].reset();
-    estado.style.display = 'none';
+    if(estado){
+      estado.style.display = 'none';
+    }
   });
 
   
@@ -60,6 +61,7 @@ var PAGE = (function () {
     form.unbind().on('submit', function (e) {
       const formData = new FormData(form1)
 
+      console.log(formData);
       // for (let [key, entry] of formData) {
       //   if (entry == '') {
       //     return
@@ -97,10 +99,10 @@ var PAGE = (function () {
         $('.modal').modal('hide')
         success.style.display= 'block';  
         success.setAttribute('class', 'success');
-        setTimeout(() => {
-          success.setAttribute('class', 'message');
-          location.reload(true)
-        }, 1000)
+        // setTimeout(() => {
+        //   success.setAttribute('class', 'message');
+        //   location.reload(true)
+        // }, 1000)
       }
     })
   }

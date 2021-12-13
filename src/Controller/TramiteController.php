@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 use App\Entity\Tramite;
+use App\Entity\User;
 use App\Entity\TipoTramite;
 use App\Entity\UsuarioTramite;
 use App\Entity\TramiteTransferencia;
@@ -16,6 +17,7 @@ use App\Entity\ClienteTramite;
 
 class TramiteController extends AbstractController
 {
+    
     /**
      * @Route("/tramite", name="tramite")
      */
@@ -70,35 +72,42 @@ class TramiteController extends AbstractController
         if ($request->isXmlHttpRequest()) {
             if ($request->getMethod() == 'GET') {
                 $tipo = $request->query->get('tipo');
+                dd($tipo);
                 if ($tipo) {
                     if ($tipo == 10)
-                    return new JsonResponse($this->updateProcesoTramite());
+                    return new JsonResponse($this->updateProcesoTramite($idTramite));
                 }
             }
         }
 
         $request = $this->container->get('request_stack')->getCurrentRequest();
         $em = $this->getDoctrine()->getManager();
-       
-        $modi = $em->getRepository(TramiteTransferencia::class)->find($idTramite);
-        $idTipoTramiteT = $modi->getIdClienteTramite()->getIdTipoTramiteTransferencia();
-        
+        // dd($idTramite);
+        $user = $em->getRepository(UsuarioTramite::class)->find($idTramite);
+        $idTipoTramiteT = $user->getIdClienteTramite()->getIdTipoTramiteTransferencia();
+        $idClienteTramite = $user->getIdClienteTramite()->id();
 
+        $tramiteTransferencia = $em->getRepository(TramiteTransferencia::class)->findBy(['idClienteTramite' => $idClienteTramite ]);
+        
+        $idTramiteTransferencia = $tramiteTransferencia[0]->id();
+        // dd($idTramiteTransferencia);
         $usuario = $em->getRepository(UsuarioTramite::class)->find($idTramite);
+        // dd($usuario);
+        $clienteTramite = $usuario->getIdClienteTramite()->id();
+        
         $fecha = $usuario->fecha();
-        	
         $userName = $usuario->getIdUsuario()->getNombre();
         $userLastName = $usuario->getIdUsuario()->getApellido();
         $clientName = $usuario->getIdClienteTramite()->getIdCliente()->nombre();
         $clientLastName = $usuario->getIdClienteTramite()->getIdCliente()->apellido();
         $tipoTramite = $usuario->getIdClienteTramite()->getIdTipoTramiteTransferencia()->tramite();
         
-        if ($modi)
-        $modi = [$modi];       
+        // if ($modi)
+        // $modi = [$modi];   
         
         
         return $this->render('tramite/procesotramite.html.twig',  [
-            "informacion" => $modi, 
+            "informacion" => $tramiteTransferencia, 
             "tipoTramite" => $idTipoTramiteT, 
             'fecha' => $fecha,
             'nombreUsuario' => $userName,
@@ -106,54 +115,76 @@ class TramiteController extends AbstractController
             'nombreCliente' => $clientName, 
             'apellidoCliente' => $clientLastName,
             'tipo' => $tipoTramite,
-            'idTramite'=>$idTramite
+            'idTramite'=>$idTramiteTransferencia,
+            'tramite' => $idTramite,
+            'clienteTramite'=>$clienteTramite,
         ]);
     }
 
     /**
      * @Route("/actualizarTramite", name="actualizarTramite", methods = "POST")
-     */
-    
+     */    
     public function updateProcesoTramite(Request $request) {
-        //$request = $this->container->get('request_stack')->getCurrentRequest();
-        dd($request);
-        // $request2 = $request->isXmlHttpRequest();
+
+  
+        $request = $this->container->get('request_stack')->getCurrentRequest();
+        $em = $this->getDoctrine()->getManager();
         
-        // $em = $this->getDoctrine()->getManager();
+        $tramiteTransferencia= $em->getRepository(TramiteTransferencia::class)->find($request->request->get('idTramite'));
+        $idTramite = $request->request->get('idTramite');
+         
+        // ------------------- Primer Proceso ------------------------
+        $tramiteTransferencia->cedula($request->request->get('cedula'));
+        $tramiteTransferencia->papeleta($request->request->get('papeleta'));
+        $tramiteTransferencia->escrituraBienes($request->request->get('bienes'));
+        $tramiteTransferencia->estaEnagenado($request->request->get('enagenado'));
+        $tramiteTransferencia->minuta($tramiteTransferencia->minuta() ? $tramiteTransferencia->minuta() : $_FILES['minuta']['name'] );
+        $tramiteTransferencia->insinuacionDonacion($request->request->get('insinuacionDonacion'));
+        $tramiteTransferencia->valoresMunicipio($request->request->get('vmunicipio'));
+        $tramiteTransferencia->peticionValores($request->request->get('pvalores'));
+        $tramiteTransferencia->pagoValores($tramiteTransferencia->pagoValores() ? $tramiteTransferencia->pagoValores() : $_FILES['comprobantep']['name']);
 
-        // $data = json_decode($request->getContent());
+        //-------------------- Cambiar Estado ---------------------------
+        // $usuarioTramite = $em->getRepository(UsuarioTramite::class)->find($idTramite);
+        // $usuarioTramite->estadoProceso('EN PROCESO');    
+        
+        // ------------------- Segundo Proceso ------------------------
 
-        // dd($_REQUEST);
+        $date = $request->request->get('horaFirma'); 
+        $date = new \DateTime(date('d-m-Y H:i:s',strtotime($date)));
+        
+        $date2 = $request->request->get('fechareunion'); 
+        $dateReunion = new \DateTime(date('d-m-Y H:i:s',strtotime($date2)));
 
-        //dd($idTramite);
-
-       /* $clienteTramite= $em->getRepository(ClienteTramite::class)->find(1);
-        dd($idTramite);
-        $tramiteTransferencia= new TramiteTransferencia();
-        // relates this tramite to the tipoTramite
-        $tramiteTransferencia->setIdClienteTramite($clienteTramite);
-        $tramiteTransferencia->cedula('YES');
-        $tramiteTransferencia->papeleta('YES');
-        $tramiteTransferencia->escrituraBienes('YES');*/
-        // $a = json_decode($request->getContent(), true);
-       // return $this->json($a);
+        $date3 = $request->request->get('fechaEjecucion'); 
+        $dateEjecucion = new \DateTime(date('d-m-Y H:i:s',strtotime($date3)));
        
+        $tramiteTransferencia->horaReunion($tramiteTransferencia->horaReunion() ? $tramiteTransferencia->horaReunion() : $date);
+        $tramiteTransferencia->fechaReunion($tramiteTransferencia->fechaReunion() ? $tramiteTransferencia->fechaReunion() : $dateReunion);
+        $tramiteTransferencia->fechaEjecucion($tramiteTransferencia->fechaEjecucion() ? $tramiteTransferencia->fechaEjecucion() : $dateEjecucion);
+        $tramiteTransferencia->retraso($request->request->get('fechareunion'));
+        $tramiteTransferencia->pagoTasaNotarial($request->request->get('valorTasaNotarial'));
+        $tramiteTransferencia->pagoCompleto($request->request->get('pagoNotarial'));
+        $tramiteTransferencia->esMutualista($request->request->get('esMutualista'));
+        $tramiteTransferencia->entregadoMutualista($request->request->get('entregadoMutualista'));
+        $tramiteTransferencia->documentoFirmado($tramiteTransferencia->documentoFirmado() ? $tramiteTransferencia->documentoFirmado() : $_FILES['documentoFirmado']['name']);
+        $tramiteTransferencia->entregadaNotaria($request->request->get('entregaNotaria'));
+        $tramiteTransferencia->subirEscritura($tramiteTransferencia->subirEscritura() ? $tramiteTransferencia->subirEscritura() : $_FILES['escritura']['name']);
+        $tramiteTransferencia->entregadaRegistroPropiedad($request->request->get('entregaRP'));
+        $tramiteTransferencia->clienteAprueba($request->request->get('clienteAprueba'));
         
-       dd('hols');
-        //dd($request->query->get('cedula'));
-        //dd($request->getMethod());
-       $clienteTramite= $em
-        ->getRepository(ClienteTramite::class)
-        ->find($idTramite);
+        // ------------------- Tercer Proceso ------------------------
+        $tramiteTransferencia->tituloPagoEntregado($request->request->get('tituloPago'));
+        $tramiteTransferencia->tituloPago($request->request->get('pagoTitulo'));
+        $tramiteTransferencia->escrituraValida($request->request->get('escrituraVali'));
+        $tramiteTransferencia->actaInscripcion($request->request->get('acta'));
+        $tramiteTransferencia->actaInscripcion($tramiteTransferencia->actaInscripcion() ? $tramiteTransferencia->actaInscripcion() : $_FILES['acta']['name']);
+        $tramiteTransferencia->informeGastos($tramiteTransferencia->informeGastos() ? $tramiteTransferencia->informeGastos() : $_FILES['gastos']['name']);
+        $tramiteTransferencia->pagoGastos($request->request->get('pagoGastos'));
+        // $tramiteTransferencia->Observa($request->request->get(''));
+        // $tramiteTransferencia->actaInscripcion($request->request->get(''));
 
 
-    $tramiteTransferencia= new TramiteTransferencia();
-    // relates this tramite to the tipoTramite
-    $tramiteTransferencia->setIdClienteTramite($clienteTramite);
-    $tramiteTransferencia->cedula($request->query->get('cedula'));
-    $tramiteTransferencia->papeleta($request->query->get('papeleta'));
-    $tramiteTransferencia->escrituraBienes($request->query->get('bienes'));
-    
        
         $em->persist($tramiteTransferencia);
         $em->flush();
@@ -164,19 +195,90 @@ class TramiteController extends AbstractController
             ]);
 
         return $response;
-                
-       
+                       
+    }
+   
+    /**
+     * @Route("/historial/{clienteTramite}/{tramite}", name = "historial");
+     */
+    public function getViewHistorial(Request $request, $clienteTramite, $tramite) {
+        
+        if ($request->isXmlHttpRequest()) {
+            if ($request->getMethod() == 'GET') {
+                $tipo = $request->query->get('tipo');
+                if ($tipo) {
+                    if ($tipo == 1) {
+                        return new JsonResponse($this->reasignar($tramite));
+                    }
+                }
+            }
+        }
+        return $this->render('tramite/reasignar.html.twig', [
+            'clienteTramite' => $clienteTramite
+        ]);
     }
 
-    public function getData($idTramite){
-    //   $request = $this->container->get('request_stack')->getCurrentRequest();
-    // $request = $this->container->get('request_stack')->getCurrentRequest();
-    // $em = $this->getDoctrine()->getManager();
-    // $clienteTramite= $em
-    // ->getRepository(ClienteTramite::class)
-    // ->find($idTramite);
-    dd($idTramite);
-    // dd($clienteTramite);
-        return $this->render('tramite/modal/_datosProceso.html.twig');
+    public function historial($clienteTramite){
+      
+        $request = $this->container->get('request_stack')->getCurrentRequest();
+        $em = $this->getDoctrine()->getManager();
+            
+        $usuarioTramite = $em->getRepository(UsuarioTramite::class)->findBy(['idClienteTramite' => $clienteTramite]);
+
+        $dataHistorial = [];
+        foreach($usuarioTramite as $key => $tramite){
+            $dataHistorial[$key] = [
+                $tramite->getIdUsuario()->getNombre(),
+                $tramite->getIdUsuario()->getApellido(),
+                $tramite->describe(),
+            ];
+        }
+
+        // dd($dataHistorial);
+        return $this->render('tramite/modal/_historial.html.twig', [
+            'datoshistorial' => $dataHistorial
+        ]);
     }
+
+    public function getUsers()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $user = $em->getRepository(User::class)->findBy(['estado' => 'Activo']);;
+
+        return $this->render('user/modal/_usuarios.html.twig', [
+            'usuarios' => $user,
+        ]);
+    }
+
+    public function reasignar($tramite){
+       
+        $request = $this->container->get('request_stack')->getCurrentRequest();
+        $em = $this->getDoctrine()->getManager();
+       
+
+        $clienteTramite = $em->getRepository(ClienteTramite::class)->find($request->query->get('tipoTramite'));
+        $user = $em->getRepository(User::class)->find($request->query->get('idusuario'));
+
+        $usuarioTramite = new UsuarioTramite();
+        
+        $usuarioTramite->setIdClienteTramite($clienteTramite);
+        $usuarioTramite->setIdUsuario($user);
+        $usuarioTramite->estado('Y');
+        $usuarioTramite->fecha(date('Y-m-d'));
+        $usuarioTramite->describe($request->query->get('descrip'));
+        $usuarioTramite->estadoProceso('EN PROCESO');
+        
+        $em->persist($usuarioTramite);
+        
+
+        $usuarioTramite = $em->getRepository(UsuarioTramite::class)->find($tramite);
+        $usuarioTramite->estado('N');
+
+        $em->flush();
+
+        return 'heythere';
+
+
+    }
+
 }

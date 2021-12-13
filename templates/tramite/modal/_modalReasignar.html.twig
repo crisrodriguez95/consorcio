@@ -1,5 +1,5 @@
 <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="reasignar" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -13,29 +13,26 @@
 					class="user">
 					{# ------------ Fila 1 ------------------ #}
 					<div class="form-group">
-						<label for="exampleFormControlInput1">Cliente</label>
+						<label for="exampleFormControlInput1">Usuario</label>
 						{{
               render(
                 controller(
-                  'App\\Controller\\ClienteTramiteController::getCliente'
+                  'App\\Controller\\TramiteController::getUsers'
                 )
               )
             }}
-					</div>
-					<div class="form-group">
-						<label for="exampleFormControlInput1">Tipo de trámite</label>
-						{{
-              render(
-                controller(
-                  'App\\Controller\\ClienteTramiteController::getTipoTramite'
-                )
-              )
-            }}
-
 					</div>
 					
+						<div class="form-group">
+            	<label for="email">Descripción</label>
+            	<input type="text"
+              	class="form-control"
+              	id="des"
+              	name="descrip"
+              	required />
+          </div>
 
-
+					<input type="hidden" name="tipoTramite" id="tipo" value={{ clienteTramite }}>
 					{# ------------ Fila 5 Buttons ------------------ #}
 					<div class="form-group">
 						<div class="row">
@@ -53,18 +50,7 @@
 					</div>
 				</form>
 			</div>
-			{# <div class="modal-footer">
-			        
-			      </div> #}
 		</div>
 	</div>
 </div>
 
-{# <script>
-	let button = document.querySelector('.data');
-button.addEventListener("click", () => {
-setTimeout(() => {
-location.reload(true);
-}, 1500);
-});
-</script> #}

@@ -182,7 +182,7 @@ class ClienteTramiteController extends AbstractController
     public function getCliente()
     {
         $em = $this->getDoctrine()->getManager();
-        $clientes = $em->getRepository(Cliente::class)->findBy(['estado' => 'Activo']);;
+        $clientes = $em->getRepository(Cliente::class)->findBy(['estado' => 'Activo']);
 
         return $this->render('client/modal/_cliente.html.twig', [
             'clientes' => $clientes,

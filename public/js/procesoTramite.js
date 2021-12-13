@@ -2,7 +2,9 @@
 var PAGE = (function () {
   
   var form = $('form.proceso');
+ 
   const cedula = document.getElementById("cedula").checked,
+  formula = document.querySelector(".proceso");
   botonSi = $('#modal-btn-si'),
   botonNo = $('#modal-btn-no');
   let tipo = "";
@@ -21,46 +23,34 @@ var PAGE = (function () {
   var inicio = function () {
     console.log(cedula);
     form.unbind().on('submit', function (e) {
-     // const formData = new FormData(form1)
-      console.log('aqui')
       
       ingreso(this)
       return false;
     })
   }
   var ingreso = (f) => {
+    const formData = new FormData(formula);
+    formData.append("tipo", 1);
 
-    var formulario = {},
-    dataform = form.serializeArray()
+    console.log(formData.get('cedula'))
 
-    if(tipo == 2){
-      formulario.id = id; 
-    }
-
-    console.log(dataform);
-    formulario.tipo = 10;
-
-
-    for (i in dataform) {
-      formulario[dataform[i]['name']] = dataform[i]['value']
-    }
-    formulario.cedula = $('#cedula').prop('checked') 
-    formulario.papeleta = $('#papeleta').prop('checked') 
-    formulario.bienes = $('#bienes').prop('checked') 
-    formulario.enagenado = $('#enagenado').prop('checked') 
-    formulario.pvalores = $('#pvalores').prop('checked') 
-    formulario.minuta = $('#minuta')[0].files[0].name ? $('#minuta')[0].files[0].name : null;
-    //formulario.archivoMinuta = $('#minuta')[0].files[0]? $('#minuta')[0].files[0]: null;
-    formulario.comprobantep = $('#comprobantep')[0].files[0].name ? $('#comprobantep')[0].files[0].name : null
-    //formulario.archivoComprobante = $('#comprobantep')[0].files[0] ? $('#comprobantep')[0].files[0] : null;
-    formulario.aprobarPagoCliente = aprobacion
-    formulario.idTramite = $('#idTramite').val() 
-    console.log(formulario);
+    formData.append("cedula", $('#cedula').prop('checked'));
+    formData.append("papeleta", $('#papeleta').prop('checked'));
+    formData.append("bienes", $('#bienes').prop('checked'));
+    formData.append("enagenado", $('#enagenado').prop('checked'));
+    formData.append("pvalores", $('#pvalores').prop('checked'));
+    formData.append("pagoNotarial", $('#pagoNotarial').prop('checked'));
+    formData.append("esMutualista", $('#esMutualista').prop('checked'));
+    formData.append("entregadoMutualista", $('#entregadoMutualista').prop('checked'));
+    
+    
+    console.log(formData);
     
     $.ajax({
-      type: "POST",
       url: "../actualizarTramite",
-      data: formulario,
+      type: "POST",
+      dataType: "html",
+      data: formData,
       cache: false,
       contentType: false,
       processData: false,
