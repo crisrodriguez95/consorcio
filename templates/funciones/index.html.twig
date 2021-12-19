@@ -15,16 +15,19 @@
       integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
       crossorigin="anonymous"></script>
     <title>
-      Administracion
+      Funciones
     </title>
+
     <!-- Custom fonts for this template -->
     <link href="vendor/fontawesome-free/css/all.min.css"
       rel="stylesheet"
       type="text/css" />
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
       rel="stylesheet" />
+
     <!-- Custom styles for this template -->
     <link href="css/sb-admin-2.css" rel="stylesheet" />
+
   </head>
 
   <body id="page-top">
@@ -41,30 +44,35 @@
           <!-- Topbar -->
           {{ include('./assets/navbar.html.twig') }}
           <!-- End of Topbar -->
-          
 
           <!-- Begin Page Content -->
-          <div class="col-lg-12">
 
-           <div class='message'>
+          {# <div class="col-lg-5 d-none d-lg-block bg-register-image"></div> #}
+          <div class="col-lg-12">
+           
+          <div class='message'>
             {{ include('components/_mensajeRegistro.html.twig') }}
           </div>
-
-            {# ----------- Message error email ----------- #}
+         {# ----------- Message error email ----------- #}
             {{ include('components/_errorCorreo.html.twig') }}
-            {# ----------- Message error Identification ----------- #}
+          {# ----------- Message error Identification ----------- #}
             {{ include('components/_mensajeError.html.twig') }}
-            
+          {# ----------- Message error mobile ----------- #}
+            {{ include('components/_mensajeErrorMobile.html.twig') }}
+          
+
             <div class="my-2"></div>
-              {{ render(controller('App\\Controller\\RegistrationController::getUsuariosList')) }}
-            </div>
-            {{ include('user/modal/_modalCrearEditar.html.twig') }}
-          <!-- /.container-fluid -->
+            {{ render(controller('App\\Controller\\FuncionController::getFuncionList')) }}
           </div>
+        
+          {{ include('funciones/modal/_funcionCrearEditar.html.twig') }}
+          {# {{ include('client/modal/_editar.html.twig') }} #}
+          <!-- /.container-fluid -->
+        </div>
         <!-- End of Main Content -->
 
         <!-- Footer -->
-          {{ include('./assets/footer.html.twig') }}
+        {{ include('./assets/footer.html.twig') }}
         <!-- End of Footer -->
       </div>
       <!-- End of Content Wrapper -->
@@ -77,7 +85,7 @@
     </a>
 
     <!-- Logout Modal -->
-   {{ include('./assets/logoutModal.html.twig') }}
+    {{ include('./assets/logoutModal.html.twig') }}
 
     <!-- Bootstrap core JavaScript -->
     <script src="vendor/jquery/jquery.min.js"></script>
@@ -96,11 +104,17 @@
     <script src="js/demo/chart-area-demo.js"></script>
     <script src="js/demo/chart-pie-demo.js"></script>
 
-    <script src="js/usuarioUpdate.js"></script>
+    <script src="js/funcionUpdate.js"></script>
     <script src="js/register.js"></script>
     <script src="js/validation.js"></script>
     <script>
       PAGE.init();
+    </script>
+    <script>
+var alertList = document.querySelectorAll('.alert')
+alertList.forEach(function (alert) {
+  new bootstrap.Alert(alert)
+})
     </script>
   </body>
 </html>

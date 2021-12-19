@@ -35,14 +35,12 @@ class RegistrationController extends AbstractController
                         return new JsonResponse(
                             $this->register($request, $passwordEncoder)
                         );
-                    }else if ($tipo == 2){
+                    } elseif ($tipo == 2) {
                         return new JsonResponse($this->updateUsuario());
-
-                    }else if($tipo == 6){
+                    } elseif ($tipo == 6) {
                         return new JsonResponse($this->changeEstado());
-                    }else if ($tipo == 7){
+                    } elseif ($tipo == 7) {
                         return new JsonResponse($this->dataUsuario());
-
                     }
                 }
             }
@@ -54,11 +52,8 @@ class RegistrationController extends AbstractController
         return $this->render('user/index.html.twig');
     }
 
-    public function register(
-        $request,
-        $passwordEncoder       
-    ) {
-       
+    public function register($request, $passwordEncoder)
+    {
         $user = new User();
         $entityManager = $this->getDoctrine()->getManager();
 
@@ -66,90 +61,90 @@ class RegistrationController extends AbstractController
         $user->setCedula($request->query->get('cedula'));
         $user->setNombre($request->query->get('nombre'));
         $user->setApellido($request->query->get('apellido'));
-        $user->setRoles([$request->query->get('id_rol')]);    
-        $user->setEstado('Activo');       
-      
+        $user->setRoles([$request->query->get('id_rol')]);
+        $user->setEstado('Activo');
+
         $user->setPassword(
-            $passwordEncoder->encodePassword($user, $request->query->get('password'))
+            $passwordEncoder->encodePassword(
+                $user,
+                $request->query->get('password')
+            )
         );
 
         $entityManager->persist($user);
         $entityManager->flush();
 
-        return 'Registro ingresado';     
-
-   
+        return 'Registro ingresado';
     }
-    // -------------------- update cliente -------------------- 
+    // -------------------- update cliente --------------------
 
-    public function updateUsuario(){
-    
+    public function updateUsuario()
+    {
         $request = $this->container->get('request_stack')->getCurrentRequest();
         $em = $this->getDoctrine()->getManager();
-  
+
         $id = $request->query->get('id');
         $usuario = $em->getRepository(User::class)->find($id);
-  
+
         $usuario->setEmail($request->query->get('correo'));
         $usuario->setCedula($request->query->get('cedula'));
         $usuario->setNombre($request->query->get('nombre'));
         $usuario->setApellido($request->query->get('apellido'));
-        $usuario->setRoles([$request->query->get('id_rol')]);    
-        $usuario->setEstado($request->query->get('estado'));     
+        $usuario->setRoles([$request->query->get('id_rol')]);
+        $usuario->setEstado($request->query->get('estado'));
 
         $em->flush();
     }
 
     // ------------------------------------------
-    public function dataUsuario(){
+    public function dataUsuario()
+    {
         $request = $this->container->get('request_stack')->getCurrentRequest();
         $id = $request->query->get('id');
 
         $em = $this->getDoctrine()->getManager();
         $usuario = $em->getRepository(User::class)->find($id);
-       
+
         $rol = $usuario->getRoles()[0];
         $dato = [
-          'cedula' => $usuario->getCedula(),
-          'nombre' => $usuario->getNombre(),
-          'apellido' => $usuario->getApellido(),
-          'correo' => $usuario->getEmail(),
-          'password' => $usuario->getPassword(),
-          'rol' => $rol,
-          'estado' => $usuario->getEstado()
+            'cedula' => $usuario->getCedula(),
+            'nombre' => $usuario->getNombre(),
+            'apellido' => $usuario->getApellido(),
+            'correo' => $usuario->getEmail(),
+            'password' => $usuario->getPassword(),
+            'rol' => $rol,
+            'estado' => $usuario->getEstado(),
         ];
 
-       $data = [
-           'datooos' => $dato
-       ];
+        $data = [
+            'datooos' => $dato,
+        ];
 
         return $data;
         // $cliente->estado("Inactivo");
         // $em->flush();
     }
 
-    public function changeEstado(){
+    public function changeEstado()
+    {
         $request = $this->container->get('request_stack')->getCurrentRequest();
         $id = $request->query->get('id');
 
         $em = $this->getDoctrine()->getManager();
         $usuario = $em->getRepository(User::class)->find($id);
-        
-        
-        $usuario->setEstado("Inactivo");
+
+        $usuario->setEstado('Inactivo');
         $em->flush();
     }
 
-    
     public function getUsuariosList()
     {
         $em = $this->getDoctrine()->getManager();
         $usuarios = $em->getRepository(User::class)->findAll();
-        $campos = ['Cédula', 'Nombre', 'Apellido', 'Correo', 'Estado', 'Rol'];
+        $campos = ['Cédula', 'Nombre', 'Apellido', 'Correo', 'Rol', 'Estado'];
         // dd($usuarios);
         $users = [];
         foreach ($usuarios as $key => $dato) {
-           // dd($dato->getRoles()[0]);
             $users[$key] = [
                 $dato->getId(),
                 $dato->getCedula(),
@@ -169,11 +164,11 @@ class RegistrationController extends AbstractController
     }
 
     /**
-     * 
+     *
      * @Route("/tablero", name="tablero")
      */
     public function getDashboard()
-    {     
+    {
         return $this->render('dashboard/index.html.twig');
     }
 }

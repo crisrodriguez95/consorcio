@@ -53,10 +53,13 @@
           <div class='message'>
             {{ include('components/_mensajeRegistro.html.twig') }}
           </div>
-
-          <div class='message-error'>
+         {# ----------- Message error email ----------- #}
+            {{ include('components/_errorCorreo.html.twig') }}
+          {# ----------- Message error Identification ----------- #}
             {{ include('components/_mensajeError.html.twig') }}
-          </div>
+          {# ----------- Message error mobile ----------- #}
+            {{ include('components/_mensajeErrorMobile.html.twig') }}
+          
 
             <div class="my-2"></div>
             {{ render(controller('App\\Controller\\ClienteController::getClienteList')) }}

@@ -1,0 +1,5 @@
+<select class="form-select" name="idFuncion" id="funcion">
+  {% for key,funcion in funciones %}
+    <option value={{funcion.id}}> {{ funcion.rol }} </option>
+  {% endfor %}
+</select>

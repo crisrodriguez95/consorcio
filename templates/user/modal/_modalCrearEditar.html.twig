@@ -25,16 +25,17 @@
               <div class="col-md-6">
                 <label for="id" class="form-label">Cédula</label>
                 <input type="text"
-                  class="form-control"
+                  class="form-control number"
                   id="id"
                   name="cedula"
+                  minlength="10"
                   maxlength="10"
                   required />
               </div>
               <div class="col-md-6">
                 <label for="name">Nombre</label>
                 <input type="text"
-                  class="form-control"
+                  class="form-control inputText"
                   id="name"
                   name="nombre"
                   required />
@@ -48,7 +49,7 @@
               <div class="col-md-6">
                 <label for="id" class="form-label">Apellido</label>
                 <input type="text"
-                  class="form-control"
+                  class="form-control inputText"
                   id="lastName"
                   name="apellido"
                   maxlength="10"
@@ -62,27 +63,28 @@
                   name="correo"
                   required />
               </div>
-            </div>    
+            </div>
           </div>
 
           {# ------------ Fila 3 Buttons ------------------ #}
-           <div class="form-group">
-             <div class="row">
-             <div class="col-md-6">
+          <div class="form-group">
+            <div class="row">
+              <div class="col-md-6">
                 <label for="rol">Rol</label>
                 <select class="form-select"
                   required
                   id="id_rol"
                   name="id_rol"
                   aria-label="Default select example">
-                  <option selected>Seleccione</option>
+                  <option selected>
+                    Seleccione
+                  </option>
                   <option value="ROLE_ADMIN">
-                   Administrador
+                    Administrador
                   </option>
                   <option value="ROLE_USER">
                     Colaborador
                   </option>
-                 
                 </select>
               </div>
               <div class="col-md-6">
@@ -93,15 +95,15 @@
                   name="password"
                   maxlength="30"
                   required />
-              </div>      
-            </div>            
+              </div>
+            </div>
           </div>
           {# ------------ Fila 4 Buttons ------------------ #}
           <div class="form-group estado">
-             <div class="row">
+            <div class="row">
               <div class="col-md-6">
                 <label for="id" class="form-label">Estado</label>
-                  <select class="form-select"
+                <select class="form-select"
                   required
                   id="estatus"
                   name="estado"
@@ -113,10 +115,10 @@
                     Activo
                   </option>
                 </select>
-              </div>      
-            </div>            
+              </div>
+            </div>
           </div>
-           
+
           {# ------------ Fila 5 Buttons ------------------ #}
           <div class="form-group">
             <div class="row">

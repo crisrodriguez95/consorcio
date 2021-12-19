@@ -36,6 +36,10 @@ class TipoTramiteTransferencia
      * @ORM\Column(name = "PESOCARGA", type = "string", nullable = false)
      */
     private $pesoCarga;
+    /**
+     * @ORM\Column(name = "ESTADO", type = "string", nullable = false)
+     */
+    private $estado;
 
     /**
      *@ORM\OneToMany(targetEntity="App\Entity\ClienteTramite", mappedBy="idTipoTramite")
@@ -87,6 +91,15 @@ class TipoTramiteTransferencia
         }
 
         $this->pesoCarga = $value;
+        return $this;
+    }
+    public function estado($value = null)
+    {
+        if (!$value) {
+            return $this->estado;
+        }
+
+        $this->estado = $value;
         return $this;
     }
 }

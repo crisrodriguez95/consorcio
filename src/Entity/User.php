@@ -52,12 +52,12 @@ class User implements UserInterface
     private $nombre;
 
     /**
-     * @ORM\Column(type="string", length=50)
+     * @ORM\Column(type="string", length=50, nullable=false)
      */
     private $apellido;
 
     /**
-     * @ORM\Column(type="integer", length=10)
+     * @ORM\Column(type="integer", length=10, nullable=false)
      */
     private $cedula;
 
@@ -70,6 +70,10 @@ class User implements UserInterface
      * @ORM\OneToMany(targetEntity="App\Entity\UsuarioTramite", mappedBy="idUser")
      */
     private $usuarioTramite;
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\FuncionUsuario", mappedBy="idUser")
+     */
+    private $funcionUsuario;
 
     public function getId(): ?int
     {
@@ -104,19 +108,16 @@ class User implements UserInterface
     public function getRoles(): array
     {
         $roles = $this->roles;
-        
-        // guarantee every user at least has ROLE_USER
-      //  $roles[] = 'ROLE_USER';
 
+        // guarantee every user at least has ROLE_USER
+        //  $roles[] = 'ROLE_USER';
 
         return array_unique($roles);
     }
 
     public function setRoles(array $roles): self
     {
-        
         $this->roles = $roles;
-        
 
         return $this;
     }

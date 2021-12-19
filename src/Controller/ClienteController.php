@@ -65,6 +65,7 @@ class ClienteController extends AbstractController
           $cliente->movil($request->query->get('celular'));
           $cliente->email($request->query->get('correo'));
           $cliente->estado('Activo');
+          
           $em->persist($cliente);
           $em->flush();
 

@@ -21,6 +21,7 @@ const update = document.querySelectorAll('.update');
          $('#observation').val(data.datooos.observacion)
          $('#tiempo').val(data.datooos.tiempo)
          $('#carga').val(data.datooos.carga)
+         $('#estatus').val(data.datooos.estado)
   
         }
       })

@@ -35,11 +35,23 @@
           <tbody>
             {% for key, fila in datos %}
               <tr>
-                {% for key, data in fila %}
-                  {% if key > 0 %}
+                {% for key, data in fila %}                  
+                  {% if data == "NO INICIADO" %}
+                    <td style="background: #fff; color: #1CCA51">
+                      {{ data }}
+                    </td>
+                  {% elseif data == "EN PROCESO" %}
+                    <td style="background: #fff; color: #FFD91A">
+                      {{ data }}
+                    </td>
+                  {% elseif data == "FINALIZADO" %}
+                    <td style="background: #fff; color: #F24100">
+                      {{ data }}
+                    </td>
+                  {% else %}
                     <td style="background: #fff; color: #484C64">
                       {{ data }}
-                    </td>                 
+                    </td>
                   {% endif %}
                 {% endfor %}
                 <td style="background: #fff" colspan="2">
@@ -69,16 +81,9 @@
   </div>
 {% else %}
   <div style="text-align: center">
-    <img src="./img/agregar.png " />
+    <img src="./img/tramite.png " />
     <h3 style="color: #172B4D, font-size: 20px">
       {{ crear }}
     </h3>
-    <!-- Button trigger modal -->
-    <button type="button"
-      class="btn btn-primary"
-      data-bs-toggle="modal"
-      data-bs-target="#exampleModal">
-      Crear
-    </button>
   </div>
 {% endif %}

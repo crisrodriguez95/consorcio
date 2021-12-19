@@ -13,14 +13,20 @@
 					class="user">
 					{# ------------ Fila 1 ------------------ #}
 					<div class="form-group">
-						<label for="exampleFormControlInput1">Usuario</label>
+						<label for="exampleFormControlInput1">Funciones</label>
 						{{
               render(
                 controller(
-                  'App\\Controller\\TramiteController::getUsers'
+                  'App\\Controller\\TramiteController::getFunciones'
                 )
               )
             }}
+					</div>
+					<div class="form-group">
+						<label for="exampleFormControlInput1">Usuario</label>
+						<select class ="form-select selec">
+							<option>Seleccione una función</option>
+						</select>
 					</div>
 					
 						<div class="form-group">
@@ -53,4 +59,3 @@
 		</div>
 	</div>
 </div>
-

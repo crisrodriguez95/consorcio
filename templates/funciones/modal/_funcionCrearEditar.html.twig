@@ -1,7 +1,7 @@
-<!-- Modal -->
 <style>
-  #typeTramit{ text-transform: uppercase; }
+  #rol{ text-transform: uppercase; }
 </style>
+<!-- Modal -->
 <div class="modal fade"
   id="exampleModal"
   tabindex="-1"
@@ -11,7 +11,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">
-          Crear tipo de trámite
+          Crear Función
         </h5>
         <button type="button"
           class="btn-close"
@@ -20,54 +20,21 @@
 
         </button>
       </div>
-
       <div class="modal-body">
         <form class="user needs-validation" novalidate>
           {# ------------ Fila 1 ------------------ #}
           <div class="form-group">
-            <label for="exampleFormControlInput1">Tipo de trámite</label>
+            <label for="address">Rol</label>
             <input type="text"
               class="form-control inputText"
-              id="typeTramit"
-              name="tipoTramite"
+              id="rol"
+              name="rol"
               onkeyup="javascript:this.value=this.value.toUpperCase()"
               required />
           </div>
 
-          <div class="form-group">
-            <label for="exampleFormControlInput1">Observación</label>
-            <input type="text"
-              class="form-control inputText"
-              id="observation"
-              name="observacion"
-              required />
-          </div>
-
-          {#  #}
-          <div class="form-group">
-            <div class="row">
-              <div class="col-md-6">
-                <label for="exampleFormControlInput1">Peso Tiempo</label>
-                <input type="text"
-                  class="form-control number"
-                  id="tiempo"
-                  name="tiempo"
-                  maxlength="2"
-                  required />
-              </div>
-              <div class="col-md-6">
-                <label for="exampleFormControlInput1">Peso carga</label>
-                <input type="text"
-                  class="form-control number"
-                  id="carga"
-                  name="carga"
-                  maxlength="2"
-                  required />
-              </div>
-            </div>
-          </div>
           <div class="form-group estado">
-            <label for="email">Estado</label>
+            <label for="">Estado</label>
             <select class="form-select"
               required
               id="estatus"
@@ -81,12 +48,12 @@
               </option>
             </select>
           </div>
-          {# ------------ Fila 5 Buttons ------------------ #}
+          {# ------------ Fila 6 Buttons ------------------ #}
           <div class="form-group">
             <div class="row">
               <div class="col-md-6">
                 <button type="submit" class="btn btn-primary data">
-                  Crear
+                  Crear función
                 </button>
               </div>
               <div class="col-md-6">
@@ -100,9 +67,6 @@
           </div>
         </form>
       </div>
-      {# <div class="modal-footer">
-        
-      </div> #}
     </div>
   </div>
 </div>

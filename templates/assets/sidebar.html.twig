@@ -59,10 +59,10 @@
                         <h6 class="collapse-header">Custom Utilities:</h6>
 
                         <a class="collapse-item" href=" {{ path('tipoTransferencia')}} ">Tipo de Tramites</a>
-                        <a class="collapse-item" href= " {{ path('clienteTramite')}} " >Tramites</a>
+                        <a class="collapse-item" href= " {{ path('clienteTramite')}} " >Asignar Tramites</a>
                         {% if is_granted('ROLE_ADMIN') %}
                                   
-                        <a class="collapse-item" href= " {{ path('usuarioTramite')}} " >Todos losTramites</a>
+                        <a class="collapse-item" href= " {{ path('usuarioTramite')}} " >Tramites</a>
                          {% endif %}          
                     </div>
                 </div>
