@@ -1,0 +1,13 @@
+{% set porcentaje = ['50%', '25%', '98%'] %}
+<td style="background: #fff">
+  <div class="progress">
+    <div class="progress-bar progress-bar-striped bg-info"
+      role="progressbar"
+      style="width: {{ porcentaje[key] }}"
+      aria-valuenow="50"
+      aria-valuemin="0"
+      aria-valuemax="100">
+      {{ porcentaje[key] }}
+    </div>
+  </div>
+</td>

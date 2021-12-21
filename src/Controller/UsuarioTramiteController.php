@@ -11,6 +11,7 @@ use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 use App\Entity\UsuarioTramite;
+use App\Entity\TramiteTransferencia;
 use App\Entity\User;
 
 class UsuarioTramiteController extends AbstractController
@@ -61,7 +62,47 @@ class UsuarioTramiteController extends AbstractController
     {
         $em = $this->getDoctrine()->getManager();
         $usuarioTramites = $em->getRepository(UsuarioTramite::class)->findAll();
+        // // dd($usuarioTramites);
+        // $idClienteTramites = [];
+        // foreach($usuarioTramites as $tramite){
+        //     array_push($idClienteTramites, $tramite->getIdClienteTramite()->id());
+        // }
 
+        // $i = 0;
+        // $tramiteTransferencia = $em->getRepository(TramiteTransferencia::class)->findBy();
+        // foreach($tramiteTransferencia as $tramite){
+
+        // }
+        //     if($tramiteTransferencia->cedula()){
+        //         $i ++;
+        //     }
+        //     if($tramiteTransferencia->papeleta()){
+        //         $i ++;
+        //     }
+        //     if($tramiteTransferencia->escrituraBienes()){
+        //         $i ++;
+        //     }
+        //     if($tramiteTransferencia->estaEnagenado()){
+        //         $i ++;
+        //     }
+        //     if($tramiteTransferencia->minuta()){
+        //         $i ++;
+        //     }
+        //     if($tramiteTransferencia->insinuacionDonacion()){
+        //         $i ++;
+        //     }
+        //     if($tramiteTransferencia->valoresMunicipio()){
+        //         $i ++;
+        //     }
+        //     if($tramiteTransferencia->peticionValores()){
+        //         $i ++;
+        //     }
+        //     if($tramiteTransferencia->pagoValores()){
+        //         $i ++;
+        //     }
+
+        // dd($i);
+        // dd($idClienteTramite);
         $campos = [
             'Código',
             'Usuario',
@@ -73,6 +114,7 @@ class UsuarioTramiteController extends AbstractController
             'Tipo de Trámite',
             'Fecha',
             'Estado',
+            'Progreso',
         ];
 
         $usuariosTramite = [];

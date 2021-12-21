@@ -343,6 +343,7 @@ class TramiteController extends AbstractController
                 $tramite->getIdUsuario()->getNombre(),
                 $tramite->getIdUsuario()->getApellido(),
                 $tramite->describe(),
+                $tramite->fecha(),
             ];
         }
 
@@ -390,6 +391,7 @@ class TramiteController extends AbstractController
         $usuarios = $query->getResult();
 
         $dato = [];
+
         foreach ($usuarios as $key => $usuario) {
             $dato[$key] = [
                 'id' => $usuario['id'],
@@ -397,8 +399,6 @@ class TramiteController extends AbstractController
                 'apellido' => $usuario['apellido'],
             ];
         }
-
-        // dd($dato);
 
         return $dato;
     }
@@ -413,7 +413,7 @@ class TramiteController extends AbstractController
             ->find($request->query->get('tipoTramite'));
         $user = $em
             ->getRepository(User::class)
-            ->find($request->query->get('idusuario'));
+            ->find($request->query->get('idUsuario'));
 
         $usuarioTramite = new UsuarioTramite();
 
@@ -434,5 +434,11 @@ class TramiteController extends AbstractController
         $em->flush();
 
         return 'heythere';
+        // return $this->redirectToRoute('usuarioTramiteIndividual');
+        // $response = $this->forward(
+        //     'App\Controller\UsuarioTramiteController::getViewTramite'
+        // );
+
+        // return $response;
     }
 }

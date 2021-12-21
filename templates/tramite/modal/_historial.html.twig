@@ -1,16 +1,41 @@
 {% if (datoshistorial|length) > 0 %}
-	{% for data  in datoshistorial %}
-			<div class="friends-grids">
-				<div class="grids-left">
-					<img src="{{asset('img/a1.jpg')}}" width = "50%"/>
-				</div>	
-				<div class="grids-right">
-					<h2>{{ data[0] }} {{ data[1] }} </h2>
-					<div class="grids-right-info">
-						Comentario: {{ data[2] }}
-						<div class="clear"> </div>
-					</div>
-				</div>			
-      </div>		
-	{% endfor %}
+  {% for key, data in datoshistorial %}
+    <div class="friends-grids">
+      <div class="grids-left">
+        <img src="{{ asset('img/a1.jpg') }}" width="55%" />
+      </div>
+      <div class="grids-right">
+        <div class="grids-right-info">
+          {% set color = [
+            '#EC407A',
+            '#1FEB88',
+            '#F7B84F',
+            '#26ACE9',
+            '#4500A9',
+            '#343435'
+          ] %}
+          {% set i = 0 %}
+          {% if (color|length) > key %}
+            <span class="name-user"
+              style="font-size: 17px; color: {{ color[key] }}">
+              {{ data[0] }} {{ data[1] }}
+            </span>
+            <span style="float: right"><b>Fecha: {{ data[3] }}</b></span>
+          {% else %}
+            <span class="name-user" style="margin: 20px 0; color: #EC407A">
+              {{ data[0] }} {{ data[1] }}
+            </span>
+            <span style="float: right"><b>Fecha: {{ data[3] }}</b></span>
+          {% endif %}
+          <div class="clear"></div>
+        </div>
+        <div class="grids-right-info">
+          <div class="clear"></div>
+        </div>
+        <div class="grids-right-info">
+          <b>Comentario:</b> {{ data[2] }} <div class="clear"></div>
+        </div>
+      </div>
+    </div>
+  {% endfor %}
 {% endif %}
