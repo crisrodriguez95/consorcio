@@ -1,13 +1,17 @@
-{% set porcentaje = ['50%', '25%', '98%'] %}
-<td style="background: #fff">
+{% set porcentaje = fila[10] * 100 / 26 %}
+<td colspan="2" style="background: #fff">
   <div class="progress">
-    <div class="progress-bar progress-bar-striped bg-info"
+    <div class="progress-bar progress-bar-striped bg-{{
+      random(
+        ['success', 'info', 'warning', 'danger']
+      )
+      }}"
       role="progressbar"
-      style="width: {{ porcentaje[key] }}"
+      style="width: {{ (porcentaje|number_format(1, '.', ',')) ~ '%' }}"
       aria-valuenow="50"
       aria-valuemin="0"
       aria-valuemax="100">
-      {{ porcentaje[key] }}
+      {{ (porcentaje|number_format(1, '.', ',')) ~ '%' }}
     </div>
   </div>
 </td>

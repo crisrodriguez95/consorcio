@@ -6,9 +6,7 @@
                 background: #fff;
                 border-top: 1px solid #DBDBDB;
                 border-bottom: 1px solid #DBDBDB;
-                border-left: 1px solid #DBDBDB;">     
-    </div>
-   
+                border-left: 1px solid #DBDBDB;"></div>
   </div>
   <div class="card mb-4">
     <div class="card-header py-3">
@@ -35,23 +33,25 @@
           <tbody>
             {% for key, fila in datos %}
               <tr>
-                {% for key, data in fila %}                  
-                  {% if data == "NO INICIADO" %}
-                    <td style="background: #fff; color: #1CCA51">
-                      {{ data }}
-                    </td>
-                  {% elseif data == "EN PROCESO" %}
-                    <td style="background: #fff; color: #FFD91A">
-                      {{ data }}
-                    </td>
-                  {% elseif data == "FINALIZADO" %}
-                    <td style="background: #fff; color: #F24100">
-                      {{ data }}
-                    </td>
-                  {% else %}
-                    <td style="background: #fff; color: #484C64">
-                      {{ data }}
-                    </td>
+                {% for key, data in fila %}
+                  {% if key != 10 %}
+                    {% if data == 'NO INICIADO' %}
+                      <td style="background: #fff; color: #1CCA51">
+                        {{ data }}
+                      </td>
+                    {% elseif data == 'EN PROCESO' %}
+                      <td style="background: #fff; color: #FFD91A">
+                        {{ data }}
+                      </td>
+                    {% elseif data == 'FINALIZADO' %}
+                      <td style="background: #fff; color: #F24100">
+                        {{ data }}
+                      </td>
+                    {% else %}
+                      <td style="background: #fff; color: #484C64">
+                        {{ data }}
+                      </td>
+                    {% endif %}
                   {% endif %}
                 {% endfor %}
                 {{ include('tramite/modal/_progress.html.twig') }}
@@ -66,10 +66,21 @@
                       <i class="fas fa-ellipsis-v"></i>
                     </button>
                     <div class="dropdown-menu"
-                      aria-labelledby="dropdownMenuButton">                     
-                      <a class="dropdown-item" href="{{ path('procesotramite',{idTramite:  fila[0] }) }}">Actualizar</a>
-                      <a class="dropdown-item" href="#">Editar</a>
-                       <a class="dropdown-item" href="#">Eliminar</a>
+                      aria-labelledby="dropdownMenuButton">
+                      <a class="dropdown-item"
+                        style="color: #4A2950"
+                        href="{{
+                        path(
+                          'procesotramite',
+                          {
+                            idTramite: fila[0]
+                          }
+                        )
+                        }}">
+                        Actualizar
+                      </a>
+                      {# <a class="dropdown-item" href="#">Editar</a>
+                      <a class="dropdown-item" href="#">Eliminar</a> #}
                     </div>
                   </div>
                 </td>

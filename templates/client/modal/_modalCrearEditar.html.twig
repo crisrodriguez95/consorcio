@@ -1,3 +1,6 @@
+<style>
+  #name, #lastName{ text-transform: uppercase; }
+</style>
 <!-- Modal -->
 <div class="modal fade"
   id="exampleModal"
@@ -12,8 +15,9 @@
         </h5>
         <button type="button"
           class="btn-close"
-          data-bs-dismiss="modal"
+          data-dismiss="modal"
           aria-label="Close">
+
         </button>
       </div>
       <div class="modal-body">
@@ -28,8 +32,7 @@
                   id="id"
                   name="cedula"
                   maxlength="10"
-                  required
-                  />
+                  required />
               </div>
               <div class="col-md-6">
                 <label for="name">Nombre</label>
@@ -37,11 +40,12 @@
                   class="form-control inputText"
                   id="name"
                   name="nombre"
+                  onkeyup="javascript:this.value=this.value.toUpperCase()"
                   required />
               </div>
             </div>
           </div>
-         
+
           {# ------------ Fila 2 ------------------ #}
           <div class="form-group">
             <div class="row">
@@ -51,6 +55,7 @@
                   class="form-control inputText"
                   id="lastName"
                   name="apellido"
+                  onkeyup="javascript:this.value=this.value.toUpperCase()"
                   required />
               </div>
               <div class="col-md-6">
@@ -81,8 +86,8 @@
           {# ------------ Fila 3 ------------------ #}
           {{ include('client/modal/conyugueCliente.html.twig') }}
 
-           {# ------------ Fila 4 ------------------ #}
-    
+          {# ------------ Fila 4 ------------------ #}
+
           <div class="form-group">
             <div class="row">
               <div class="col-md-6">
@@ -126,17 +131,17 @@
           <div class="form-group estado">
             <label for="email">Estado</label>
             <select class="form-select"
-                  required
-                  id="estatus"
-                  name="estado"
-                  aria-label="Default select example">
-                  <option value="Inactivo">
-                    Inactivo
-                  </option>
-                  <option value="Activo">
-                    Activo
-                  </option>
-                </select>
+              required
+              id="estatus"
+              name="estado"
+              aria-label="Default select example">
+              <option value="Inactivo">
+                Inactivo
+              </option>
+              <option value="Activo">
+                Activo
+              </option>
+            </select>
           </div>
           {# ------------ Fila 6 Buttons ------------------ #}
           <div class="form-group">
@@ -148,8 +153,8 @@
               </div>
               <div class="col-md-6">
                 <button type="button"
-                  class="btn btn-secondary"
-                  data-bs-dismiss="modal">
+                  class="btn btn-secondary cls"
+                  data-dismiss="modal">
                   Cerrar
                 </button>
               </div>
@@ -161,22 +166,15 @@
   </div>
 </div>
 <script>
+  const select = document.querySelector('.form-select'); const div =
+  document.querySelector('.conyugue'), cedulaConyugue =
+  document.querySelector('#idConyugue');
 
-  const select = document.querySelector('.form-select');
-  const div = document.querySelector('.conyugue'),
-   cedulaConyugue = document.querySelector('#idConyugue');
-  
   div.style.display = 'none';
 
-  select.addEventListener("change", () => {
-    const estadoCivil = select.value;
-    if(estadoCivil == "Casado"){
-      div.style.display = 'block';
-    }else{
-      div.style.display = 'none';
-      cedulaConyugue.value = null;
+  select.addEventListener("change", () => { const estadoCivil = select.value;
+  if(estadoCivil == "Casado"){ div.style.display = 'block'; }else{
+  div.style.display = 'none'; cedulaConyugue.value = null;
 
-    }
-  });
-
+  } });
 </script>

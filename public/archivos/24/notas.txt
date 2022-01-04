@@ -1,0 +1,12 @@
+1. Digito verificador en cedula ✔
+2. validar numero de cedular y telefono solo la longitud ✔
+3. eliminado logico en tipo de tramite ✔
+4. todo con mayuscula el tipo de tramite ✔
+5. agregar codigo del tramite ✔
+6. la peticion de pago de municipipo ✔
+7. agregar porcentaje
+8. que hace cada usuario
+9. Definir roles y que se guarden en una tabla
+10. que el boton de finalizar no finalice sin que todos los campos esten llenos
+11. guardar los archivos
+12. que no se pueda quitar el check ✔

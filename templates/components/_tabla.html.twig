@@ -1,18 +1,12 @@
 {% if (datos|length) > 0 %}
   <!-- DataTales Example -->
   <div class="btn-crear">
-    <div style="display: inline-block; 
-                margin-right: 4em; 
-                background: #fff;
-                border-top: 1px solid #DBDBDB;
-                border-bottom: 1px solid #DBDBDB;
-                border-left: 1px solid #DBDBDB;">
-            {# </div> #}
-    </div>
-   <button type="button"
+    <button type="button"
       class="btn btn-primary crear"
-      data-bs-toggle="modal"
-      data-bs-target="#exampleModal">
+      data-toggle="modal"
+      data-target="#exampleModal"
+      data-backdrop="static"
+      data-keyboard="false">
       Crear
     </button>
   </div>
@@ -43,18 +37,28 @@
               <tr>
                 {% for key, data in fila %}
                   {% if key > 0 %}
-                    {% if data == "Activo" %}
+                    {% if data == 'Activo' %}
                       <td style="background: #fff; color: #1CCA51">
                         {{ data }}
                       </td>
-                    {% elseif data == "Inactivo" %}
+                    {% elseif data == 'Inactivo' %}
                       <td style="background: #fff; color: #E32222">
                         {{ data }}
                       </td>
                     {% else %}
-                      <td style="background: #fff; color: #484C64">
-                        {{ data }}
-                      </td>
+                      {% if data == 'ROLE_ADMIN' %}
+                        <td style="background: #fff; color: #20C4AB">
+                          {{ data }}
+                        </td>
+                      {% elseif data == 'ROLE_USER' %}
+                        <td style="background: #fff; color: #EC7424">
+                          {{ data }}
+                        </td>
+                      {% else %}
+                        <td style="background: #fff; color: #484C64">
+                          {{ data }}
+                        </td>
+                      {% endif %}
                     {% endif %}
                   {% endif %}
                 {% endfor %}
@@ -69,20 +73,25 @@
                       <i class="fas fa-ellipsis-v"></i>
                     </button>
 
-                      <div class="dropdown-menu"
-                        aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item eliminar" style="color: #FF5500" data-id="{{ fila[0] }}" href="">
-                          Eliminar
-                        </a>
-                        <a class="dropdown-item update"
-                          data-bs-toggle="modal"
-                          data-bs-target="#exampleModal"
-                          style = "color: #26ACE9"
-                          data-id="{{ fila[0] }}" 
-                          href="">
-                          Editar
-                        </a>
-                      </div>
+                    <div class="dropdown-menu"
+                      aria-labelledby="dropdownMenuButton">
+                      <a class="dropdown-item eliminar"
+                        style="color: #FF5500"
+                        data-id="{{ fila[0] }}"
+                        href="">
+                        Eliminar
+                      </a>
+                      <a class="dropdown-item update"
+                        data-toggle="modal"
+                        data-target="#exampleModal"
+                        data-backdrop="static"
+                        data-keyboard="false"
+                        style="color: #26ACE9"
+                        data-id="{{ fila[0] }}"
+                        href="">
+                        Editar
+                      </a>
+                    </div>
                   </div>
                 </td>
               </tr>
@@ -101,8 +110,10 @@
     <!-- Button trigger modal -->
     <button type="button"
       class="btn btn-primary crear"
-      data-bs-toggle="modal"
-      data-bs-target="#exampleModal">
+      data-toggle="modal"
+      data-target="#exampleModal"
+      data-backdrop="static"
+      data-keyboard="false">
       Crear
     </button>
   </div>

@@ -61,48 +61,110 @@ class UsuarioTramiteController extends AbstractController
     public function getUsuarioTramiteList()
     {
         $em = $this->getDoctrine()->getManager();
-        $usuarioTramites = $em->getRepository(UsuarioTramite::class)->findAll();
-        // // dd($usuarioTramites);
-        // $idClienteTramites = [];
-        // foreach($usuarioTramites as $tramite){
-        //     array_push($idClienteTramites, $tramite->getIdClienteTramite()->id());
-        // }
+        $usuarioTramites = $em
+            ->getRepository(UsuarioTramite::class)
+            ->findBy(['estado' => 'Y']);
 
-        // $i = 0;
-        // $tramiteTransferencia = $em->getRepository(TramiteTransferencia::class)->findBy();
-        // foreach($tramiteTransferencia as $tramite){
+        $i = 0;
+        $tramiteTransferencia = $em
+            ->getRepository(TramiteTransferencia::class)
+            ->findAll();
 
-        // }
-        //     if($tramiteTransferencia->cedula()){
-        //         $i ++;
-        //     }
-        //     if($tramiteTransferencia->papeleta()){
-        //         $i ++;
-        //     }
-        //     if($tramiteTransferencia->escrituraBienes()){
-        //         $i ++;
-        //     }
-        //     if($tramiteTransferencia->estaEnagenado()){
-        //         $i ++;
-        //     }
-        //     if($tramiteTransferencia->minuta()){
-        //         $i ++;
-        //     }
-        //     if($tramiteTransferencia->insinuacionDonacion()){
-        //         $i ++;
-        //     }
-        //     if($tramiteTransferencia->valoresMunicipio()){
-        //         $i ++;
-        //     }
-        //     if($tramiteTransferencia->peticionValores()){
-        //         $i ++;
-        //     }
-        //     if($tramiteTransferencia->pagoValores()){
-        //         $i ++;
-        //     }
+        $tramiteCamposLlenos = [];
 
-        // dd($i);
-        // dd($idClienteTramite);
+        foreach ($tramiteTransferencia as $tramite) {
+            if ($tramite->cedula() == 'true') {
+                $i++;
+            }
+
+            if ($tramite->papeleta() == 'true') {
+                $i++;
+            }
+            if ($tramite->escrituraBienes() == 'true') {
+                $i++;
+            }
+            if ($tramite->estaEnagenado() == 'true') {
+                $i++;
+            }
+            if ($tramite->minuta()) {
+                $i++;
+            }
+            if ($tramite->insinuacionDonacion()) {
+                $i++;
+            }
+            if ($tramite->valoresMunicipio()) {
+                $i++;
+            }
+            if ($tramite->peticionValores() == 'true') {
+                $i++;
+            }
+            if ($tramite->pagoValores()) {
+                $i++;
+            }
+            if ($tramite->horaReunion()) {
+                $i++;
+            }
+            if ($tramite->fechaReunion()) {
+                $i++;
+            }
+            if ($tramite->fechaEjecucion()) {
+                $i++;
+            }
+            if ($tramite->retraso()) {
+                $i++;
+            }
+            if ($tramite->pagoTasaNotarial()) {
+                $i++;
+            }
+            if ($tramite->pagoCompleto() == 'true') {
+                $i++;
+            }
+            if ($tramite->esMutualista() == 'true') {
+                $i++;
+            }
+            if ($tramite->entregadoMutualista() == 'true') {
+                $i++;
+            }
+            if ($tramite->documentoFirmado()) {
+                $i++;
+            }
+            if ($tramite->entregadaNotaria() == 'true') {
+                $i++;
+            }
+            if ($tramite->subirEscritura()) {
+                $i++;
+            }
+            if ($tramite->entregadaRegistroPropiedad() == 'true') {
+                $i++;
+            }
+            if ($tramite->clienteAprueba() == 'true') {
+                $i++;
+            }
+            if ($tramite->tituloPagoEntregado() == 'true') {
+                $i++;
+            }
+            if ($tramite->tituloPago() == 'true') {
+                $i++;
+            }
+            if ($tramite->escrituraValida() == 'true') {
+                $i++;
+            }
+            if ($tramite->actaInscripcion()) {
+                $i++;
+            }
+            if ($tramite->informeGastos()) {
+                $i++;
+            }
+            if ($tramite->pagoGastos() == 'true') {
+                $i++;
+            }
+            if ($tramite->Observa()) {
+                $i++;
+            }
+            $tramiteCamposLlenos[$tramite->getIdClienteTramite()->id()] = [$i];
+            $i = 0;
+        }
+
         $campos = [
             'Código',
             'Usuario',
@@ -115,12 +177,14 @@ class UsuarioTramiteController extends AbstractController
             'Fecha',
             'Estado',
             'Progreso',
+            '  ',
         ];
 
         $usuariosTramite = [];
 
         foreach ($usuarioTramites as $key => $data) {
-            // dd($data->getIdClienteTramite()->id());
+            $idClienteTramite = $data->getIdClienteTramite()->id();
+
             $usuariosTramite[$key] = [
                 $data->id(),
                 $data->getIdUsuario()->getCedula(),
@@ -147,6 +211,7 @@ class UsuarioTramiteController extends AbstractController
 
                 $data->fecha(),
                 $data->estadoProceso(),
+                $tramiteCamposLlenos[$idClienteTramite][0],
             ];
         }
 
@@ -172,7 +237,108 @@ class UsuarioTramiteController extends AbstractController
             ->getRepository(UsuarioTramite::class)
             ->findBy(['idUser' => $user->getId(), 'estado' => 'Y']);
 
+        $i = 0;
+        $tramiteTransferencia = $em
+            ->getRepository(TramiteTransferencia::class)
+            ->findAll();
+
+        $tramiteCamposLlenos = [];
+
+        foreach ($tramiteTransferencia as $tramite) {
+            if ($tramite->cedula() == 'true') {
+                $i++;
+            }
+
+            if ($tramite->papeleta() == 'true') {
+                $i++;
+            }
+            if ($tramite->escrituraBienes() == 'true') {
+                $i++;
+            }
+            if ($tramite->estaEnagenado() == 'true') {
+                $i++;
+            }
+            if ($tramite->minuta()) {
+                $i++;
+            }
+            if ($tramite->insinuacionDonacion()) {
+                $i++;
+            }
+            if ($tramite->valoresMunicipio()) {
+                $i++;
+            }
+            if ($tramite->peticionValores() == 'true') {
+                $i++;
+            }
+            if ($tramite->pagoValores()) {
+                $i++;
+            }
+            if ($tramite->horaReunion()) {
+                $i++;
+            }
+            if ($tramite->fechaReunion()) {
+                $i++;
+            }
+            if ($tramite->fechaEjecucion()) {
+                $i++;
+            }
+            if ($tramite->retraso()) {
+                $i++;
+            }
+            if ($tramite->pagoTasaNotarial()) {
+                $i++;
+            }
+            if ($tramite->pagoCompleto() == 'true') {
+                $i++;
+            }
+            if ($tramite->esMutualista() == 'true') {
+                $i++;
+            }
+            if ($tramite->entregadoMutualista() == 'true') {
+                $i++;
+            }
+            if ($tramite->documentoFirmado()) {
+                $i++;
+            }
+            if ($tramite->entregadaNotaria() == 'true') {
+                $i++;
+            }
+            if ($tramite->subirEscritura()) {
+                $i++;
+            }
+            if ($tramite->entregadaRegistroPropiedad() == 'true') {
+                $i++;
+            }
+            if ($tramite->clienteAprueba() == 'true') {
+                $i++;
+            }
+            if ($tramite->tituloPagoEntregado() == 'true') {
+                $i++;
+            }
+            if ($tramite->tituloPago() == 'true') {
+                $i++;
+            }
+            if ($tramite->escrituraValida() == 'true') {
+                $i++;
+            }
+            if ($tramite->actaInscripcion()) {
+                $i++;
+            }
+            if ($tramite->informeGastos()) {
+                $i++;
+            }
+            if ($tramite->pagoGastos() == 'true') {
+                $i++;
+            }
+            if ($tramite->Observa()) {
+                $i++;
+            }
+            $tramiteCamposLlenos[$tramite->getIdClienteTramite()->id()] = [$i];
+            $i = 0;
+        }
+
         $campos = [
+            'Código',
             'Usuario',
             'Nombre',
             'Apellido',
@@ -182,10 +348,15 @@ class UsuarioTramiteController extends AbstractController
             'Tipo de Trámite',
             'Fecha',
             'Estado',
+            'Progreso',
+            '  ',
         ];
+
         $usuariosTramite = [];
 
         foreach ($usuarioTramites as $key => $data) {
+            $idClienteTramite = $data->getIdClienteTramite()->id();
+
             $usuariosTramite[$key] = [
                 $data->id(),
                 $data->getIdUsuario()->getCedula(),
@@ -212,6 +383,7 @@ class UsuarioTramiteController extends AbstractController
 
                 $data->fecha(),
                 $data->estadoProceso(),
+                $tramiteCamposLlenos[$idClienteTramite][0],
             ];
         }
 

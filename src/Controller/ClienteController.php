@@ -24,12 +24,11 @@ class ClienteController extends AbstractController
                 if ($tipo) {
                     if ($tipo == 1) {
                         return new JsonResponse($this->registrar());
-                      }else if($tipo == 2){                 
+                    } elseif ($tipo == 2) {
                         return new JsonResponse($this->updateClient());
-                    }else if($tipo == 6){
-                        return new JsonResponse($this->deleteClient());                        
-                    }else if ($tipo == 7){      
-
+                    } elseif ($tipo == 6) {
+                        return new JsonResponse($this->deleteClient());
+                    } elseif ($tipo == 7) {
                         return new JsonResponse($this->dataClient());
                     }
                 }
@@ -43,59 +42,58 @@ class ClienteController extends AbstractController
         $request = $this->container->get('request_stack')->getCurrentRequest();
         $em = $this->getDoctrine()->getManager();
         $id = $request->query->get('id');
-      
-          if (
-            $this->getDoctrine()
-                ->getRepository(Cliente::class)
-                ->find($request->query->get('cedula'))
-          ) {
+
+        $_cliente = $em
+            ->getRepository(Cliente::class)
+            ->findBy(['cedula' => $request->query->get('cedula')]);
+
+        if ($_cliente) {
             return 'El cliente que desea registrar ya esta registrado';
-          }
+        }
 
-          $cliente = new Cliente();
-          
-          $cliente->cedula($request->query->get('cedula'));
-          $cliente->nombre($request->query->get('nombre'));
-          $cliente->setConyugueCedula($request->query->get('conyugueCedula'));
-          $cliente->setConyugueNombre($request->query->get('conyugueNombre'));
-          $cliente->apellido($request->query->get('apellido'));
-          $cliente->direccion($request->query->get('direccion'));
-          $cliente->estadocivil($request->query->get('estadoCivil'));
-          $cliente->telefono($request->query->get('telefono'));
-          $cliente->movil($request->query->get('celular'));
-          $cliente->email($request->query->get('correo'));
-          $cliente->estado('Activo');
-          
-          $em->persist($cliente);
-          $em->flush();
+        $cliente = new Cliente();
 
-          return 'heythere';
-                   
+        $cliente->cedula($request->query->get('cedula'));
+        $cliente->nombre($request->query->get('nombre'));
+        $cliente->setConyugueCedula($request->query->get('conyugueCedula'));
+        $cliente->setConyugueNombre($request->query->get('conyugueNombre'));
+        $cliente->apellido($request->query->get('apellido'));
+        $cliente->direccion($request->query->get('direccion'));
+        $cliente->estadocivil($request->query->get('estadoCivil'));
+        $cliente->telefono($request->query->get('telefono'));
+        $cliente->movil($request->query->get('celular'));
+        $cliente->email($request->query->get('correo'));
+        $cliente->estado('Activo');
+
+        $em->persist($cliente);
+        $em->flush();
+
+        return 'heythere';
+
         // die('<pre>'.print_r($request->query->get('cedula'),true).'</pre>');
-
     }
 
-    // -------------------- Delete cliente -------------------- 
-    public function deleteClient(){
+    // -------------------- Delete cliente --------------------
+    public function deleteClient()
+    {
         $request = $this->container->get('request_stack')->getCurrentRequest();
         $id = $request->query->get('id');
 
-
         $em = $this->getDoctrine()->getManager();
         $cliente = $em->getRepository(Cliente::class)->find($id);
-                
-        $cliente->estado("Inactivo");
+
+        $cliente->estado('Inactivo');
         $em->flush();
     }
-    // -------------------- update cliente -------------------- 
+    // -------------------- update cliente --------------------
 
-    public function updateClient(){
-    
-      $request = $this->container->get('request_stack')->getCurrentRequest();
-      $em = $this->getDoctrine()->getManager();
+    public function updateClient()
+    {
+        $request = $this->container->get('request_stack')->getCurrentRequest();
+        $em = $this->getDoctrine()->getManager();
 
-      $id = $request->query->get('id');
-      $cliente = $em->getRepository(Cliente::class)->find($id);
+        $id = $request->query->get('id');
+        $cliente = $em->getRepository(Cliente::class)->find($id);
 
         $cliente->cedula($request->query->get('cedula'));
         $cliente->nombre($request->query->get('nombre'));
@@ -109,29 +107,29 @@ class ClienteController extends AbstractController
         $em->flush();
     }
 
-
-    public function dataClient(){
+    public function dataClient()
+    {
         $request = $this->container->get('request_stack')->getCurrentRequest();
         $id = $request->query->get('id');
 
         $em = $this->getDoctrine()->getManager();
         $cliente = $em->getRepository(Cliente::class)->find($id);
-        
+
         $dato = [
-          'cedula' => $cliente->cedula(),
-          'nombre' => $cliente->nombre(),
-          'apellido' => $cliente->apellido(),
-          'estadoCivil' => $cliente->estadocivil(),
-          'direccion' => $cliente->direccion(),
-          'telefono' => $cliente->telefono(),
-          'movil' => $cliente->movil(),
-          'email' => $cliente->email(),
-          'estado' => $cliente->estado()
+            'cedula' => $cliente->cedula(),
+            'nombre' => $cliente->nombre(),
+            'apellido' => $cliente->apellido(),
+            'estadoCivil' => $cliente->estadocivil(),
+            'direccion' => $cliente->direccion(),
+            'telefono' => $cliente->telefono(),
+            'movil' => $cliente->movil(),
+            'email' => $cliente->email(),
+            'estado' => $cliente->estado(),
         ];
 
-       $data = [
-           'datooos' => $dato
-       ];
+        $data = [
+            'datooos' => $dato,
+        ];
 
         return $data;
         // $cliente->estado("Inactivo");
@@ -143,7 +141,7 @@ class ClienteController extends AbstractController
     {
         $em = $this->getDoctrine()->getManager();
         $clientes = $em->getRepository(Cliente::class)->findAll();
-    
+
         $campos = [
             'Cédula',
             'Nombre',
@@ -153,10 +151,10 @@ class ClienteController extends AbstractController
             'Teléfono',
             'Movil',
             'Email',
-            'Estado'
+            'Estado',
         ];
         $clients = [];
-        
+
         // $idClients = [];
 
         foreach ($clientes as $key => $data) {
@@ -172,11 +170,11 @@ class ClienteController extends AbstractController
                 $data->telefono(),
                 $data->movil(),
                 $data->email(),
-                $data->estado()
+                $data->estado(),
             ];
         }
         // dd($clients);
-        
+
         return $this->render('/components/_tabla.html.twig', [
             'datos' => $clients,
             'campos' => $campos,

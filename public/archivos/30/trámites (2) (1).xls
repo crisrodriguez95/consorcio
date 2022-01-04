@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Welcome!</title>
+ 
+                  
+        
+                               
+    </head>
+    <body>
+        
+        Reporte de trámites gestionados por usuario<table style='border: 2px solid black'><tr><th>Fecha de emisión</th> <th colspan='2'>2022-01-03 16:08:24</th></tr><tr>
+            <th> Cédula</th> 
+            <th> Nombre</th> 
+            <th> Apellido</th> 
+            <th> Número de támites gestionados</th> 
+        </tr><tr><td>1725449571</td><td>Daniela</td><td>Peralta</td><td>2</td></tr><tr><td>1720842481</td><td>David</td><td>Cadena</td><td>1</td></tr></table>

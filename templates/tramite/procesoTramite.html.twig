@@ -51,6 +51,7 @@
           
           <!-- Errors -->
           {{ include('components/_errorDatosIncompletos.html.twig') }}
+          {{ include('components/_datosIncompletos.html.twig') }}
 
           <div class='message'>
             {{ include('components/_mensajeRegistro.html.twig') }}
@@ -64,14 +65,17 @@
               <div id="wizard">
                 <h3>
                   <div class="media">
-                    <div class="bd-wizard-step-icon"><i class="mdi mdi-account-outline"></i></div>
+                    <div class="bd-wizard-step-icon">
+                      <img src="https://img.icons8.com/external-kmg-design-outline-color-kmg-design/32/000000/external-office-building-work-from-home-kmg-design-outline-color-kmg-design.png" width="35px"/>
+                    </div>
                     <div class="media-body">
-                      <div class="bd-wizard-step-title">Personal Details</div>
+                      <div class="bd-wizard-step-title">Minuta y Municipio</div>
                       <div class="bd-wizard-step-subtitle">Paso 1</div>
                     </div>
                   </div>
                 </h3>       
                 {% for dato in informacion %}  
+                {% if estadoProceso != 'FINALIZADO'  %}
                   <section>
                     {# ----------- Content wrapper ----------- #}
                     <div class="content-wrapper">
@@ -98,7 +102,7 @@
                       <div class="form-check">       
                         <label class="form-check-label">
                           <input type="checkbox" class="form-check-input" name="enagenado" id="enagenado"  {% if dato.estaEnagenado() == 'true' %} disabled checked {% endif %}  >
-                          Bien enagenado
+                          Certificado de gravámenes
                         </label>
                       </div> 
                       <hr>            
@@ -113,7 +117,7 @@
                       {# ------------ Trámite de donación ------------- #}
                       {% if  'DONA' in dato.getIdClienteTramite().getIdTipoTramiteTransferencia().tramite() %} 
                         <div class="form-group col-md-12">
-                          <label for="insinuacionDonacion" class="">Insinuacion de donación</label>
+                          <h4 class="section-heading">Insinuacion de donación</h4> 
                           {% if dato.insinuacionDonacion() == null %} 
                             <input type="file" name="insinuacionDonacion" id="insinuacionDonacion" class="form-control" placeholder="Cargar insinuacion de donacion">
                           {% else %} 
@@ -123,7 +127,6 @@
                       {% endif %}               
                       <div class="form-group col-md-12">
                         <h4 class="section-heading">Valores Municipio </h4>   
-                        <label for="vmunicipio" class="">Valores a pagar</label>
                         {% if dato.valoresMunicipio() == null %} 
                           <input type="file" name="vmunicipio" id="vmunicipio" maxlength="5" class="form-control" value="{{ dato.valoresMunicipio() }}" placeholder="Valores a pagar a municipio">
                         {% else %} 
@@ -159,9 +162,11 @@
                   </section>
                   <h3>
                     <div class="media">
-                      <div class="bd-wizard-step-icon"><i class="mdi mdi-bank"></i></div>
+                      <div class="bd-wizard-step-icon">
+                        <img src="https://img.icons8.com/external-kmg-design-flat-kmg-design/32/000000/external-apartment-business-kmg-design-flat-kmg-design.png" width="35px"/>
+                      </div>
                       <div class="media-body">
-                        <div class="bd-wizard-step-title">Employ Details</div>
+                        <div class="bd-wizard-step-title">Notaria</div>
                         <div class="bd-wizard-step-subtitle">Paso 2</div>
                       </div>
                     </div>
@@ -219,20 +224,20 @@
                       <div class="row">
                         <div class="form-check col-md-12">
                           <h4 class="section-heading">Mutualista</h4> 
-                          <label class="form-check-label">
+                          <label class="form-check-label mut">
                             <input type="checkbox" class="form-check-input" name="esMutualista" id="esMutualista"  {% if dato.esMutualista() == 'true' %} disabled checked {% endif %} >
                             ¿Es mutualista?
                           </label>
                         </div>
 
-                        <div class="form-check col-md-12">
+                        {# <div class="form-check col-md-12">
                           <label class="form-check-label">
                             <input type="checkbox" class="form-check-input" name="entregadoMutualista" id="entregadoMutualista" {% if dato.entregadoMutualista() == 'true' %} disabled checked {% endif %}>
-                            Documentacion entregada a mutualista
+                            Documentacion entregada a consorcio
                           </label>
-                        </div> 
+                        </div>  #}
                           
-                        <div class="form-group col-md-12" style="padding-top: 14px">
+                        <div class="form-group col-md-12 documFirmado" style="padding-top: 14px">
                           <h4 class="section-heading">Subir documentación firmada</h4> 
                           {% if dato.documentoFirmado() == null %} 
                             <input type="file" name="documentoFirmado" id="documentoFirmado" class="form-control" placeholder="Cargar minuta">
@@ -278,9 +283,11 @@
                 
                   <h3>
                     <div class="media">
-                      <div class="bd-wizard-step-icon"><i class="mdi mdi-account-check-outline"></i></div>
+                      <div class="bd-wizard-step-icon">
+                        <img src="https://img.icons8.com/emoji/48/000000/scroll-emoji.png" width="35px"/>
+                      </div>
                       <div class="media-body">
-                        <div class="bd-wizard-step-title">Review </div>
+                        <div class="bd-wizard-step-title">Escritura e Informe de gastos</div>
                         <div class="bd-wizard-step-subtitle">Paso 3</div>
                       </div>
                     </div>
@@ -346,27 +353,356 @@
 
                   <h3>
                     <div class="media">
-                      <div class="bd-wizard-step-icon"><i class="mdi mdi-emoticon-outline"></i></div>
+                      <div class="bd-wizard-step-icon">
+                        <img src="https://img.icons8.com/external-flat-geotatah/64/000000/external-clearage-workaholic-flat-flat-geotatah.png" width="35px"/>
+                      </div>
                       <div class="media-body">
-                        <div class="bd-wizard-step-title">Submit</div>
-                        <div class="bd-wizard-step-subtitle">Step 4</div>
+                        <div class="bd-wizard-step-title">Finalización</div>
+                        <div class="bd-wizard-step-subtitle">Paso 4</div>
+                      </div>
+                    </div>
+                  </h3>
+
+                  <section>                   
+                    <div class="content-wrapper">
+                      <h4 class="section-heading mb-5">Resumen de Tramite</h4>
+                        <div class="form-check">
+                          <label class="form-check-label">
+                            <input type="checkbox" class="form-check-input" name="" id="" value="checkedValue" checked>
+                            Antes de finalizar el trámite verifique que todos los datos se han guardado correctamente. Si todo esta listo puede dar click en finalizar.</label>
+                          </label>
+                        </div>
+                      </div>
+                      <div style="margin: 25px">
+                        <button type="button" class="btn btn-primary fin" onClick="sendIdClient()"  style="background: #00d69f">Finalizar</button>
+                      </div>
+                    {% else %}
+                      {# ---------------------Else Trámite Finalizado---------------------- #}
+                  <section>
+                    {# ----------- Content wrapper ----------- #}
+                    <div class="content-wrapper">
+                      <h4 class="section-heading">Documentos personales </h4>           
+                      <div class="form-check">
+                        <label class="form-check-label">
+                          <input type="hidden"  name="idTramite" id="idTramite" value="{{idTramite}}"  >
+                          <input type="checkbox" class="form-check-input" name="cedula" id="cedula" disabled {% if dato.cedula() == 'true' %}  disabled checked {% endif %} >
+                          Copia de cedula 
+                        </label>
+                      </div>
+                      <div class="form-check">
+                        <label class="form-check-label">
+                          <input type="checkbox" class="form-check-input" name="papeleta" id="papeleta" disabled {% if dato.papeleta() == 'true' %} disabled checked {% endif %} >
+                          Copia de papeleta de votación
+                        </label>
+                      </div>
+                      <div class="form-check">
+                        <label class="form-check-label">
+                          <input type="checkbox" class="form-check-input" name="bienes" id="bienes" disabled {% if dato.escrituraBienes() == 'true' %} disabled checked {% endif %} >
+                          Escritura de bienes
+                        </label>
+                      </div>
+                      <div class="form-check">       
+                        <label class="form-check-label">
+                          <input type="checkbox" class="form-check-input" name="enagenado" id="enagenado" disabled {% if dato.estaEnagenado() == 'true' %} disabled checked {% endif %}  >
+                          Certificado de gravámenes
+                        </label>
+                      </div> 
+                      <hr>            
+                      <div class="form-group col-md-12">
+                        <h4 class="section-heading">Minuta</h4> 
+                        {% if dato.minuta() == null %} 
+                          <input type="file" name="minuta" id="minuta" class="form-control" placeholder="Cargar minuta" disabled>
+                        {% else %} 
+                          {{ dato.minuta() }}
+                          <a class="file" style="padding: 4px 15px; background: #4A2950; color: #fff; float: right; border-radius: 5px" target="_blank" href="../archivos/{{ idTramite }}/{{ dato.minuta() }}" > 
+                            <i class="fas fa-download"></i>
+                            Descargar 
+                          </a>                                                                             
+                        {% endif %}
+                      </div>
+                      {# ------------ Trámite de donación ------------- #}
+                      {% if  'DONA' in dato.getIdClienteTramite().getIdTipoTramiteTransferencia().tramite() %} 
+                        <div class="form-group col-md-12">
+                          <label for="insinuacionDonacion" class="">Insinuacion de donación</label>
+                          {% if dato.insinuacionDonacion() == null %} 
+                            <input type="file" name="insinuacionDonacion" id="insinuacionDonacion" class="form-control" placeholder="Cargar insinuacion de donacion" disabled>
+                          {% else %} 
+                            {{ dato.insinuacionDonacion() }}
+                            <a class="file" style="padding: 4px 15px; background: #4A2950; color: #fff; float: right; border-radius: 5px;" target="_blank" href="../archivos/{{ idTramite }}/{{ dato.insinuacionDonacion() }}" > 
+                              <i class="fas fa-download"></i>
+                              Descargar 
+                            </a>                                                                             
+                          {% endif %} 
+                        </div>
+                      {% endif %}               
+                      <div class="form-group col-md-12">
+                        <h4 class="section-heading">Valores Municipio </h4>   
+                        {% if dato.valoresMunicipio() == null %} 
+                          <input type="file" name="vmunicipio" id="vmunicipio" maxlength="5" class="form-control" value="{{ dato.valoresMunicipio() }}" placeholder="Valores a pagar a municipio" disabled>
+                        {% else %} 
+                          {{ dato.valoresMunicipio() }}
+                          <a class="file" style="padding: 5px 15px; background: #4A2950; color: #fff; float: right; border-radius: 5px" target="_blank" href="../archivos/{{ idTramite }}/{{ dato.valoresMunicipio() }}" >
+                           <i class="fas fa-download"></i>
+                           Descargar 
+                          </a>                                                                             
+                        {% endif %} 
+                      </div>
+                      <div class="form-check">
+                        <label class="form-check-label">
+                          <input type="checkbox" class="form-check-input" name="pvalores" id="pvalores" disabled  {% if dato.peticionValores() == 'true' %} disabled checked {% endif %} >
+                          Peticion de valores
+                        </label>
+                      </div>
+                      <div class="oculto"> 
+                      
+                        <hr>
+                        <div class="form-group col-md-12">
+                          <h4 class="section-heading">Comprobante de pago </h4>  
+                          {% if dato.pagoValores() == null %} 
+                            <input type="file" name="comprobantep" id="comprobantep" class="form-control" placeholder="Cargar comprobante de pago" disabled>
+                          {% else %} 
+                            {{ dato.pagoValores() }}
+                            <a class="file" style="padding: 5px 15px; background: #4A2950; color: #fff; float: right; border-radius: 5px" target="_blank" href="../archivos/{{ idTramite }}/{{ dato.pagoValores() }}" > 
+                              <i class="fas fa-download"></i>
+                              Descargar 
+                            </a>                                                   
+                          {% endif %} 
+                        </div>
+                      </div>
+                    </div>
+                    {# --------------------------------------------- #}
+                  </section>
+                  <h3>
+                    <div class="media">
+                      <div class="bd-wizard-step-icon">
+                        <img src="https://img.icons8.com/external-kmg-design-flat-kmg-design/32/000000/external-apartment-business-kmg-design-flat-kmg-design.png" width="35px"/>
+                      </div>
+                      <div class="media-body">
+                        <div class="bd-wizard-step-title">Notaria</div>
+                        <div class="bd-wizard-step-subtitle">Paso 2</div>
+                      </div>
+                    </div>
+                  </h3>
+                  <section>
+                  {# ----------- Content wrapper ------------ #}
+                    <div class="content-wrapper">
+                      <h4 class="section-heading">Detalles de reunion</h4>
+                      {# -------------- Row 1 ---------------- #}
+                      <div class="row">
+                        <div class="form-group col-md-6">
+                          <label for="fechareunion" class="">Fecha para firmar</label>
+                          {% if dato.fechaReunion() == null %} 
+                            <input type="date" name="fechareunion" id="fechareunion" class="form-control" disabled>        
+                          {% else %} 
+                            {% set date = dato.fechaReunion()|date('Y-m-d') %}
+                            {{ date }}    
+                          {% endif %}
+                        </div>
+                        <div class="form-group col-md-6">
+                          <label for="horaFirma" class="">Hora para firmar</label>
+                          {% if dato.horaReunion() == null %} 
+                            <input type="time" name="horaFirma" id="horaFirma" class="form-control" disabled>
+                          {% else %}
+                            {% set date = dato.horaReunion()|date('H:i:s') %}
+                            {{ date }}
+                          {% endif %}
+                        </div>
+                        <div class="form-group col-md-6">
+                          <label for="fechaEjecucion" class="">Fecha de ejecucion</label>
+                          {% if dato.fechaEjecucion() == null %}  
+                            <input type="date" name="fechaEjecucion" id="fechaEjecucion" class="form-control" disabled>          
+                          {% else %} 
+                            {% set date = dato.fechaEjecucion()|date('Y-m-d') %}
+                            {{ date }}
+                          {% endif %}
+                        </div>
+                        <div class="form-group col-md-12">
+                          <h4 class="section-heading">Valor tasa notarial</h4>  
+                          {% if dato.pagoTasaNotarial() == null %} 
+                            <input type="file" name="valorTasaNotarial" id="valorTasaNotarial" class="form-control" value= "" disabled>
+                          {% else %} 
+                            {{ dato.pagoTasaNotarial() }}
+                            <a class="file" style="padding: 5px 15px; background: #4A2950; color: #fff; float: right; border-radius: 5px" target="_blank" href="../archivos/{{ idTramite }}/{{ dato.pagoTasaNotarial() }}" > 
+                              <i class="fas fa-download"></i>
+                              Descargar 
+                            </a>                                                   
+                          {% endif %}
+                        </div>
+                        <div class="form-check">
+                          <label class="form-check-label">
+                            <input type="checkbox" class="form-check-input" name="pagoNotarial" id="pagoNotarial" disabled {% if dato.pagoCompleto() == 'true' %} disabled checked {% endif %} >
+                            Pago tasa notarial
+                          </label>
+                        </div>
+                      </div>
+                      <hr>
+                      {# -------------- Row 2 ---------------- #}
+                      <div class="row">
+                        <div class="form-check col-md-12">
+                          <h4 class="section-heading">Mutualista</h4> 
+                          <label class="form-check-label">
+                            <input type="checkbox" class="form-check-input" name="esMutualista" id="esMutualista" disabled {% if dato.esMutualista() == 'true' %} disabled checked {% endif %} >
+                            ¿Es mutualista?
+                          </label>
+                        </div>
+                          
+                        <div class="form-group col-md-12" style="padding-top: 14px">
+                          <h4 class="section-heading">Subir documentación firmada</h4> 
+                          {% if dato.documentoFirmado() == null %} 
+                            <input type="file" name="documentoFirmado" id="documentoFirmado" class="form-control" placeholder="Cargar minuta" disabled>
+                          {% else %} 
+                            {{ dato.documentoFirmado() }}
+                            <a class="file" style="padding: 5px 15px; background: #4A2950; color: #fff; float: right; border-radius: 5px" target="_blank" href="../archivos/{{ idTramite }}/{{ dato.documentoFirmado() }}" > 
+                              <i class="fas fa-download"></i>
+                              Descargar 
+                            </a>                         
+                          {% endif %}
+                        </div>
+          
+                        <div class="form-check col-md-12">
+                          <h4 class="section-heading">Notaria</h4>
+                          <input type="checkbox" class="form-check-input" name="entregaNotaria" id="entregaNotaria" disabled {% if dato.entregadaNotaria() == 'true' %} disabled checked {% endif %} >
+                          Documentacion entregada en notaria
+                        </div>
+
+                        <div class="form-group col-md-12" style="padding-top: 14px">
+                          <h4 class="section-heading">Subir escritura</h4> 
+                          {% if dato.subirEscritura() == null %} 
+                            <input type="file" name="escritura" id="escritura" class="form-control" placeholder="Cargar minuta" disabled>
+                          {% else %}
+                            {{ dato.subirEscritura() }}
+                            <a class="file" style="padding: 5px 15px; background: #4A2950; color: #fff; float: right; border-radius: 5px" target="_blank" href="../archivos/{{ idTramite }}/{{ dato.subirEscritura() }}" > 
+                              <i class="fas fa-download"></i>
+                              Descargar 
+                            </a>                         
+                          {% endif %}
+                        </div> 
+
+                        <div class="form-check col-md-12">
+                          <h4 class="section-heading">Registro de la Propiedad</h4>
+                          <input type="checkbox" class="form-check-input" name="entregaRP" id="entregaRP" disabled {% if dato.entregadaRegistroPropiedad() == 'true' %} disabled checked {% endif %} >
+                          Documentacion entregada a registro de la propiedad
+                        </div>
+
+                        <div class="form-check">
+                          <label class="form-check-label">
+                            <input type="checkbox" class="form-check-input" name="clienteAprueba" id="clienteAprueba" disabled {% if dato.clienteAprueba() == 'true' %} disabled checked {% endif %}  >
+                            Aprobacion de pago de valores de cliente
+                          </label>
+                        </div>         
+                      </div>
+                    </div>
+                    {# --------------------------------- #}
+                    {# <div style="margin: 25px">
+                      <button class="btn btn-primary" style="background: #00d69f" type="submit">Guardar</button>
+                    </div> #}
+                  </section>
+                
+                  <h3>
+                    <div class="media">
+                      <div class="bd-wizard-step-icon">
+                        <img src="https://img.icons8.com/emoji/48/000000/scroll-emoji.png" width="35px"/>
+                      </div>
+                      <div class="media-body">
+                        <div class="bd-wizard-step-title">Escritura e Informes de gastos </div>
+                        <div class="bd-wizard-step-subtitle">Paso 3</div>
                       </div>
                     </div>
                   </h3>
 
                   <section>
+                  {# --------------Content wrapper -------------- #}
                     <div class="content-wrapper">
-                      <h4 class="section-heading mb-5">Resumen de Tramite</h4>
-                      <div class="form-check">
+                      <h4 class="section-heading mb-5">Detalles</h4>
+                      <div class="form-check col-md-12">
                         <label class="form-check-label">
-                          <input type="checkbox" class="form-check-input" name="" id="" value="checkedValue" checked>
-                          El proceso de este trámite ha finalizado. Todos los datos han sido guardados exitosamente. Acontinuación de click en finalizar.</label>
+                          <input type="checkbox" class="form-check-input" name="tituloPago" id="tituloPago" disabled {% if dato.tituloPagoEntregado() == 'true' %} disabled checked {% endif %}  >
+                          Titulo de pago entregado
+                        </label>
+                      </div> 
+
+                      <div class="form-check col-md-12">
+                        <label class="form-check-label">
+                          <input type="checkbox" class="form-check-input" name="pagoTitulo" id="pagoTitulo" disabled {% if dato.tituloPago() == 'true' %} disabled checked {% endif %} >
+                          Pago de valores
+                        </label>
+                      </div> 
+                      <hr>
+
+                      <div class="form-check col-md-12">
+                        <h4 class="section-heading">Escritura</h4>
+                        <label class="form-check-label">
+                          <input type="checkbox" class="form-check-input" name="escrituraVali" id="escrituraVali" disabled {% if dato.escrituraValida() == 'true' %} disabled checked {% endif %} >
+                          Escritura valida
+                        </label>
+                      </div>
+
+                      <div class="form-group col-md-12" style="padding-top: 14px">
+                        <h4 class="section-heading">Subir acta de acta de inscripción</h4> 
+                        {% if dato.actaInscripcion() == null %} 
+                          <input type="file" name="acta" id="acta" class="form-control" placeholder="Cargar minuta" disabled>
+                        {% else %} 
+                          {{ dato.actaInscripcion() }}
+                          <a class="file" style="padding: 5px 15px; background: #4A2950; color: #fff; float: right; border-radius: 5px" target="_blank" href="../archivos/{{ idTramite }}/{{ dato.actaInscripcion() }}" > 
+                            <i class="fas fa-download"></i>
+                            Descargar 
+                          </a>                         
+                        {% endif %}
+                      </div>
+
+                      <div class="form-group col-md-12">
+                        <h4 class="section-heading">Informe de gastos</h4>
+                        {% if dato.informeGastos() == null %} 
+                          <input type="file" name="gastos" id="gastos" class="form-control" placeholder="Cargar minuta" disabled>
+                        {% else %} 
+                          {{ dato.informeGastos() }}
+                          <a class="file" style="padding: 5px 15px; background: #4A2950; color: #fff; float: right; border-radius: 5px" target="_blank" href="../archivos/{{ idTramite }}/{{ dato.informeGastos() }}" > 
+                            <i class="fas fa-download"></i>
+                            Descargar 
+                          </a>                         
+                        {% endif %}
+                      </div> 
+        
+                      <div class="form-check col-md-12">
+                        <label class="form-check-label">
+                          <input type="checkbox" class="form-check-input" name="pagoGastos" id="pagoGastos" disabled {% if dato.pagoGastos() == 'true' %} disabled checked {% endif %} >
+                          Pago de gastos
                         </label>
                       </div>
                     </div>
-                    <div style="margin: 25px">
-                      <button type="button" class="btn btn-primary fin" onClick="sendIdClient()"  style="background: #00d69f">Finalizar</button>
+                    {# -------------------------------------- #}
+                    {# <div style="margin: 25px">
+                      <button class="btn btn-primary" style="background: #00d69f" type="submit">Guardar</button>
+                    </div> #}
+                  </section>
+
+                  <h3>
+                    <div class="media">
+                      <div class="bd-wizard-step-icon">
+                        <img src="https://img.icons8.com/external-flat-geotatah/64/000000/external-clearage-workaholic-flat-flat-geotatah.png" width="35px"/>
+                      </div>
+                      <div class="media-body">
+                        <div class="bd-wizard-step-title">Finalización</div>
+                        <div class="bd-wizard-step-subtitle">Paso 4</div>
+                      </div>
                     </div>
+                  </h3>
+
+                  <section>
+                      <div class="content-wrapper">
+                        <div class="form-check">
+                          <center>
+                            <img src="{{ asset('img/orquera.png') }}" width="300px" />
+                            <div style="padding: 10px 0">
+                              <a style="background: #253B4F; padding: 10px 15px; color: #fff; border-radius: 3px;"
+                                href="{{path('usuarioTramiteIndividual')}}">
+                                Volver
+                              </a>
+                            </div>
+                          </center>
+                        </div>
+                      </div>
+                    {% endif %}  
                   </section>
                 {% endfor %}
               </div>
@@ -419,17 +755,51 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
   <script src="{{ asset('js/jquery.steps.min.js') }}"></script>
   <script src="{{ asset('js/bd-wizard.js') }}"></script>
+  <script src="{{ asset('js/test.js') }}"></script>
   <script >
-  let array = [];
+  
+
     function sendIdClient(){
-      const $formDat = document.querySelector(".proceso");
-      const data = new FormData($formDat);
-      for (let [key, value] of data){
-        if(value.name == "" || value == ""){
-           $('#datosIncompletos').modal('show');
-            return;
+    const $formDat = document.querySelector(".proceso");
+    const data = new FormData($formDat);
+    data.append('cedula', $('#cedula').prop('checked'))
+    data.append('papeleta', $('#papeleta').prop('checked'))
+    data.append('bienes', $('#bienes').prop('checked'))
+    data.append('enagenado', $('#enagenado').prop('checked'))
+    data.append('pvalores', $('#pvalores').prop('checked'))
+    data.append('pagoNotarial', $('#pagoNotarial').prop('checked'))
+    data.append('entregaNotaria', $('#entregaNotaria').prop('checked'))
+    data.append('entregaRP', $('#entregaRP').prop('checked'))
+
+   
+    for (let [key, value] of data){
+      if(key != "documentoFirmado"){
+        if(
+          value.name == "" || value == "" 
+          || data.get("cedula") == "false" 
+          || data.get("papeleta") == "false"
+          || data.get("bienes") == "false"
+          || data.get("enagenado") == "false"
+          || data.get("pvalores") == "false"
+          || data.get("pagoNotarial") == "false"
+          || data.get("entregaNotaria") == "false"
+          || data.get("entregaRP") == "false"
+          ){
+          $('#datosIncompletos').modal('show');
+          return;
         }
-      }    
+      }
+    }    
+    const formData = {};
+    const idCliente = '{{ clienteTramite }}';
+    formData.tipo = 2;
+    formData.idCliente = idCliente;
+     $.ajax({
+      data: formData,
+    }); 
+
+  } 
+    function finalizarTramite(){    
     const formData = {};
     const idCliente = '{{ clienteTramite }}';
     formData.tipo = 2;
@@ -452,6 +822,7 @@
   });
   
   $("#modal-btn-no").on("click", function(){
+    finalizarTramite() 
     callback(false);
     $("#mi-modal").modal('hide');
   });

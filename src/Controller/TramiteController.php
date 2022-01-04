@@ -80,6 +80,10 @@ class TramiteController extends AbstractController
                         );
                     } elseif ($tipo == 2) {
                         return new JsonResponse($this->updateUsarioTramite());
+                    } elseif ($tipo == 3) {
+                        return new JsonResponse(
+                            $this->descargaArchivosProceso()
+                        );
                     }
                 }
             }
@@ -102,6 +106,7 @@ class TramiteController extends AbstractController
 
         $usuario = $em->getRepository(UsuarioTramite::class)->find($idTramite);
 
+        $estadoProceso = $usuario->estadoProceso();
         $clienteTramite = $usuario->getIdClienteTramite()->id();
 
         $fecha = $usuario->fecha();
@@ -135,6 +140,7 @@ class TramiteController extends AbstractController
             'idTramite' => $idTramiteTransferencia,
             'tramite' => $idTramite,
             'clienteTramite' => $clienteTramite,
+            'estadoProceso' => $estadoProceso,
         ]);
     }
 
@@ -167,6 +173,12 @@ class TramiteController extends AbstractController
         $request = $this->container->get('request_stack')->getCurrentRequest();
         $em = $this->getDoctrine()->getManager();
 
+        $directorio = 'archivos/' . $request->request->get('idTramite') . '/';
+
+        if (!is_dir($directorio)) {
+            mkdir($directorio);
+        }
+
         $tramiteTransferencia = $em
             ->getRepository(TramiteTransferencia::class)
             ->find($request->request->get('idTramite'));
@@ -180,25 +192,56 @@ class TramiteController extends AbstractController
         $tramiteTransferencia->estaEnagenado(
             $request->request->get('enagenado')
         );
+        // -------------- Minuta guardar archivo -----------------
         $tramiteTransferencia->minuta(
             $tramiteTransferencia->minuta()
                 ? $tramiteTransferencia->minuta()
                 : $_FILES['minuta']['name']
         );
+
+        if (isset($_FILES['minuta'])) {
+            $subir_archivo = $directorio . basename($_FILES['minuta']['name']);
+            move_uploaded_file($_FILES['minuta']['tmp_name'], $subir_archivo);
+        }
         $tramiteTransferencia->insinuacionDonacion(
             $request->request->get('insinuacionDonacion')
         );
+
+        // -------------- Municipio guardar archivo -----------------
         $tramiteTransferencia->valoresMunicipio(
-            $request->request->get('vmunicipio')
+            $tramiteTransferencia->valoresMunicipio()
+                ? $tramiteTransferencia->valoresMunicipio()
+                : $_FILES['vmunicipio']['name']
         );
+
+        if (isset($_FILES['vmunicipio'])) {
+            $subir_archivo =
+                $directorio . basename($_FILES['vmunicipio']['name']);
+            move_uploaded_file(
+                $_FILES['vmunicipio']['tmp_name'],
+                $subir_archivo
+            );
+        }
+
         $tramiteTransferencia->peticionValores(
             $request->request->get('pvalores')
         );
+
+        // -------------- Comprobantes guardar archivo -----------------
         $tramiteTransferencia->pagoValores(
             $tramiteTransferencia->pagoValores()
                 ? $tramiteTransferencia->pagoValores()
                 : $_FILES['comprobantep']['name']
         );
+
+        if (isset($_FILES['comprobantep'])) {
+            $subir_archivo =
+                $directorio . basename($_FILES['comprobantep']['name']);
+            move_uploaded_file(
+                $_FILES['comprobantep']['tmp_name'],
+                $subir_archivo
+            );
+        }
 
         //-------------------- Cambiar Estado ---------------------------
         $usuarioTramite = $em
@@ -213,33 +256,35 @@ class TramiteController extends AbstractController
         // ------------------- Segundo Proceso ------------------------
 
         $date = $request->request->get('horaFirma');
-        $date = new \DateTime(date('d-m-Y H:i:s', strtotime($date)));
+        // $date = new \DateTime(date('d-m-Y H:i:s', strtotime($date)));
 
         $date2 = $request->request->get('fechareunion');
-        $dateReunion = new \DateTime(date('d-m-Y H:i:s', strtotime($date2)));
+        // $dateReunion = new \DateTime(date('d-m-Y H:i:s', strtotime($date2)));
 
         $date3 = $request->request->get('fechaEjecucion');
-        $dateEjecucion = new \DateTime(date('d-m-Y H:i:s', strtotime($date3)));
+        // $dateEjecucion = new \DateTime(date('d-m-Y H:i:s', strtotime($date3)));
 
-        $tramiteTransferencia->horaReunion(
-            $tramiteTransferencia->horaReunion()
-                ? $tramiteTransferencia->horaReunion()
-                : $date
-        );
-        $tramiteTransferencia->fechaReunion(
-            $tramiteTransferencia->fechaReunion()
-                ? $tramiteTransferencia->fechaReunion()
-                : $dateReunion
-        );
-        $tramiteTransferencia->fechaEjecucion(
-            $tramiteTransferencia->fechaEjecucion()
-                ? $tramiteTransferencia->fechaEjecucion()
-                : $dateEjecucion
-        );
+        $tramiteTransferencia->horaReunion($date);
+        $tramiteTransferencia->fechaReunion($date2);
+        $tramiteTransferencia->fechaEjecucion($date3);
         $tramiteTransferencia->retraso($request->request->get('fechareunion'));
+
+        // -------------- Tasa notarial guardar archivo -----------------
         $tramiteTransferencia->pagoTasaNotarial(
-            $request->request->get('valorTasaNotarial')
+            $tramiteTransferencia->pagoTasaNotarial()
+                ? $tramiteTransferencia->pagoTasaNotarial()
+                : $_FILES['valorTasaNotarial']['name']
         );
+
+        if (isset($_FILES['valorTasaNotarial'])) {
+            $subir_archivo =
+                $directorio . basename($_FILES['valorTasaNotarial']['name']);
+            move_uploaded_file(
+                $_FILES['valorTasaNotarial']['tmp_name'],
+                $subir_archivo
+            );
+        }
+
         $tramiteTransferencia->pagoCompleto(
             $request->request->get('pagoNotarial')
         );
@@ -249,22 +294,46 @@ class TramiteController extends AbstractController
         $tramiteTransferencia->entregadoMutualista(
             $request->request->get('entregadoMutualista')
         );
+
+        // -------------- Comprobantes guardar archivo -----------------
         $tramiteTransferencia->documentoFirmado(
             $tramiteTransferencia->documentoFirmado()
                 ? $tramiteTransferencia->documentoFirmado()
                 : $_FILES['documentoFirmado']['name']
         );
+        if (isset($_FILES['documentoFirmado'])) {
+            $subir_archivo =
+                $directorio . basename($_FILES['documentoFirmado']['name']);
+            move_uploaded_file(
+                $_FILES['documentoFirmado']['tmp_name'],
+                $subir_archivo
+            );
+        }
+
         $tramiteTransferencia->entregadaNotaria(
             $request->request->get('entregaNotaria')
         );
+
+        // -------------- Escritura guardar archivo -----------------
         $tramiteTransferencia->subirEscritura(
             $tramiteTransferencia->subirEscritura()
                 ? $tramiteTransferencia->subirEscritura()
                 : $_FILES['escritura']['name']
         );
+
+        if (isset($_FILES['escritura'])) {
+            $subir_archivo =
+                $directorio . basename($_FILES['escritura']['name']);
+            move_uploaded_file(
+                $_FILES['escritura']['tmp_name'],
+                $subir_archivo
+            );
+        }
+
         $tramiteTransferencia->entregadaRegistroPropiedad(
             $request->request->get('entregaRP')
         );
+
         $tramiteTransferencia->clienteAprueba(
             $request->request->get('clienteAprueba')
         );
@@ -277,17 +346,32 @@ class TramiteController extends AbstractController
         $tramiteTransferencia->escrituraValida(
             $request->request->get('escrituraVali')
         );
+
+        // -------------- Escritura guardar archivo -----------------
         $tramiteTransferencia->actaInscripcion($request->request->get('acta'));
         $tramiteTransferencia->actaInscripcion(
             $tramiteTransferencia->actaInscripcion()
                 ? $tramiteTransferencia->actaInscripcion()
                 : $_FILES['acta']['name']
         );
+
+        if (isset($_FILES['acta'])) {
+            $subir_archivo = $directorio . basename($_FILES['acta']['name']);
+            move_uploaded_file($_FILES['acta']['tmp_name'], $subir_archivo);
+        }
+
+        // -------------- Informe gastos guardar archivo -----------------
         $tramiteTransferencia->informeGastos(
             $tramiteTransferencia->informeGastos()
                 ? $tramiteTransferencia->informeGastos()
                 : $_FILES['gastos']['name']
         );
+
+        if (isset($_FILES['gastos'])) {
+            $subir_archivo = $directorio . basename($_FILES['gastos']['name']);
+            move_uploaded_file($_FILES['gastos']['tmp_name'], $subir_archivo);
+        }
+
         $tramiteTransferencia->pagoGastos($request->request->get('pagoGastos'));
         // $tramiteTransferencia->Observa($request->request->get(''));
         // $tramiteTransferencia->actaInscripcion($request->request->get(''));

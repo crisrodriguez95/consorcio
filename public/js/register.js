@@ -87,7 +87,8 @@ var PAGE = (function () {
       // -------- Cédula ------------
       if (key == 'cedula') {
         if (entry.length != 10) {
-          $('.modal').modal('hide')
+          console.log('object')
+          $('.cls').click()
           $('#error').modal('show')
           return
         } else {
@@ -113,7 +114,7 @@ var PAGE = (function () {
           final = decena - total
           if ((final == 10 && digito == 0) || final == digito) {
           } else {
-            $('.modal').modal('hide')
+            $('.cls').click()
             $('#error').modal('show')
             return
           }
@@ -122,7 +123,7 @@ var PAGE = (function () {
       // -------- Celular ------------
       if (key == 'celular') {
         if (entry.length != 10) {
-          $('.modal').modal('hide')
+          $('.cls').click()
           $('#errorMobile').modal('show')
           return
         }
@@ -130,8 +131,20 @@ var PAGE = (function () {
       // -------- Teléfono ------------
       if (key == 'telefono') {
         if (entry.length != 7) {
-          $('.modal').modal('hide')
+          $('.cls').click()
           $('#errorMobile').modal('show')
+          return
+        }
+      }
+      // -------- Rol ------------
+      if (
+        key == 'id_rol' ||
+        key == 'password' ||
+        key == 'nombre' ||
+        key == 'apellido'
+      ) {
+        if (entry == '') {
+          alert('Llene todos los campos')
           return
         }
       }
@@ -147,13 +160,13 @@ var PAGE = (function () {
         return false
       } else {
         form[0].reset()
-        $('.modal').modal('hide')
+        $('.cls').click()
         success.style.display = 'block'
         success.setAttribute('class', 'success')
-        // setTimeout(() => {
-        //   success.setAttribute('class', 'message');
-        //   location.reload(true)
-        // }, 1000)
+        setTimeout(() => {
+          success.setAttribute('class', 'message')
+          location.reload(true)
+        }, 1000)
       }
     })
   }

@@ -44,8 +44,7 @@ class UsuarioController extends AbstractController
                 if ($tipo) {
                     if ($tipo == 1) {
                         return new JsonResponse($this->registerUsuario());
-                    }else if ($tipo == 7){
-                        
+                    } elseif ($tipo == 7) {
                         return new JsonResponse($this->dataUsuario());
                     }
                 }
@@ -67,12 +66,11 @@ class UsuarioController extends AbstractController
         $request = $this->container->get('request_stack')->getCurrentRequest();
 
         $em = $this->getDoctrine()->getManager();
+        $_usuario = $em
+            ->getRepository(Usuario::class)
+            ->findBy(['cedula' => $request->query->get('cedula')]);
 
-        if (
-            $this->getDoctrine()
-                ->getRepository(Usuario::class)
-                ->find($request->query->get('cedula'))
-        ) {
+        if ($_usuario) {
             return 'El usuario que desea registrar ya esta registrado';
         }
 
@@ -88,7 +86,4 @@ class UsuarioController extends AbstractController
 
         return 'heythere';
     }
-
-
-   
 }

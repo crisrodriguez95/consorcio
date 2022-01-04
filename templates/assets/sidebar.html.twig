@@ -57,7 +57,6 @@
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Custom Utilities:</h6>
-
                         <a class="collapse-item" href=" {{ path('tipoTransferencia')}} ">Tipo de Tramites</a>
                         <a class="collapse-item" href= " {{ path('clienteTramite')}} " >Asignar Tramites</a>
                         {% if is_granted('ROLE_ADMIN') %}
@@ -67,6 +66,24 @@
                     </div>
                 </div>
             </li>
+
+            {% if is_granted('ROLE_ADMIN') %}
+              <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFunciones"
+                  aria-expanded="true" aria-controls="collapseFunciones">
+                  <i class="fas fa-fw fa-cog"></i>
+                  <span>Funciones</span>
+                </a>
+                <div id="collapseFunciones" class="collapse" aria-labelledby="headingUtilities"
+                  data-parent="#accordionSidebar">
+                  <div class="bg-white py-2 collapse-inner rounded">
+                    <h6 class="collapse-header">Custom Utilities:</h6>
+                      <a class="collapse-item" href=" {{ path('funcion')}} ">Funciones</a>
+                      <a class="collapse-item" href=" {{ path('funcionUsuario')}} ">Asignar Función</a>
+                  </div>
+                </div>
+              </li>
+            {% endif %}          
 
              <!-- Nav Item - Reportes Menu -->
               

@@ -1,19 +1,34 @@
 <!-- Modal -->
 
-<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="mi-modal">
+<div class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="mySmallModalLabel"
+  aria-hidden="true"
+  id="mi-modal">
   <div class="modal-dialog modal-md">
     <div class="modal-content">
-      <div class="modal-header">        
-        <h4 class="modal-title" id="myModalLabel">Aprobación del cliente</h4>
+      <div class="modal-header">
+        <h4 class="modal-title" id="myModalLabel">
+          Aprobación del cliente
+        </h4>
       </div>
       <div class="modal-boddy">
-      <p style="padding: 5%;">              
-        Al dar clic en SI, acepta cancelar los valores emitidos, al dar clic en NO, el trámite finalizará
-           </p> 
+        <p style="padding: 5%;">
+          Al dar clic en SI, acepta cancelar los valores emitidos, al dar clic
+          en NO, el trámite finalizará
+        </p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" id="modal-btn-si">Si</button>
-        <button type="button" class="btn btn-primary" id="modal-btn-no">No</button>
+        <button type="button" class="btn btn-default" id="modal-btn-si">
+          Si
+        </button>
+        <a type="button"
+          href="{{ path('usuarioTramiteIndividual') }}"
+          class="btn btn-primary"
+          id="modal-btn-no">
+          No
+        </a>
       </div>
     </div>
   </div>

@@ -11,12 +11,12 @@ var PAGE = (function () {
     aprobacion = 'true'
     alert('aaa')
   })
+
   botonNo.on('click', () => {
     aprobacion = 'false'
   })
 
   var inicio = function () {
-    console.log(cedula)
     form.unbind().on('submit', function (e) {
       ingreso(this)
       return false
